@@ -26,12 +26,29 @@ update_repositories: yes
 # unles you are switching to a different version of Jetty or Java
 jetty_download_url: "http://central.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.3.6.v20151106/jetty-runner-9.3.6.v20151106.jar"
 
+# HSPC server configuration
+# Schema version maps to HAPI schema and FHIR version
+#   HSPC Schema version 1 uses HAPI 1.4 and FHIR DSTU2
+#   HSPC Schema version 2 uses HAPI 2.0 and FHIR STU3
+hspc_schema_version: 1
+
+# Base and branch for HSPC server repos
+# HSPC Branches map to HSPC Schema Versions (and HAPI and FHIR versions transitively)
+#   branch "1.0-HAPI-1.4" maps to HSPC Schema version 1
+#   branch "develop" maps to HSPC Schema version 2
+hspc_api_branch: "1.0-HAPI-1.4"
+
+hspc_repos_base: "https://bitbucket.org/hspconsortium"
+
 # Database configuration
+mysql_endpoint: localhost:3306
 mysql_root_pass: password
 mysql_user: fhir
 mysql_pass: password
-api_server_database: hapi_pu
+api_server_sandbox: smart
+api_server_database: hspc_{{hspc_schema_version}}_{{api_server_sandbox}}
 auth_server_database: oic
+hspc_auth_branch: "develop"
 
 # Password for the Java keystore used by the authorization server (please change)
 keystore_password: "changeme"
@@ -134,30 +151,16 @@ ldap_server_host: "localhost"
 ldap_server_base: "dc=example,dc=com"
 ldap_server_uri: "ldap://{{ldap_server_host}}:389"
 ldap_server_admin_password: "sample-password"
-
 # Additional parameters for the sample patient generator
 sample_patients_generator_params: ""
 
-# Base and branch for HSPC server repos
-hspc_repos_base: "https://bitbucket.org/hspconsortium"
-hspc_smart_branch: "master"
-
 repositories:
-     - {name: 'reference-auth-security', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-auth-server-webapp', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-auth-server-ldap-webapp', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-api-mysql', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-api-oauth2', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-api-fhir', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-api-smart-support', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-api-webapp', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-messaging', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-apps', version: "{{hspc_smart_branch}}"}
-     - {name: 'reference-impl', version: "{{hspc_smart_branch}}"}
-     - {name: 'bilirubin-risk-chart', version: "{{hspc_smart_branch}}"}
-     - {name: 'java-client', version: "{{hspc_smart_branch}}"}
-     - {name: 'tools', version: "{{hspc_smart_branch}}"}
-     - {name: 'examples', version: "{{hspc_smart_branch}}"}
+# Note, reference-auth-server-webapp is cloned to gain the SQL install files
+     - {name: 'reference-auth-server-webapp', version: "{{hspc_auth_branch}}"}
+     - {name: 'reference-auth-server-ldap-webapp', version: "{{hspc_auth_branch}}"}
+# Note, reference-api-mysql is cloned to gain the SQL install files
+     - {name: 'reference-api-mysql', version: "{{hspc_api_branch}}"}
+     - {name: 'reference-api-webapp', version: "{{hspc_api_branch}}"}
 
 # Maximu size of sample patient data files
 max_upload_size: "5M"

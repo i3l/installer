@@ -70,21 +70,6 @@
        force=yes
   with_items: '{{repositories}}'
 
-- name: patch api server webapp
-  become_user: "{{username}}"
-  template: src=patches/application.yml.j2
-            dest={{install_dir}}/hspc/reference-api-webapp/src/main/resources/application.yml
-
-- name: patch auth server webapp
-  become_user: "{{username}}"
-  template: src=patches/auth.properties.j2
-            dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/config/auth.properties
-
-- name: patch auth server ldap config
-  become_user: "{{username}}"
-  template: src=patches/ldap.properties.j2
-            dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/resources/config/ldap.properties
-
 - name: patch auth server login screen
   become_user: "{{username}}"
   template: src=patches/login.jsp.j2
@@ -136,11 +121,17 @@
   shell: chdir={{install_dir}}/hspc/reference-api-mysql/src/main/resources/db/openidconnect/mysql
          mysql oic < resource-server-client.sql
 
-- name: build hspc server stack
+- name: build hspc server API server
   tags: [api]
   become_user: "{{username}}"
   shell: chdir={{install_dir}}/hspc
-       mvn clean install -e -f reference-impl/pom.xml
+       mvn clean install -e -f reference-api-webapp/pom.xml -Pjetty
+
+- name: build hspc server Auth server
+  tags: [api]
+  become_user: "{{username}}"
+  shell: chdir={{install_dir}}/hspc
+       mvn clean install -e -f reference-auth-server-ldap-webapp/pom.xml
 
 - name: restart api server
   tags: [smart_on_fhir, reset_db]
