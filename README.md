@@ -96,14 +96,14 @@ sudo pip install ansible==2.1.0
 Make sure that you have a user account on the remote machine that
 has passwordless sudo privileges.  Enable SSH from your local machine to
  the remote machine using certificates or password.
-3. Prepare the installer
+3. Configure the installer
 Edit `smart-on-fhir.yml` locally replacing `REMOTEHOST` and `REMOTEUSER` 
 with the hostname or IP of your remote host and the user account with the 
 sudo privileges. Also, don't forget to update the `custom_settings.yml` 
 file to suit your needs. 
 
 ### Install Remotely
-1. The steps (on the local machine):
+The steps (on the local machine):
 ```
 sudo apt-get update
 sudo apt-get install curl git python-pycurl python-pip python-yaml python-paramiko python-jinja2
@@ -114,7 +114,7 @@ vi smart-on-fhir.yml
 vi custom_settings.yml
 ansible-playbook -i "REMOTEHOST," smart-on-fhir.yml
 ```
-* Note:  If your install returns an error "ESTABLISH SSH CONNECTION FOR USER: None", 
+*Note:*  If your install returns an error "ESTABLISH SSH CONNECTION FOR USER: None", 
 explicitly pass the user (replacing {user} with your username):
 ```
 ansible-playbook -i "REMOTEHOST," -e "ansible_user={user}" smart-on-fhir.yml
