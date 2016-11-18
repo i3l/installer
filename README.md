@@ -83,16 +83,27 @@ sudo ansible-playbook  -c local -i 'localhost,' -vvvv smart-on-fhir.yml
 
 ## Building SMART-on-FHIR on fresh Ubuntu 16.04 remote machine
 
-You can build a remote machine using your local Ansible. First,
-make sure that you have a user account on the remote machine that
-has passwordless sudo privileges. Next, edit `smart-on-fhir.yml`
-locally replacing `REMOTEHOST` and `REMOTEUSER` with the hostname or IP
-of your remote host and the user account with the sudo privileges. Also,
-don't forget to update the `custom_settings.yml` file to suit your needs.
-You can then start the build of the remote host.
+You can build a remote machine using your local Ansible. 
 
-The steps (on the local machine):
+### Configure the Remote Machine
+1. Install Libraries
+```
+sudo apt-get update
+sudo apt-get install curl git python-pycurl python-pip python-yaml python-paramiko python-jinja2
+sudo pip install ansible==2.1.0
+```
+2. Set up SSH using Certificates
+Make sure that you have a user account on the remote machine that
+has passwordless sudo privileges.  Enable SSH from your local machine to
+ the remote machine using certificates or password.
+3. Prepare the installer
+Edit `smart-on-fhir.yml` locally replacing `REMOTEHOST` and `REMOTEUSER` 
+with the hostname or IP of your remote host and the user account with the 
+sudo privileges. Also, don't forget to update the `custom_settings.yml` 
+file to suit your needs. 
 
+### Install Remotely
+1. The steps (on the local machine):
 ```
 sudo apt-get update
 sudo apt-get install curl git python-pycurl python-pip python-yaml python-paramiko python-jinja2
@@ -103,11 +114,11 @@ vi smart-on-fhir.yml
 vi custom_settings.yml
 ansible-playbook -i "REMOTEHOST," smart-on-fhir.yml
 ```
-
-Of course, you always have the option of building the remote machine
-using the method described in
-`Building SMART-on-FHIR on fresh Ubuntu 16.04 machine (without Vagrant)`
-instead
+* Note:  If your install returns an error "ESTABLISH SSH CONNECTION FOR USER: None", 
+explicitly pass the user (replacing {user} with your username):
+```
+ansible-playbook -i "REMOTEHOST," -e "ansible_user={user}" smart-on-fhir.yml
+```
 
 ---
 
