@@ -70,6 +70,7 @@
        force=yes
   with_items: '{{repositories}}'
 
+# login.jsp is patched to show "username" label instead of "email address"
 - name: patch auth server login screen
   become_user: "{{username}}"
   template: src=patches/login.jsp.j2
@@ -105,8 +106,12 @@
   template: src=patches/mysql_clients.sql.j2
             dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_clients.sql
 
+# install SMART logos
 - name: config company-logo.png
   copy: src=company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo.png
+
+- name: config company-logo@2x.png
+  copy: src=company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo@2x.png
 
 - name: config company-logo-main-web-top.png
   copy: src=company-logo-main-web-top.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo-main-web-top.png
