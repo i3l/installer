@@ -58,6 +58,8 @@ And when you're done you can shut the virtual machine down with:
 vagrant halt
 ```
 
+*Note:* The SMART reference implementation stack is based on the [HSPC Reference Implementation stack](https://healthservices.atlassian.net/wiki/display/HSPC/HSPC+Reference+Implementation) which in turn is based upon [HAPI-FHIR](http://hapifhir.io). The authorization server is [MITREidConnect](http://mitreid-connect.github.io) and the underlying LDAP directory is [OpenLDAP](http://www.openldap.org). Please refer to these sites for details on administering and extending the stack components.
+
 ---
 
 ## Building SMART-on-FHIR on fresh Ubuntu 16.04 machine (without Vagrant)
