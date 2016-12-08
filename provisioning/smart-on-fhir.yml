@@ -2,10 +2,14 @@
 - hosts: all:!REMOTEHOST
   become: yes
   vars_files:
+    - default_settings.yml
     - custom_settings.yml
   roles:
     - common
     - ldap
+    - auth
+    - api
+    - apps
 #    - docs
 #    - sandbox
 
@@ -24,3 +28,6 @@
   roles:
     - common
     - ldap
+    - auth
+    - api
+    - apps

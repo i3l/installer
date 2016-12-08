@@ -1,5 +1,6 @@
 <%@ taglib prefix="authz" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="o" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
@@ -59,16 +60,19 @@
                 </div>
                 <div>
 					<span class="help-block pull-left">
-                        <spring:eval var="newUserUrl" expression="@ldapProperties.newUserUrl" />
-						<a href="${newUserUrl}" name="register_new_account"
-                           target="_self" class="login-form-text">Create New Account</a>
+                        <spring:eval var="newUserUrl" expression="@environment.getProperty('newUserUrl')"/>
+                        <c:if test="${not empty fn:trim(newUserUrl)}">
+                            <a href="${newUserUrl}" name="register_new_account"
+                               target="_self" class="login-form-text">Create New Account</a>
+                        </c:if>
      				</span>
                     <span class="help-block pull-right">
-                        <spring:eval var="forgotPasswordUrl" expression="@ldapProperties.forgotPasswordUrl" />
-                        <a href="${forgotPasswordUrl}" name="forgot_password"
-                           target="_self" class="login-form-text">Forgot Password?</a>
-                        </span>
-
+                        <spring:eval var="forgotPasswordUrl" expression="@environment.getProperty('forgotPasswordUrl')"/>
+                        <c:if test="${not empty fn:trim(forgotPasswordUrl)}">
+                            <a href="${forgotPasswordUrl}" name="forgot_password"
+                               target="_self" class="login-form-text">Forgot Password?</a>
+                        </c:if>
+                    </span>
                 </div>
             </form>
         </div>

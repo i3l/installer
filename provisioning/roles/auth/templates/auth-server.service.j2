@@ -1,0 +1,17 @@
+[Unit]
+Description=Authorization Service
+
+[Service]
+User={{username}}
+TimeoutStartSec=infinity
+Environment=oidc.issuer={{auth_server_base}}/
+WorkingDirectory={{install_dir}}/hspc/reference-auth-server-ldap-webapp/target
+{% if auth_server_secure_http and not use_custom_ssl_certificates %}
+ExecStart=/usr/bin/java -Djetty.port="9001" -Djetty.host="localhost" -Djavax.net.ssl.trustStore="{{install_dir}}/keystore" -Djavax.net.ssl.trustStorePassword="{{keystore_password}}" -Doidc.issuer={{auth_server_base}}/ -Dhspc.platform.persona.oauthUserLoginEndpointURL={{auth_server_base}}/j_spring_security_check -DCONTEXT_FHIR_ENDPOINT={{fhir_server_base}} -DCONTEXT_RESOLVE_ENDPOINT={{app_server_base}} -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} -Doidc.datasource.mysql.username={{mysql_user}} -Doidc.datasource.mysql.password={{mysql_pass}} -DLOGOUT_SUCCESS_URL_PROPERTY={{auth_server_base}} -Dldap.url={{ldap_server_uri}} -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} -Dldap.base={{ldap_server_base}} -Dldap.userDn=cn=admin,{{ldap_server_base}} -Dldap.password={{ldap_server_admin_password}} -DnewUserUrl={{auth_server_newUserUrl}} -DforgotPasswordUrl={{auth_server_forgotPasswordUrl}} -jar {{install_dir}}/jetty-runner.jar --config {{install_dir}}/jetty.xml hspc-reference-authorization.war
+{% else %}
+ExecStart=/usr/bin/java -Djetty.port="9001" -Djetty.host="localhost" -Doidc.issuer={{auth_server_base}}/ -Dhspc.platform.persona.oauthUserLoginEndpointURL={{auth_server_base}}/j_spring_security_check -DCONTEXT_FHIR_ENDPOINT={{fhir_server_base}} -DCONTEXT_RESOLVE_ENDPOINT={{app_server_base}} -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} -Doidc.datasource.mysql.username={{mysql_user}} -Doidc.datasource.mysql.password={{mysql_pass}} -DLOGOUT_SUCCESS_URL_PROPERTY={{auth_server_base}} -Dldap.url={{ldap_server_uri}} -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} -Dldap.base={{ldap_server_base}} -Dldap.userDn=cn=admin,{{ldap_server_base}} -Dldap.password={{ldap_server_admin_password}} -DnewUserUrl={{auth_server_newUserUrl}} -DforgotPasswordUrl={{auth_server_forgotPasswordUrl}} -jar {{install_dir}}/jetty-runner.jar --config {{install_dir}}/jetty.xml hspc-reference-authorization.war
+{% endif %}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,96 @@
+---
+ - name: configure api server service
+   tags: [smart_on_fhir, reset_db]
+   template: src=api-server.service.j2
+             dest=/etc/systemd/system/api-server.service
+             owner=root group=root mode=0644
+
+ - name: enable api server service
+   tags: [docs-webhook]
+   shell: systemctl enable api-server.service
+
+ - name: reload systemd daemon
+   tags: [api]
+   shell: systemctl daemon-reload
+
+ - name: stop api server
+   tags: [smart_on_fhir, reset_db]
+   service: name=api-server state=stopped
+
+ - name: Drop the API Server database
+   tags: [smart_on_fhir, reset_db]
+   mysql_db: name={{api_server_database}} state=absent
+   notify:
+      - Restart MySQL
+
+ - name: Drop the API Server Snapshot
+   tags: [smart_on_fhir, reset_db]
+   mysql_db: name="{{api_server_database}}${{baseline_snapshot}}" state=absent
+   notify:
+      - Restart MySQL
+
+ - name: Create the API Server database
+   tags: [smart_on_fhir, reset_db]
+   mysql_db: name={{api_server_database}} state=present
+   notify:
+      - Restart MySQL
+
+ - name: build hspc server API server
+   tags: [api]
+   become_user: "{{username}}"
+   shell: chdir={{install_dir}}/hspc
+        mvn clean install -e -f reference-api-webapp/pom.xml -Pjetty
+
+ - name: restart api server
+   tags: [smart_on_fhir, reset_db]
+   service: name=api-server enabled=yes state=restarted
+
+ - name: generate self-signed ssl certificate (api server)
+   tags: [api]
+   when: fhir_server_secure_http and not use_custom_ssl_certificates
+   shell: creates=/etc/nginx/ssl/fhir.crt
+          /bin/echo -e "{{fhir_server_ssl_country}}\n{{fhir_server_ssl_province}}\n{{fhir_server_ssl_locality}}\n{{fhir_server_ssl_organization}}\n{{fhir_server_ssl_division}}\n{{fhir_server_host}}\n{{fhir_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/fhir.key -out /etc/nginx/ssl/fhir.crt
+
+ - name: import fhir server certificate in truststore (api server)
+   tags: [api]
+   when: fhir_server_secure_http
+   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
+            -importcert -trustcacerts
+            -alias fhir
+            -file /etc/nginx/ssl/fhir.crt
+            -keystore {{install_dir}}/keystore
+
+ - name: configure nginx (api server)
+   tags: [api,nginx]
+   template: src=nginx_api.j2 dest=/etc/nginx/sites-enabled/default owner=root group=root mode=0644
+   notify:
+     - restart nginx
+
+ # Create the API Server Sandbox
+ - name: wait for api server to become available
+   tags: [smart_on_fhir, reset_db, load_patients]
+   wait_for: port=9002
+
+ - name: initialize sandbox
+   tags: [smart_on_fhir, reset_db]
+   uri:
+     url: http://localhost:9002/sandbox
+     method: PUT
+     body: "{ 'teamId': '{{api_server_sandbox}}','schemaVersion': '{{hspc_schema_version}}','allowOpenAccess': true,'baselineDate': '{{ ansible_date_time.year }}-{{ ansible_date_time.month }}-{{ ansible_date_time.day }}' }"
+     body_format: json
+     HEADER_Content-Type: "application/json"
+
+ # load the sample data
+ - include: sample-data.yml
+
+ - name: wait for api server to become available
+   tags: [smart_on_fhir, reset_db, load_patients, restore_db]
+   wait_for: port=9002
+
+ # take a snapshot of the sandbox
+ - include: snapshot-command.yml
+   vars:
+     snapshot_name: "{{ baseline_snapshot }}"
+     snapshot_action: Take
+
+ - meta: flush_handlers

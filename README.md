@@ -105,7 +105,7 @@ sudo privileges. Also, don't forget to update the `custom_settings.yml`
 file to suit your needs. 
 
 ### Install Remotely
-The steps (on the local machine):
+The steps (on the local machine, replacing REMOTEHOST):
 ```
 sudo apt-get update
 sudo apt-get install curl git python-pycurl python-pip python-yaml python-paramiko python-jinja2
@@ -147,6 +147,14 @@ API server and add the self-signed certificate to your browser's security except
 By default, the server will load data for only 10 sample patients. To automatically load the entire set of ~60 samples patients, you can update your `custom_settings` to increase this limit:
 
 * `sample_patients_limit: 100`
+
+### Log Files
+The installer creates servers that log to the journal.  You can view the journal logs using this command:
+
+* sudo journalctl -u api-server.service
+* sudo journalctl -u auth-server.service
+
+Use the -f option tail the logs. 
 
 ### SMART on FHIR Versions
 

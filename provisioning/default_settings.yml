@@ -45,10 +45,12 @@ mysql_endpoint: localhost:3306
 mysql_root_pass: password
 mysql_user: fhir
 mysql_pass: password
-api_server_sandbox: smart
+api_server_sandbox: smartdstu2
 api_server_database: hspc_{{hspc_schema_version}}_{{api_server_sandbox}}
 auth_server_database: oic
+mysql_privilage: "{{api_server_database}}.*:ALL/{{auth_server_database}}.*:ALL/*.*:ALL,GRANT"
 hspc_auth_branch: "develop"
+baseline_snapshot: initial
 
 # Password for the Java keystore used by the authorization server (please change)
 keystore_password: "changeme"
@@ -75,8 +77,10 @@ fhir_server_host: "localhost"
 fhir_server_port: 9080
 fhir_server_name: "Local FHIR dev server"
 
-# Set this to either "open" or "secured"
+# Set this to either "open" or "secured" on the primary endpoint /data
 fhir_server_security_mode: secured
+# Set this to either "true" or "false" to allow an open endpoint at /open
+fhir_server_allow_open_access: true
 
 # General settings for the applications server
 app_server_secure_http: false
@@ -133,6 +137,8 @@ auth_server_ssl_locality: Boston
 auth_server_ssl_organization: Example Company
 auth_server_ssl_division: support
 auth_server_ssl_email: support@example.com
+auth_server_newUserUrl:
+auth_server_forgotPasswordUrl:
 fhir_server_ssl_country: "{{auth_server_ssl_country}}"
 fhir_server_ssl_province: "{{auth_server_ssl_province}}"
 fhir_server_ssl_locality: "{{auth_server_ssl_locality}}"
