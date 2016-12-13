@@ -50,6 +50,11 @@
    tags: [general]
    apt: upgrade=full
 
+ - name: create ssl-cert group
+   group:
+     name: ssl-cert
+     state: present
+
  - name: create group
    tags: [general]
    group: name="{{username}}"
@@ -92,14 +97,16 @@
  - name: list private key files
    tags: [general]
    when: (auth_server_secure_http or fhir_server_secure_http or app_server_secure_http) and use_custom_ssl_certificates
-   shell: ls /etc/nginx/ssl/*.key
-   register: private_key_files
+   find:
+     paths: "/etc/nginx/ssl"
+     patterns: "*.key"
+   register: keys
 
  - name: set private key permissions
    tags: [general]
    when: (auth_server_secure_http or fhir_server_secure_http or app_server_secure_http) and use_custom_ssl_certificates
-   file: path={{item}} group=ssl-cert mode=640
-   with_items: "{{private_key_files.stdout_lines}}"
+   file: path="{{item.path}}" group=ssl-cert mode=640
+   with_items: "{{keys.files}}"
 
  - name: clear truststore
    tags: [general]
