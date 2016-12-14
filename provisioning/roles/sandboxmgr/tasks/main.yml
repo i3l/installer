@@ -8,10 +8,12 @@
      packaging: war
      dest: "{{install_dir}}/hspc/sandbox-manager/target"
 
+# TODO continue adapting this for sandbox manager
  - name: build hspc server API server
    tags: [sandboxmgr, general]
    become_user: "{{username}}"
    shell: chdir={{install_dir}}/hspc
+# TODO this needs to change to checkout sandbox manager
         mvn clean install -e -f reference-api-webapp/pom.xml -Pjetty
 
 mvn org.apache.maven.plugins:maven-dependency-plugin:2.8:copy -Dartifact=groupId:artifactId:version[:packaging][:classifier] -DoutputDirectory=[target] -Dmdep.useBaseVersion=true
