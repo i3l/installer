@@ -50,11 +50,6 @@
    tags: [general]
    apt: upgrade=full
 
- - name: create ssl-cert group
-   group:
-     name: ssl-cert
-     state: present
-
  - name: create group
    tags: [general]
    group: name="{{username}}"

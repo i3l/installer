@@ -11,7 +11,8 @@ sudo apt-get -y install curl \
                         python-pip \
                         python-yaml \
                         python-paramiko \
-                        python-jinja2
+                        python-jinja2 \
+                        ssl-cert
 
 # install Ansible
 sudo pip install ansible==2.1.0
