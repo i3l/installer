@@ -1,0 +1,72 @@
+---
+ - name: checkout repository hspc_repo_sandbox_manager_project
+   tags: [sandbox-manager, smart-platform]
+   become_user: "{{username}}"
+   git: repo="{{hspc_repos_base}}/{{hspc_repo_sandbox_manager_project}}"
+        version="{{hspc_repo_sandbox_manager_branch}}"
+        dest="{{install_dir}}/hspc/{{hspc_repo_sandbox_manager_project}}"
+        update={{update_repositories}}
+        force=yes
+
+ - name: configure sandbox-manager server service
+   tags: [sandbox-manager, smart-platform]
+   template: src=sandbox-manager-server.service.j2
+             dest=/etc/systemd/system/sandbox-manager-server.service
+             owner=root group=root mode=0644
+
+ - name: enable sandbox-manager server service
+   tags: [sandbox-manager, smart-platform]
+   shell: systemctl enable sandbox-manager-server.service
+
+ - name: reload systemd daemon
+   tags: [sandbox-manager, smart-platform]
+   shell: systemctl daemon-reload
+
+ - name: stop sandbox-manager server
+   tags: [sandbox-manager, smart-platform]
+   service: name=sandbox-manager-server state=stopped
+
+ - name: Drop the sandbox-manager server database
+   tags: [sandbox-manager, smart-platform]
+   mysql_db: name={{sandbox_manager_server_database}} state=absent
+   notify:
+      - Restart MySQL
+
+ - name: Create the sandbox-manager server database
+   tags: [sandbox-manager, smart-platform]
+   mysql_db: name={{sandbox_manager_server_database}} state=present
+   notify:
+      - Restart MySQL
+
+ - name: build hspc sandbox-manager server
+   tags: [sandbox-manager, smart-platform]
+   become_user: "{{username}}"
+   shell: chdir={{install_dir}}/hspc
+        mvn clean install -e -f sandbox-manager/pom.xml -Ptomcat-embedded
+
+ - name: restart sandbox-manager server
+   tags: [sandbox-manager, smart-platform, reset_db]
+   service: name=sandbox-manager-server enabled=yes state=restarted
+
+ - name: generate self-signed ssl certificate (sandbox-manager server)
+   tags: [sandbox-manager, smart-platform]
+   when: sandbox_manager_server_secure_http and not use_custom_ssl_certificates
+   shell: creates=/etc/nginx/ssl/sandbox-manager.crt
+          /bin/echo -e "{{sandbox_manager_server_ssl_country}}\n{{sandbox_manager_server_ssl_province}}\n{{sandbox_manager_server_ssl_locality}}\n{{sandbox_manager_server_ssl_organization}}\n{{sandbox_manager_server_ssl_division}}\n{{sandbox_manager_server_host}}\n{{sandbox_manager_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/sandbox-manager.key -out /etc/nginx/ssl/sandbox-manager.crt
+
+ - name: import sandbox-manager server certificate in truststore (sandbox-manager server)
+   tags: [sandbox-manager, smart-platform]
+   when: sandbox_manager_server_secure_http
+   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
+            -importcert -trustcacerts
+            -alias sandbox-manager
+            -file /etc/nginx/ssl/sandbox-manager.crt
+            -keystore {{install_dir}}/keystore
+
+ - name: configure nginx (sandbox-manager server)
+   tags: [sandbox-manager, smart-platform]
+   template: src=nginx_sandbox_manager.j2 dest=/etc/nginx/sites-enabled/sandbox-manager owner=root group=root mode=0644
+   notify:
+     - restart nginx
+
+ - meta: flush_handlers

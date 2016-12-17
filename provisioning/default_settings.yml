@@ -32,13 +32,23 @@ jetty_download_url: "http://central.maven.org/maven2/org/eclipse/jetty/jetty-run
 #   HSPC Schema version 2 uses HAPI 2.0 and FHIR STU3
 hspc_schema_version: 1
 
-# Base and branch for HSPC server repos
-# HSPC Branches map to HSPC Schema Versions (and HAPI and FHIR versions transitively)
-#   branch "1.0-HAPI-1.4" maps to HSPC Schema version 1
-#   branch "develop" maps to HSPC Schema version 2
-hspc_api_branch: "1.0-HAPI-1.4"
-
+# HSPC Repositories
 hspc_repos_base: "https://bitbucket.org/hspconsortium"
+
+hspc_repo_api_branch: "1.0-HAPI-1.4"
+# Note, reference-api-mysql is cloned to gain the SQL install files
+hspc_repo_api_mysql_project: "reference-api-mysql"
+# Note, reference-api-webapp is cloned to perform a jetty build
+hspc_repo_api_webapp_project: "reference-api-webapp"
+
+hspc_repo_auth_branch: "develop"
+# reference-auth-server-webapp is cloned to gain the SQL install files
+hspc_repo_auth_webapp_project: "reference-auth-server-webapp"
+# reference-auth-server-webapp is cloned to gain the sourcecode to build the application
+hspc_repo_auth_webapp_ldap_project: "reference-auth-server-ldap-webapp"
+
+hspc_repo_sandbox_manager_project: "sandbox-manager"
+hspc_repo_sandbox_manager_branch: "master"
 
 # Database configuration
 mysql_endpoint: localhost:3306
@@ -48,8 +58,8 @@ mysql_pass: password
 api_server_sandbox: smartdstu2
 api_server_database: hspc_{{hspc_schema_version}}_{{api_server_sandbox}}
 auth_server_database: oic
+sandbox_manager_server_database: sandman
 mysql_privilage: "{{api_server_database}}.*:ALL/{{auth_server_database}}.*:ALL/*.*:ALL,GRANT"
-hspc_auth_branch: "develop"
 baseline_snapshot: initial
 
 # Password for the Java keystore used by the authorization server (please change)
@@ -63,7 +73,7 @@ use_custom_ssl_certificates: false
 
 # Controls whether HTTP requests on port 80 will be
 # redirected to the server's base URLs
-http_redirect: true
+http_redirect: false
 
 # When set to true Ansible will not reset the SMART-on-FHIR database
 fhir_server_preserve_db: false
@@ -72,15 +82,35 @@ fhir_server_preserve_db: false
 fhir_server_use_auth: true
 
 # General settings for the SMART-on-FHIR server (override as needed)
+# todo remove these in favor of the hspc below
 fhir_server_secure_http: false
 fhir_server_host: "localhost"
 fhir_server_port: 9080
 fhir_server_name: "Local FHIR dev server"
 
+# DSTU2 API Server settings
+hspc_api_version_1_secure_http: false
+hspc_api_version_1_server_host: "localhost"
+hspc_api_version_1_server_port: 9080
+hspc_api_version_1_server_context: \
+hspc_api_version_1_server_name: "Local DSTU2 FHIR dev server"
+
+# STU3 API Server settings
+hspc_api_version_2_secure_http: false
+hspc_api_version_2_server_host: "localhost"
+hspc_api_version_2_server_port: 9081
+hspc_api_version_2_server_context: \
+hspc_api_version_2_server_name: "Local STU3 FHIR dev server"
+
 # Set this to either "open" or "secured" on the primary endpoint /data
 fhir_server_security_mode: secured
 # Set this to either "true" or "false" to allow an open endpoint at /open
 fhir_server_allow_open_access: true
+
+# Sandbox manager settings
+sandbox_manager_server_secure_http: false
+sandbox_manager_server_host: "localhost"
+sandbox_manager_server_port: 9075
 
 # General settings for the applications server
 app_server_secure_http: false
@@ -104,6 +134,7 @@ auth_server_preserve_db: false
 auth_server_secure_http: false
 auth_server_host: "localhost"
 auth_server_port: 9085
+auth_server_context: /
 auth_server_client: client
 auth_server_password: secret
 auth_server_db_file: "{{install_dir}}/auth_server_db.hsql"
@@ -119,16 +150,20 @@ include_custom_patients: false
 # These are convenience variables with the generated base paths of the servers. You
 # most likely will never have to touch these.
 auth_server_base: "{{
-    'https' if auth_server_secure_http else 'http' }}://{{auth_server_host}}{{(
-    ':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
+    'https' if auth_server_secure_http else 'http' }}://{{auth_server_host}}{{
+    (':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
 
 app_server_base: "{{
-        'https' if app_server_secure_http else 'http'}}://{{app_server_host}}{{
-        (':'+app_server_port|string) if app_server_port|int not in (80,443) else ''}}"
+    'https' if app_server_secure_http else 'http'}}://{{app_server_host}}{{
+    (':'+app_server_port|string) if app_server_port|int not in (80,443) else ''}}"
 
 fhir_server_base: "{{
-        'https' if fhir_server_secure_http else 'http'}}://{{fhir_server_host}}{{
-        (':'+fhir_server_port|string) if fhir_server_port|int not in (80,443) else ''}}/data"
+    'https' if fhir_server_secure_http else 'http'}}://{{fhir_server_host}}{{
+    (':'+fhir_server_port|string) if fhir_server_port|int not in (80,443) else ''}}/data"
+
+sandbox_manager_server_base: "{{
+    'https' if sandbox_manager_server_secure_http else 'http'}}://{{sandbox_manager_server_host}}{{
+    (':'+sandbox_manager_server_port|string) if sandbox_manager_server_port|int not in (80,443) else ''}}"
 
 # Self-signed SSL certificates settings (if generating self-signed certificates)
 auth_server_ssl_country: US
@@ -151,6 +186,12 @@ app_server_ssl_locality: "{{auth_server_ssl_locality}}"
 app_server_ssl_organization: "{{auth_server_ssl_organization}}"
 app_server_ssl_division: "{{auth_server_ssl_division}}"
 app_server_ssl_email: "{{auth_server_ssl_email}}"
+sandbox_manager_server_ssl_country: "{{auth_server_ssl_country}}"
+sandbox_manager_server_ssl_province: "{{auth_server_ssl_province}}"
+sandbox_manager_server_ssl_locality: "{{auth_server_ssl_locality}}"
+sandbox_manager_server_ssl_organization: "{{auth_server_ssl_organization}}"
+sandbox_manager_server_ssl_division: "{{auth_server_ssl_division}}"
+sandbox_manager_server_ssl_email: "{{auth_server_ssl_email}}"
 
 # LDAP server configuration
 ldap_server_host: "localhost"
@@ -159,14 +200,6 @@ ldap_server_uri: "ldap://{{ldap_server_host}}:389"
 ldap_server_admin_password: "sample-password"
 # Additional parameters for the sample patient generator
 sample_patients_generator_params: ""
-
-repositories:
-# Note, reference-auth-server-webapp is cloned to gain the SQL install files
-     - {name: 'reference-auth-server-webapp', version: "{{hspc_auth_branch}}"}
-     - {name: 'reference-auth-server-ldap-webapp', version: "{{hspc_auth_branch}}"}
-# Note, reference-api-mysql is cloned to gain the SQL install files
-     - {name: 'reference-api-mysql', version: "{{hspc_api_branch}}"}
-     - {name: 'reference-api-webapp', version: "{{hspc_api_branch}}"}
 
 # Maximu size of sample patient data files
 max_upload_size: "5M"

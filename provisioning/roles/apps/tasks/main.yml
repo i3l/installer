@@ -1,6 +1,6 @@
 ---
  - name: checkout fhir starter
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    git: repo={{fhir_starter_repo}}
         version={{fhir_starter_branch}}
@@ -8,21 +8,21 @@
         update={{update_repositories}}
 
  - name: configure sample apps server (services.js)
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    template: src="config/services.js.j2"
              dest="{{install_dir}}/apps/static/fhirStarter/services.js"
              owner="{{username}}" group="{{username}}" mode=0644
 
  - name: configure sample apps server (apps.json)
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    template: src="config/apps.json.j2"
              dest="{{install_dir}}/apps/static/fhirStarter/apps.json"
              owner="{{username}}" group="{{username}}" mode=0644
 
  - name: checkout cardiac risk app
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    git: repo={{cardiac_risk_repo}}
         version={{cardiac_risk_branch}}
@@ -31,7 +31,7 @@
         force=yes
 
  - name: checkout bp centiles app
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    git: repo={{bp_centiles_repo}}
         version={{bp_centiles_branch}}
@@ -40,7 +40,7 @@
         force=yes
 
  - name: checkout growth chart app
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    git: repo={{growth_chart_repo}}
         version={{growth_chart_branch}}
@@ -49,7 +49,7 @@
         force=yes
 
  - name: checkout fhir demo app
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    git: repo={{fhir_demo_app_repo}}
         version={{fhir_demo_app_branch}}
@@ -58,7 +58,7 @@
         force=yes
 
  - name: configure sample apps
-   tags: [apps]
+   tags: [apps, smart-platform]
    become_user: "{{username}}"
    shell: sed -i -e 's/node_modules\/fhirclient\/fhir-client\.js/\.\.\/\.\.\/js\/fhir-client\.js/' {{install_dir}}/apps/static/apps/{{item}}
    with_items:
@@ -71,14 +71,16 @@
          - fhir-demo/app/index.html
          - fhir-demo/app/launch.html
 
+# todo need to get the hspc patient picker running in here
+
  - name: generate self-signed ssl certificate (apps server)
-   tags: [apps]
+   tags: [apps, smart-platform]
    when: app_server_secure_http and not use_custom_ssl_certificates
    shell: creates=/etc/nginx/ssl/apps.crt
           /bin/echo -e "{{app_server_ssl_country}}\n{{app_server_ssl_province}}\n{{app_server_ssl_locality}}\n{{app_server_ssl_organization}}\n{{app_server_ssl_division}}\n{{app_server_host}}\n{{app_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/apps.key -out /etc/nginx/ssl/apps.crt
 
  - name: configure nginx (sample apps)
-   tags: [apps,nginx]
+   tags: [apps, smart-platform]
    template: src=nginx_apps.j2 dest=/etc/nginx/sites-enabled/apps owner=root group=root mode=0644
    notify:
      - restart nginx

@@ -8,11 +8,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "smart-on-fhir"
   config.vm.box = "bento/ubuntu-16.04"
 
+# Sandbox Manager
+  config.vm.network :forwarded_port, guest: 9075, host: 9075
+# API Server
   config.vm.network :forwarded_port, guest: 9080, host: 9080
+# Auth Server
   config.vm.network :forwarded_port, guest: 9085, host: 9085
+# Apps Server
   config.vm.network :forwarded_port, guest: 9090, host: 9090
+# LDAP
   config.vm.network :forwarded_port, guest: 389, host: 1389
-    config.vm.network :forwarded_port, guest: 9095, host: 9095
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"
@@ -29,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
-#    ansible.tags=["load_patients"]
+    ansible.tags=["sandbox-manager"]
     ansible.playbook = "provisioning/smart-on-fhir.yml"
   end
 

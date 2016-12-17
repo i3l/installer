@@ -7,8 +7,9 @@
   roles:
     - common
     - ldap
-    - auth
     - api
+    - auth
+    - sandbox-manager
     - apps
 #    - docs
 #    - sandbox
@@ -28,6 +29,7 @@
   roles:
     - common
     - ldap
-    - auth
     - api
+    - auth
+    - sandbox-manager
     - apps
