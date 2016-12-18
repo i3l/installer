@@ -5,7 +5,7 @@ The three prerequisites, which are available on Mac, Windows, and Linux
 are (we have tested with the versions below, but other versions may be fine too):
 
 1. [VirtualBox 5.0.20](https://www.virtualbox.org/wiki/Downloads)
-2. [Vagrant 1.8.1](http://www.vagrantup.com/downloads)
+2. [Vagrant 1.8.1](https://www.vagrantup.com/downloads.html)
 3. [Ansible 2.1.0](http://docs.ansible.com/intro_installation.html)
 
 *Note:* Ansible is not supported on Windows. If you want to build a SMART on FHIR VM on Windows,
@@ -130,7 +130,7 @@ ansible-playbook -i "REMOTEHOST," -e "ansible_user={user}" smart-on-fhir.yml
 By default, the install process will not enable SSL. To enable SSL for specific services, you can set the following variables to `true`:
 
 * `auth_server_secure_http`: Authorization server
-* `fhir_server_secure_http`: API server
+* `api_dstu2_secure_http`: API server
 * `app_server_secure_http`: App server
 
 What certificates will be used? You have two options:
@@ -151,7 +151,7 @@ By default, the server will load data for only 10 sample patients. To automatica
 ### Log Files
 The installer creates servers that log to the journal.  You can view the journal logs using this command:
 
-* sudo journalctl -u api-server.service
+* sudo journalctl -u api-dstu2-server.service
 * sudo journalctl -u auth-server.service
 
 Use the -f option tail the logs. 

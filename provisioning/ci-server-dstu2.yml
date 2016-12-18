@@ -8,9 +8,10 @@
     auth_server_host: "ci-auth.fhir.me"
     auth_server_port: "443"
     auth_server_preserve_db: true
-    fhir_server_secure_http: true
-    fhir_server_host: "ci-api.fhir.me"
-    fhir_server_port: "443"
+    api_dstu2_secure_http: true
+    api_dstu2_host: "ci-api.fhir.me"
+    api_dstu2_port: "443"
+    # todo need to figure this out
     fhir_server_preserve_db: true
     app_server_secure_http: true
     app_server_host: "ci.fhir.me"

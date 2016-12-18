@@ -26,20 +26,8 @@ update_repositories: yes
 # unles you are switching to a different version of Jetty or Java
 jetty_download_url: "http://central.maven.org/maven2/org/eclipse/jetty/jetty-runner/9.3.6.v20151106/jetty-runner-9.3.6.v20151106.jar"
 
-# HSPC server configuration
-# Schema version maps to HAPI schema and FHIR version
-#   HSPC Schema version 1 uses HAPI 1.4 and FHIR DSTU2
-#   HSPC Schema version 2 uses HAPI 2.0 and FHIR STU3
-hspc_schema_version: 1
-
 # HSPC Repositories
 hspc_repos_base: "https://bitbucket.org/hspconsortium"
-
-hspc_repo_api_branch: "1.0-HAPI-1.4"
-# Note, reference-api-mysql is cloned to gain the SQL install files
-hspc_repo_api_mysql_project: "reference-api-mysql"
-# Note, reference-api-webapp is cloned to perform a jetty build
-hspc_repo_api_webapp_project: "reference-api-webapp"
 
 hspc_repo_auth_branch: "develop"
 # reference-auth-server-webapp is cloned to gain the SQL install files
@@ -55,12 +43,9 @@ mysql_endpoint: localhost:3306
 mysql_root_pass: password
 mysql_user: fhir
 mysql_pass: password
-api_server_sandbox: smartdstu2
-api_server_database: hspc_{{hspc_schema_version}}_{{api_server_sandbox}}
 auth_server_database: oic
 sandbox_manager_server_database: sandman
-mysql_privilage: "{{api_server_database}}.*:ALL/{{auth_server_database}}.*:ALL/*.*:ALL,GRANT"
-baseline_snapshot: initial
+mysql_privilage: "{{auth_server_database}}.*:ALL/*.*:ALL,GRANT"
 
 # Password for the Java keystore used by the authorization server (please change)
 keystore_password: "changeme"
@@ -74,33 +59,6 @@ use_custom_ssl_certificates: false
 # Controls whether HTTP requests on port 80 will be
 # redirected to the server's base URLs
 http_redirect: false
-
-# When set to true Ansible will not reset the SMART-on-FHIR database
-fhir_server_preserve_db: false
-
-# Specific settings for the SMART-on-FHIR server authorization behavior
-fhir_server_use_auth: true
-
-# General settings for the SMART-on-FHIR server (override as needed)
-# todo remove these in favor of the hspc below
-fhir_server_secure_http: false
-fhir_server_host: "localhost"
-fhir_server_port: 9080
-fhir_server_name: "Local FHIR dev server"
-
-# DSTU2 API Server settings
-hspc_api_version_1_secure_http: false
-hspc_api_version_1_server_host: "localhost"
-hspc_api_version_1_server_port: 9080
-hspc_api_version_1_server_context: \
-hspc_api_version_1_server_name: "Local DSTU2 FHIR dev server"
-
-# STU3 API Server settings
-hspc_api_version_2_secure_http: false
-hspc_api_version_2_server_host: "localhost"
-hspc_api_version_2_server_port: 9081
-hspc_api_version_2_server_context: \
-hspc_api_version_2_server_name: "Local STU3 FHIR dev server"
 
 # Set this to either "open" or "secured" on the primary endpoint /data
 fhir_server_security_mode: secured
@@ -157,41 +115,37 @@ app_server_base: "{{
     'https' if app_server_secure_http else 'http'}}://{{app_server_host}}{{
     (':'+app_server_port|string) if app_server_port|int not in (80,443) else ''}}"
 
-fhir_server_base: "{{
-    'https' if fhir_server_secure_http else 'http'}}://{{fhir_server_host}}{{
-    (':'+fhir_server_port|string) if fhir_server_port|int not in (80,443) else ''}}/data"
-
 sandbox_manager_server_base: "{{
     'https' if sandbox_manager_server_secure_http else 'http'}}://{{sandbox_manager_server_host}}{{
     (':'+sandbox_manager_server_port|string) if sandbox_manager_server_port|int not in (80,443) else ''}}"
 
 # Self-signed SSL certificates settings (if generating self-signed certificates)
-auth_server_ssl_country: US
-auth_server_ssl_province: MA
-auth_server_ssl_locality: Boston
-auth_server_ssl_organization: Example Company
-auth_server_ssl_division: support
-auth_server_ssl_email: support@example.com
+default_ssl_country: US
+default_ssl_province: MA
+default_ssl_locality: Boston
+default_ssl_organization: Example Company
+default_ssl_division: support
+default_ssl_email: support@example.com
+auth_server_ssl_country: "{{default_ssl_country}}"
+auth_server_ssl_province: "{{default_ssl_province}}"
+auth_server_ssl_locality: "{{default_ssl_locality}}"
+auth_server_ssl_organization: "{{default_ssl_organization}}"
+auth_server_ssl_division: "{{default_ssl_division}}"
+auth_server_ssl_email: "{{default_ssl_email}}"
 auth_server_newUserUrl:
 auth_server_forgotPasswordUrl:
-fhir_server_ssl_country: "{{auth_server_ssl_country}}"
-fhir_server_ssl_province: "{{auth_server_ssl_province}}"
-fhir_server_ssl_locality: "{{auth_server_ssl_locality}}"
-fhir_server_ssl_organization: "{{auth_server_ssl_organization}}"
-fhir_server_ssl_division: "{{auth_server_ssl_division}}"
-fhir_server_ssl_email: "{{auth_server_ssl_email}}"
-app_server_ssl_country: "{{auth_server_ssl_country}}"
-app_server_ssl_province: "{{auth_server_ssl_province}}"
-app_server_ssl_locality: "{{auth_server_ssl_locality}}"
-app_server_ssl_organization: "{{auth_server_ssl_organization}}"
-app_server_ssl_division: "{{auth_server_ssl_division}}"
-app_server_ssl_email: "{{auth_server_ssl_email}}"
-sandbox_manager_server_ssl_country: "{{auth_server_ssl_country}}"
-sandbox_manager_server_ssl_province: "{{auth_server_ssl_province}}"
-sandbox_manager_server_ssl_locality: "{{auth_server_ssl_locality}}"
-sandbox_manager_server_ssl_organization: "{{auth_server_ssl_organization}}"
-sandbox_manager_server_ssl_division: "{{auth_server_ssl_division}}"
-sandbox_manager_server_ssl_email: "{{auth_server_ssl_email}}"
+app_server_ssl_country: "{{default_ssl_country}}"
+app_server_ssl_province: "{{default_ssl_province}}"
+app_server_ssl_locality: "{{default_ssl_locality}}"
+app_server_ssl_organization: "{{default_ssl_organization}}"
+app_server_ssl_division: "{{default_ssl_division}}"
+app_server_ssl_email: "{{default_ssl_email}}"
+sandbox_manager_server_ssl_country: "{{default_ssl_country}}"
+sandbox_manager_server_ssl_province: "{{default_ssl_province}}"
+sandbox_manager_server_ssl_locality: "{{default_ssl_locality}}"
+sandbox_manager_server_ssl_organization: "{{default_ssl_organization}}"
+sandbox_manager_server_ssl_division: "{{default_ssl_division}}"
+sandbox_manager_server_ssl_email: "{{default_ssl_email}}"
 
 # LDAP server configuration
 ldap_server_host: "localhost"
@@ -200,6 +154,19 @@ ldap_server_uri: "ldap://{{ldap_server_host}}:389"
 ldap_server_admin_password: "sample-password"
 # Additional parameters for the sample patient generator
 sample_patients_generator_params: ""
+
+# API DSTU2 Server
+# Promoted to global settings to it can be shared
+api_dstu2_host: "localhost"
+api_dstu2_secure_http: false
+api_dstu2_port: 9080
+api_dstu2_context: /
+api_dstu2_name: "Local DSTU2 FHIR dev server"
+api_dstu2_inferred_protocol: "{{'https' if api_dstu2_secure_http else 'http'}}"
+api_dstu2_inferred_port: "{{(':'+api_dstu2_port|string) if api_dstu2_port|int not in (80,443) else ''}}"
+api_dstu2_smart_sandbox: smartdstu2
+api_dstu2_base_url: "{{api_dstu2_inferred_protocol}}://{{api_dstu2_host}}{{api_dstu2_inferred_port}}{{api_dstu2_context}}"
+api_dstu2_smart_sandbox_url: "{{api_dstu2_base_url}}{{api_dstu2_smart_sandbox}}/data"
 
 # Maximu size of sample patient data files
 max_upload_size: "5M"

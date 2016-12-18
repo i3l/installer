@@ -1,0 +1,49 @@
+---
+
+# *** Main configuration file for the API-DSTU2 Installer ***
+
+# HSPC server configuration
+# Schema version maps to HAPI schema and FHIR version
+#   HSPC Schema version 1 uses HAPI 1.4 and FHIR DSTU2
+#   HSPC Schema version 2 uses HAPI 2.0 and FHIR STU3
+api_dstu2_schema_version: 1
+
+# Repositories
+api_dstu2_repos_base: "https://bitbucket.org/hspconsortium"
+# Note, reference-api-mysql is cloned to gain the SQL install files
+api_dstu2_repo_api_mysql_project: "reference-api-mysql"
+# Note, reference-api-webapp is cloned to perform a jetty build
+api_dstu2_repo_api_webapp_project: "reference-api-webapp-multitenant"
+api_dstu2_repo_api_branch: "1.0-HAPI-1.4"
+
+api_dstu2_database: hspc_{{api_dstu2_schema_version}}_{{api_dstu2_smart_sandbox}}
+api_dstu2_baseline_snapshot: initial
+api_dstu2_mysql_privilage: "{{api_dstu2_database}}.*:ALL/*.*:ALL,GRANT"
+
+# DSTU2 API Server settings
+api_dstu2_internal_port: 9002
+
+# Set this to either "open" or "secured" on the primary endpoint /data
+api_dstu2_security_mode: secured
+# Set this to either "true" or "false" to allow an open endpoint at /open
+api_dstu2_allow_open_access: true
+
+# General settings for the sample patients set
+api_dstu2_sample_patients_repo: "https://github.com/smart-on-fhir/sample-patients.git"
+api_dstu2_sample_patients_branch: "master"
+
+# choose how many sample patients to load in the server or set to 9999 for all of them
+api_dstu2_sample_patients_limit: 10
+api_dstu2_include_custom_patients: false
+
+# Additional parameters for the sample patient generator
+api_dstu2_sample_patients_generator_params: ""
+
+# Self-signed SSL certificates settings (if generating self-signed certificates)
+api_dstu2_ssl_country: "{{default_ssl_country}}"
+api_dstu2_ssl_province: "{{default_ssl_province}}"
+api_dstu2_ssl_locality: "{{default_ssl_locality}}"
+api_dstu2_ssl_organization: "{{default_ssl_organization}}"
+api_dstu2_ssl_division: "{{default_ssl_division}}"
+api_dstu2_ssl_email: "{{default_ssl_email}}"
+

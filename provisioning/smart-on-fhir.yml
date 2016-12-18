@@ -2,17 +2,15 @@
 - hosts: all:!REMOTEHOST
   become: yes
   vars_files:
-    - default_settings.yml
+    - global_settings.yml
     - custom_settings.yml
   roles:
     - common
     - ldap
-    - api
+    - api-dstu2
     - auth
     - sandbox-manager
     - apps
-#    - docs
-#    - sandbox
 
 - hosts: REMOTEHOST
   remote_user: REMOTEUSER
@@ -23,13 +21,13 @@
   vars_files:
     - custom_settings.yml
   vars:
-    fhir_server_host: REMOTEHOST
+    api_dstu2_host: REMOTEHOST
     app_server_host: REMOTEHOST
     auth_server_host: REMOTEHOST
   roles:
     - common
     - ldap
-    - api
+    - api-dstu2
     - auth
     - sandbox-manager
     - apps

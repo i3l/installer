@@ -23,6 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.memory = "2048"
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
   end
 
   config.vm.provision "fix-no-tty", type: "shell" do |s|
@@ -34,6 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
+#    ansible.tags=["smart-platform"]
     ansible.tags=["sandbox-manager"]
     ansible.playbook = "provisioning/smart-on-fhir.yml"
   end

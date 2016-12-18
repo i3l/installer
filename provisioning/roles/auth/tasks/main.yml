@@ -1,5 +1,5 @@
 ---
- - name: checkout repository hspc_repo_sandbox_manager_project
+ - name: checkout repository hspc_repo_auth_webapp_project
    tags: [auth, smart-platform]
    become_user: "{{username}}"
    git: repo="{{hspc_repos_base}}/{{hspc_repo_auth_webapp_project}}"
@@ -34,6 +34,10 @@
  - name: stop auth server
    tags: [auth, smart-platform]
    service: name=auth-server state=stopped
+
+ - name: Configure MySQL user
+   tags: [linux, smart-platform]
+   mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{mysql_privilage}} state=present
 
  - name: Drop the Authorization Server database
    tags: [auth, smart-platform]
@@ -114,9 +118,9 @@
    shell: chdir={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql
           mysql oic < mysql_auth_install.sql
 
- - name: Load Resource Server Client
+ - name: load api-dstu2 resource server client
    tags: [auth, smart-platform]
-   shell: chdir={{install_dir}}/hspc/reference-api-mysql/src/main/resources/db/openidconnect/mysql
+   shell: chdir={{install_dir}}/hspc/api-dstu2/reference-api-mysql/src/main/resources/db/openidconnect/mysql
           mysql oic < resource-server-client.sql
 
  - name: build hspc auth server

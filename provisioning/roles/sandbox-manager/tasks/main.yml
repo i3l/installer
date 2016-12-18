@@ -26,6 +26,11 @@
    tags: [sandbox-manager, smart-platform]
    service: name=sandbox-manager-server state=stopped
 
+# todo fix privileges
+ - name: Configure MySQL user
+   tags: [linux, smart-platform]
+   mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{mysql_privilage}} state=present
+
  - name: Drop the sandbox-manager server database
    tags: [sandbox-manager, smart-platform]
    mysql_db: name={{sandbox_manager_server_database}} state=absent

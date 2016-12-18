@@ -8,14 +8,14 @@ username: fhir
 #       enable password authentication on the account.
 userpass: nopass
 auth_server_password: secret
-fhir_server_name: SMART-on-FHIR Sandbox
-fhir_server_host: localhost
+api_dstu2_name: SMART-on-FHIR Sandbox
+api_dstu2_host: localhost
 auth_server_host: localhost
 app_server_host: localhost
 app_server_port: 9090
 #use_custom_ssl_certificates: true
 #custom_ssl_certificates_path: examples/certificates
-#fhir_server_secure_http: true
+#api_dstu2_secure_http: true
 #app_server_secure_http: true
 #auth_server_secure_http: true
 sample_patients_branch: hapi-patients-testing

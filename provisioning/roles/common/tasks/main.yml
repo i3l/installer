@@ -1,9 +1,4 @@
 ---
- - name: check host:port uniqueness
-   tags: [linux, smart-platform]
-   fail: msg="each server must have unique host:port assigned"
-   when: "'{{auth_server_host}}:{{auth_server_port}}' == '{{fhir_server_host}}:{{fhir_server_port}}' or '{{auth_server_host}}:{{auth_server_port}}' == '{{app_server_host}}:{{app_server_port}}' or '{{fhir_server_host}}:{{fhir_server_port}}' == '{{app_server_host}}:{{app_server_port}}'"
-
  - name: check custom certificate preconditions
    tags: [linux, smart-platform]
    fail: msg="please define the path to the custom certificates that you would like to use"
@@ -73,12 +68,12 @@
 
  - name: create ssl certificates directory
    tags: [linux, smart-platform]
-   when: auth_server_secure_http or fhir_server_secure_http or app_server_secure_http
+   when: auth_server_secure_http or api_dstu2_secure_http or app_server_secure_http
    file: path=/etc/nginx/ssl state=directory owner=root group=root mode=0640
 
  - name: copy custom ssl certificates
    tags: [linux, smart-platform]
-   when: (auth_server_secure_http or fhir_server_secure_http or app_server_secure_http) and use_custom_ssl_certificates
+   when: (auth_server_secure_http or api_dstu2_secure_http or app_server_secure_http) and use_custom_ssl_certificates
    copy: src={{custom_ssl_certificates_path}}/
          dest=/etc/nginx/ssl
    notify:
@@ -86,7 +81,7 @@
 
  - name: add www-data user to ssl-cert group
    tags: [linux, smart-platform]
-   when: (auth_server_secure_http or fhir_server_secure_http or app_server_secure_http) and use_custom_ssl_certificates
+   when: (auth_server_secure_http or api_dstu2_secure_http or app_server_secure_http) and use_custom_ssl_certificates
    user: name=www-data groups=ssl-cert
 
  - name: list private key files
@@ -98,7 +93,7 @@
 
  - name: set private key permissions
    tags: [linux, smart-platform]
-   when: (auth_server_secure_http or fhir_server_secure_http or app_server_secure_http or sandbox_manager_server_secure_http) and use_custom_ssl_certificates
+   when: (auth_server_secure_http or api_dstu2_secure_http or app_server_secure_http or sandbox_manager_server_secure_http) and use_custom_ssl_certificates
    file: path="{{item.path}}" group=ssl-cert mode=640
    with_items: "{{keys.files}}"
 
@@ -109,7 +104,7 @@
  - name: initialize truststore
    tags: [linux, smart-platform]
    become_user: "{{username}}"
-   when: auth_server_secure_http or fhir_server_secure_http or app_server_secure_http
+   when: auth_server_secure_http or api_dstu2_secure_http or app_server_secure_http
    shell: /bin/echo -e "{{keystore_password}}\n{{keystore_password}}\n\n\n\n\n\n\nyes\n" | keytool
             -genkey -alias foo
             -keystore {{install_dir}}/keystore
