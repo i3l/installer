@@ -25,8 +25,8 @@ api_dstu2_internal_port: 9002
 
 # Set this to either "open" or "secured" on the primary endpoint /data
 api_dstu2_security_mode: secured
-# Set this to either "true" or "false" to allow an open endpoint at /open
-api_dstu2_allow_open_access: true
+# Set this to none to remove open access
+api_dstu2_open_access_endpoint: open
 
 # General settings for the sample patients set
 api_dstu2_sample_patients_repo: "https://github.com/smart-on-fhir/sample-patients.git"

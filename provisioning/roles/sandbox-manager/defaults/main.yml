@@ -1,0 +1,15 @@
+---
+# Version control information
+sandbox_manager_project: "sandbox-manager"
+sandbox_manager_branch: "master"
+
+# Database schema
+sandbox_manager_database: sandman
+
+# Self-signed SSL certificates settings (if generating self-signed certificates)
+sandbox_manager_ssl_country: "{{default_ssl_country}}"
+sandbox_manager_ssl_province: "{{default_ssl_province}}"
+sandbox_manager_ssl_locality: "{{default_ssl_locality}}"
+sandbox_manager_ssl_organization: "{{default_ssl_organization}}"
+sandbox_manager_ssl_division: "{{default_ssl_division}}"
+sandbox_manager_ssl_email: "{{default_ssl_email}}"

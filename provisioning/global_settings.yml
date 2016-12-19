@@ -35,17 +35,13 @@ hspc_repo_auth_webapp_project: "reference-auth-server-webapp"
 # reference-auth-server-webapp is cloned to gain the sourcecode to build the application
 hspc_repo_auth_webapp_ldap_project: "reference-auth-server-ldap-webapp"
 
-hspc_repo_sandbox_manager_project: "sandbox-manager"
-hspc_repo_sandbox_manager_branch: "master"
-
 # Database configuration
 mysql_endpoint: localhost:3306
 mysql_root_pass: password
 mysql_user: fhir
 mysql_pass: password
 auth_server_database: oic
-sandbox_manager_server_database: sandman
-mysql_privilage: "{{auth_server_database}}.*:ALL/*.*:ALL,GRANT"
+mysql_privilage: "{{auth_server_database}}.*:ALL/{{sandbox_manager_database}}.*:ALL/*.*:ALL,GRANT"
 
 # Password for the Java keystore used by the authorization server (please change)
 keystore_password: "changeme"
@@ -64,11 +60,6 @@ http_redirect: false
 fhir_server_security_mode: secured
 # Set this to either "true" or "false" to allow an open endpoint at /open
 fhir_server_allow_open_access: true
-
-# Sandbox manager settings
-sandbox_manager_server_secure_http: false
-sandbox_manager_server_host: "localhost"
-sandbox_manager_server_port: 9075
 
 # General settings for the applications server
 app_server_secure_http: false
@@ -115,10 +106,6 @@ app_server_base: "{{
     'https' if app_server_secure_http else 'http'}}://{{app_server_host}}{{
     (':'+app_server_port|string) if app_server_port|int not in (80,443) else ''}}"
 
-sandbox_manager_server_base: "{{
-    'https' if sandbox_manager_server_secure_http else 'http'}}://{{sandbox_manager_server_host}}{{
-    (':'+sandbox_manager_server_port|string) if sandbox_manager_server_port|int not in (80,443) else ''}}"
-
 # Self-signed SSL certificates settings (if generating self-signed certificates)
 default_ssl_country: US
 default_ssl_province: MA
@@ -140,12 +127,6 @@ app_server_ssl_locality: "{{default_ssl_locality}}"
 app_server_ssl_organization: "{{default_ssl_organization}}"
 app_server_ssl_division: "{{default_ssl_division}}"
 app_server_ssl_email: "{{default_ssl_email}}"
-sandbox_manager_server_ssl_country: "{{default_ssl_country}}"
-sandbox_manager_server_ssl_province: "{{default_ssl_province}}"
-sandbox_manager_server_ssl_locality: "{{default_ssl_locality}}"
-sandbox_manager_server_ssl_organization: "{{default_ssl_organization}}"
-sandbox_manager_server_ssl_division: "{{default_ssl_division}}"
-sandbox_manager_server_ssl_email: "{{default_ssl_email}}"
 
 # LDAP server configuration
 ldap_server_host: "localhost"
@@ -167,6 +148,19 @@ api_dstu2_inferred_port: "{{(':'+api_dstu2_port|string) if api_dstu2_port|int no
 api_dstu2_smart_sandbox: smartdstu2
 api_dstu2_base_url: "{{api_dstu2_inferred_protocol}}://{{api_dstu2_host}}{{api_dstu2_inferred_port}}{{api_dstu2_context}}"
 api_dstu2_smart_sandbox_url: "{{api_dstu2_base_url}}{{api_dstu2_smart_sandbox}}/data"
+
+# SandboxManager Server
+# Promoted to global settings to it can be shared
+sandbox_manager_host: "localhost"
+sandbox_manager_secure_http: false
+sandbox_manager_port: 9075
+sandbox_manager_internal_port: 9002
+sandbox_manager_context: /
+sandbox_manager_name: "Sandbox Manager server"
+sandbox_manager_inferred_protocol: "{{'https' if sandbox_manager_secure_http else 'http'}}"
+sandbox_manager_inferred_port: "{{(':'+sandbox_manager_port|string) if sandbox_manager_port|int not in (80,443) else ''}}"
+sandbox_manager_base_url: "{{sandbox_manager_inferred_protocol}}://{{sandbox_manager_host}}{{sandbox_manager_inferred_port}}"
+sandbox_manager_url: "{{sandbox_manager_inferred_protocol}}://{{sandbox_manager_host}}{{sandbox_manager_inferred_port}}{{sandbox_manager_context}}"
 
 # Maximu size of sample patient data files
 max_upload_size: "5M"

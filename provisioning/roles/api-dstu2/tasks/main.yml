@@ -35,37 +35,27 @@
    tags: [api-dstu2, smart-platform]
    service: name=api-dstu2-server state=stopped
 
- - name: Configure MySQL user
+ - name: configure mysql user
    tags: [linux, smart-platform]
    mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{api_dstu2_mysql_privilage}} state=present
 
  - name: drop the api-dstu2-server database
    tags: [api-dstu2, smart-platform]
    mysql_db: name={{api_dstu2_database}} state=absent
-   notify:
-      - Restart MySQL
 
- - name: Drop the {{api_dstu2_database}}${{api_dstu2_baseline_snapshot}} snapshot
+ - name: drop the {{api_dstu2_database}}${{api_dstu2_baseline_snapshot}} snapshot
    tags: [api-dstu2, smart-platform]
    mysql_db: name="{{api_dstu2_database}}${{api_dstu2_baseline_snapshot}}" state=absent
-   notify:
-      - Restart MySQL
 
- - name: Create the {{api_dstu2_database}} database
+ - name: create the {{api_dstu2_database}} database
    tags: [api-dstu2, smart-platform]
    mysql_db: name={{api_dstu2_database}} state=present
-   notify:
-      - Restart MySQL
 
  - name: build hspc server api-dstu2-server
    tags: [api-dstu2, smart-platform]
    become_user: "{{username}}"
    shell: chdir={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}
         mvn clean install -e -Pjetty
-
- - name: restart api-dstu2-server
-   tags: [api-dstu2, smart-platform]
-   service: name=api-dstu2-server enabled=yes state=restarted
 
  - name: generate self-signed ssl certificate (api-dstu2-server)
    tags: [api-dstu2, smart-platform]
@@ -88,11 +78,15 @@
    notify:
      - restart nginx
 
- # Create the api-dstu2-server sandbox
+ - name: restart api-dstu2-server
+   tags: [api-dstu2, smart-platform]
+   service: name=api-dstu2-server enabled=yes state=restarted
+
  - name: wait for api-dstu2-server to become available
    tags: [api-dstu2, smart-platform]
    wait_for: port={{api_dstu2_internal_port}}
 
+ # Create the api-dstu2-server sandbox
  - name: initialize sandbox
    tags: [api-dstu2, smart-platform]
    uri:
@@ -104,10 +98,6 @@
 
  # load the sample data
  - include: sample-data.yml
-
- - name: wait for api-dstu2-server to become available
-   tags: [api-dstu2, smart-platform]
-   wait_for: port={{api_dstu2_internal_port}}
 
  # take a snapshot of the sandbox
  - include: snapshot-command.yml

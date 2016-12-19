@@ -36,20 +36,16 @@
    service: name=auth-server state=stopped
 
  - name: Configure MySQL user
-   tags: [linux, smart-platform]
+   tags: [auth, smart-platform]
    mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{mysql_privilage}} state=present
 
  - name: Drop the Authorization Server database
    tags: [auth, smart-platform]
    mysql_db: name={{auth_server_database}} state=absent
-   notify:
-      - Restart MySQL
 
  - name: Create the Authorization Server database
    tags: [auth, smart-platform]
    mysql_db: name={{auth_server_database}} state=present
-   notify:
-      - Restart MySQL
 
  - name: clear auth server data
    tags: [auth, smart-platform]
@@ -100,6 +96,12 @@
    template: src=patches/mysql_clients.sql.j2
              dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_clients.sql
 
+ - name: patch sandbox-manager mysql auth install
+   tags: [auth, smart-platform]
+   become_user: "{{username}}"
+   template: src=patches/sandbox-manager-client.sql.j2
+             dest={{install_dir}}//hspc/sandbox-manager/src/main/resources/db/openidconnect/mysql/sandbox-manager-client.sql
+
  # install SMART logos
  - name: config company-logo.png
    tags: [auth, smart-platform]
@@ -122,6 +124,11 @@
    tags: [auth, smart-platform]
    shell: chdir={{install_dir}}/hspc/api-dstu2/reference-api-mysql/src/main/resources/db/openidconnect/mysql
           mysql oic < resource-server-client.sql
+
+ - name: load sandbox-manager resource server client
+   tags: [auth, smart-platform]
+   shell: chdir={{install_dir}}/hspc/sandbox-manager/src/main/resources/db/openidconnect/mysql
+          mysql oic < sandbox-manager-client.sql
 
  - name: build hspc auth server
    tags: [auth, smart-platform]

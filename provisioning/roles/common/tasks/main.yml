@@ -93,7 +93,7 @@
 
  - name: set private key permissions
    tags: [linux, smart-platform]
-   when: (auth_server_secure_http or api_dstu2_secure_http or app_server_secure_http or sandbox_manager_server_secure_http) and use_custom_ssl_certificates
+   when: (auth_server_secure_http or api_dstu2_secure_http or app_server_secure_http or sandbox_manager_secure_http) and use_custom_ssl_certificates
    file: path="{{item.path}}" group=ssl-cert mode=640
    with_items: "{{keys.files}}"
 

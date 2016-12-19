@@ -8,9 +8,9 @@
     - common
     - ldap
     - api-dstu2
-    - auth
     - sandbox-manager
     - apps
+    - auth
 
 - hosts: REMOTEHOST
   remote_user: REMOTEUSER
@@ -28,6 +28,6 @@
     - common
     - ldap
     - api-dstu2
-    - auth
     - sandbox-manager
     - apps
+    - auth
