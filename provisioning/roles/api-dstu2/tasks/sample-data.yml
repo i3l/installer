@@ -23,7 +23,7 @@
    tags: [api-dstu2-sample-data, smart-platform]
    shell: "chdir={{install_dir}}/api-dstu2-sample-patients/generated-data/
           curl
-            '{{api_dstu2_server_smart_sandbox_open_fhir_root_url}}/?'
+            '{{api_dstu2_server_internal_smart_sandbox_open_fhir_root_url}}/?'
             -H 'Content-Type: application/xml+fhir'
             --data-binary @{{item}}"
    with_items: "{{api_dstu2_sample_patient_files.stdout_lines}}"
@@ -37,7 +37,7 @@
    tags: [api-dstu2-sample-data, smart-platform]
    shell: "chdir={{install_dir}}/api-dstu2-sample-patients/custom-data/
           curl
-            '{{api_dstu2_server_smart_sandbox_open_fhir_root_url}}/?'
+            '{{api_dstu2_server_internal_smart_sandbox_open_fhir_root_url}}/?'
             -H 'Content-Type: application/json+fhir'
             --data-binary @{{item}}"
    with_items: "{{api_dstu2_custom_patient_files_json.stdout_lines}}"
