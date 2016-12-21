@@ -7,7 +7,7 @@ TimeoutStartSec=infinity
 WorkingDirectory={{install_dir}}/hspc/sandbox-manager/target
 {% if sandbox_manager_server_secure_http and not use_custom_ssl_certificates %}
 ExecStart=/usr/bin/java \
-  -Dserver.port=9005 \
+  -Dserver.port={{sandbox_manager_server_internal_port}} \
   -Dspring.datasource.url=jdbc:mysql://{{mysql_endpoint}}/{{sandbox_manager_database}} \
   -Dspring.datasource.username={{mysql_user}} \
   -Dspring.datasource.password={{mysql_pass}} \
@@ -46,7 +46,7 @@ ExecStart=/usr/bin/java \
   -jar hspc-sandbox-manager.war
 {% else %}
 ExecStart=/usr/bin/java \
-  -Dserver.port=9005 \
+  -Dserver.port={{sandbox_manager_server_internal_port}} \
   -Dspring.datasource.url=jdbc:mysql://{{mysql_endpoint}}/{{sandbox_manager_database}} \
   -Dspring.datasource.username={{mysql_user}} \
   -Dspring.datasource.password={{mysql_pass}} \

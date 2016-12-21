@@ -8,7 +8,7 @@ Environment=oidc.issuer={{auth_server_base_url}}/
 WorkingDirectory={{install_dir}}/hspc/reference-auth-server-ldap-webapp/target
 {% if auth_server_secure_http and not use_custom_ssl_certificates %}
 ExecStart=/usr/bin/java \
- -Djetty.port="9001" \
+ -Djetty.port="{{auth_server_internal_port}}" \
  -Djetty.host="{{auth_server_host}}" \
  -Doidc.issuer={{auth_server_base_url}}/ \
  -Dhspc.platform.persona.oauthUserLoginEndpointURL={{auth_server_base_url}}/j_spring_security_check \
@@ -32,7 +32,7 @@ ExecStart=/usr/bin/java \
  hspc-reference-authorization.war
 {% else %}
 ExecStart=/usr/bin/java \
- -Djetty.port="9001" \
+ -Djetty.port="{{auth_server_internal_port}}" \
  -Djetty.host="{{auth_server_host}}" \
  -Doidc.issuer={{auth_server_base_url}}/ \
  -Dhspc.platform.persona.oauthUserLoginEndpointURL={{auth_server_base_url}}/j_spring_security_check \

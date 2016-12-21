@@ -127,7 +127,7 @@ api_dstu2_server_base_url_persona: "{{api_dstu2_server_base_url}}"
 sandbox_manager_server_secure_http: false
 sandbox_manager_server_host: "localhost"
 sandbox_manager_server_port: 9075
-sandbox_manager_server_internal_port: 9002
+sandbox_manager_server_internal_port: 9005
 sandbox_manager_server_context: /
 sandbox_manager_server_name: "Sandbox Manager server"
 sandbox_manager_server_inferred_protocol: "{{'https' if sandbox_manager_server_secure_http else 'http'}}"
@@ -141,7 +141,7 @@ auth_server_secure_http: false
 #auth_server_host: "localhost"
 auth_server_host: "auth.com"
 auth_server_port: 9085
-auth_server_internal_port: 9002
+auth_server_internal_port: 9001
 auth_server_context: /
 auth_server_name: "Authorization Server"
 auth_server_inferred_protocol: "{{'https' if auth_server_secure_http else 'http'}}"
@@ -157,7 +157,7 @@ auth_persona_server_secure_http: false
 #auth_persona_server_host: "localhost"
 auth_persona_server_host: "persona-auth.com"
 auth_persona_server_port: 9086
-auth_persona_server_internal_port: 9002
+auth_persona_server_internal_port: {{auth_server_internal_port}}
 auth_persona_server_context: /
 auth_persona_server_name: "Authorization Server"
 auth_persona_server_inferred_protocol: "{{'https' if auth_persona_server_secure_http else 'http'}}"

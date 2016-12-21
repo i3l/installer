@@ -1,5 +1,5 @@
-upstream persona {
-    server 127.0.0.1:9001;
+upstream persona-auth {
+    server 127.0.0.1:{{auth_persona_server_internal_port}};
 }
 
 # the nginx server instance
@@ -18,7 +18,7 @@ server {
       proxy_set_header X-NginX-Proxy true;
 
       access_log /var/log/nginx/auth_persona_access.log;
-      proxy_pass http://persona;
+      proxy_pass http://persona-auth;
       proxy_redirect off;
     }
 
