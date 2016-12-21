@@ -31,7 +31,7 @@ hspc_repos_base: "https://bitbucket.org/hspconsortium"
 
 # Database configuration
 mysql_host: localhost
-mysql_endpoint: {{mysql_host}}:3306
+mysql_endpoint: "{{mysql_host}}:3306"
 mysql_root_pass: password
 mysql_user: fhir
 mysql_pass: password
