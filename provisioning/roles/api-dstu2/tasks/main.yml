@@ -102,7 +102,7 @@
  # take a snapshot of the sandbox
  - include: snapshot-command.yml
    vars:
-     snapshot_name: "{{ baseline_snapshot }}"
+     snapshot_name: "{{api_dstu2_baseline_snapshot}}"
      snapshot_action: Take
 
  - meta: flush_handlers
