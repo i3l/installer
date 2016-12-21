@@ -1,0 +1,23 @@
+---
+ - name: generate self-signed ssl certificate (auth_persona server)
+   tags: [auth-persona, smart-platform]
+   when: auth_persona_server_secure_http and not use_custom_ssl_certificates
+   shell: creates=/etc/nginx/ssl/auth-persona.crt
+          /bin/echo -e "{{auth_server_ssl_country}}\n{{auth_server_ssl_province}}\n{{auth_server_ssl_locality}}\n{{auth_server_ssl_organization}}\n{{auth_server_ssl_division}}\n{{auth_server_host}}\n{{auth_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/auth-persona.key -out /etc/nginx/ssl/auth-persona.crt
+
+ - name: import auth_persona server certificate in truststore (auth_persona server)
+   tags: [auth-persona, smart-platform]
+   when: auth_persona_server_secure_http
+   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
+            -importcert -trustcacerts
+            -alias auth_persona
+            -file /etc/nginx/ssl/auth-persona.crt
+            -keystore {{install_dir}}/keystore
+
+ - name: configure nginx (auth_persona server)
+   tags: [auth-persona, smart-platform]
+   template: src=nginx_auth_persona.j2 dest=/etc/nginx/sites-enabled/auth-persona owner=root group=root mode=0644
+   notify:
+     - restart nginx
+
+ - meta: flush_handlers

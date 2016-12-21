@@ -11,6 +11,7 @@
     - sandbox-manager
     - apps
     - auth
+    - auth-persona
 
 - hosts: REMOTEHOST
   remote_user: REMOTEUSER
@@ -21,7 +22,7 @@
   vars_files:
     - custom_settings.yml
   vars:
-    api_dstu2_host: REMOTEHOST
+    api_dstu2_server_host: REMOTEHOST
     app_server_host: REMOTEHOST
     auth_server_host: REMOTEHOST
   roles:
@@ -31,3 +32,4 @@
     - sandbox-manager
     - apps
     - auth
+    - auth-persona

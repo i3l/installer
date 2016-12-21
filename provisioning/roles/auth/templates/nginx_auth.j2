@@ -34,7 +34,7 @@ server {
 {% if auth_server_port != 80 and http_redirect %}
 server {
     server_name {{auth_server_host}};
-    rewrite ^       {{auth_server_base}}$request_uri? permanent;
+    rewrite ^       {{auth_server_base_url}}$request_uri? permanent;
     listen 80;
 }
 {% endif %}

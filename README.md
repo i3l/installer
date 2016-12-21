@@ -130,7 +130,7 @@ ansible-playbook -i "REMOTEHOST," -e "ansible_user={user}" smart-on-fhir.yml
 By default, the install process will not enable SSL. To enable SSL for specific services, you can set the following variables to `true`:
 
 * `auth_server_secure_http`: Authorization server
-* `api_dstu2_secure_http`: API server
+* `api_dstu2_server_secure_http`: API server
 * `app_server_secure_http`: App server
 
 What certificates will be used? You have two options:

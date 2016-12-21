@@ -16,7 +16,7 @@ api_dstu2_repo_api_mysql_project: "reference-api-mysql"
 api_dstu2_repo_api_webapp_project: "reference-api-webapp-multitenant"
 api_dstu2_repo_api_branch: "1.0-HAPI-1.4"
 
-api_dstu2_database: hspc_{{api_dstu2_schema_version}}_{{api_dstu2_smart_sandbox}}
+api_dstu2_database: hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server_smart_sandbox}}
 api_dstu2_baseline_snapshot: initial
 api_dstu2_mysql_privilage: "{{api_dstu2_database}}.*:ALL/*.*:ALL,GRANT"
 

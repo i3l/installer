@@ -1,7 +1,7 @@
 ---
  - name: baseline snapshot
    uri:
-     url: "http://localhost:{{api_dstu2_internal_port}}/{{api_dstu2_smart_sandbox}}/sandbox/snapshot/{{snapshot_name}}"
+     url: "http://localhost:{{api_dstu2_internal_port}}/{{api_dstu2_server_smart_sandbox}}/sandbox/snapshot/{{snapshot_name}}"
      method: POST
      body: '{"action": "{{snapshot_action}}"}'
      body_format: json

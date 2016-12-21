@@ -4,11 +4,11 @@ upstream api-dstu2 {
 
 # the nginx server instance
 server {
-{% if api_dstu2_host %}
-    server_name {{api_dstu2_host}};
+{% if api_dstu2_server_host %}
+    server_name {{api_dstu2_server_host}};
 {% endif %}
 
-    listen {{api_dstu2_port}};
+    listen {{api_dstu2_server_port}};
 
     location / {
       proxy_set_header X-Real-IP $remote_addr;
@@ -22,17 +22,17 @@ server {
       proxy_redirect off;
     }
 
-{% if api_dstu2_secure_http %}
+{% if api_dstu2_server_secure_http %}
     ssl on;
     ssl_certificate /etc/nginx/ssl/api-dstu2.crt;
     ssl_certificate_key /etc/nginx/ssl/api-dstu2.key;
 {% endif %}
 }
 
-{% if api_dstu2_port != 80 and http_redirect %}
+{% if api_dstu2_server_port != 80 and http_redirect %}
 server {
-    server_name {{api_dstu2_host}};
-    rewrite ^       {{api_dstu2_base_url}}$request_uri? permanent;
+    server_name {{api_dstu2_server_host}};
+    rewrite ^       {{api_dstu2_server_base_url}}$request_uri? permanent;
     listen 80;
 }
 {% endif %}

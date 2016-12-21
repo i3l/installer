@@ -1,0 +1,29 @@
+---
+# Version control information
+auth_branch: "develop"
+# reference-auth-server-webapp is cloned to gain the SQL install files
+auth_webapp_project: "reference-auth-server-webapp"
+# reference-auth-server-webapp is cloned to gain the sourcecode to build the application
+auth_webapp_ldap_project: "reference-auth-server-ldap-webapp"
+
+# Database schema
+auth_server_database: oic
+auth_db_file: "{{install_dir}}/auth_server_db.hsql"
+
+# Self-signed SSL certificates settings (if generating self-signed certificates)
+auth_server_ssl_country: "{{default_ssl_country}}"
+auth_server_ssl_province: "{{default_ssl_province}}"
+auth_server_ssl_locality: "{{default_ssl_locality}}"
+auth_server_ssl_organization: "{{default_ssl_organization}}"
+auth_server_ssl_division: "{{default_ssl_division}}"
+auth_server_ssl_email: "{{default_ssl_email}}"
+auth_server_newUserUrl:
+auth_server_forgotPasswordUrl:
+
+# Options
+sandbox_manager_defaultSystemRoles: USER
+sandbox_manager_defaultSandboxVisibility: PUBLIC
+
+# Branding
+sandbox_manager_company_logo_path: static/branding/smart/images/smart-logo.png
+sandbox_manager_company_logo2x_path: static/branding/smart/images/smart-logo@2x.png

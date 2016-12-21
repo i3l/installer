@@ -1,19 +1,19 @@
 ---
- - name: checkout repository hspc_repo_auth_webapp_project
+ - name: checkout repository auth_webapp_project
    tags: [auth, smart-platform]
    become_user: "{{username}}"
-   git: repo="{{hspc_repos_base}}/{{hspc_repo_auth_webapp_project}}"
-        version="{{hspc_repo_auth_branch}}"
-        dest="{{install_dir}}/hspc/{{hspc_repo_auth_webapp_project}}"
+   git: repo="{{hspc_repos_base}}/{{auth_webapp_project}}"
+        version="{{auth_branch}}"
+        dest="{{install_dir}}/hspc/{{auth_webapp_project}}"
         update={{update_repositories}}
         force=yes
 
- - name: checkout repository hspc_repo_auth_webapp_ldap_project
+ - name: checkout repository auth_webapp_ldap_project
    tags: [auth, smart-platform]
    become_user: "{{username}}"
-   git: repo="{{hspc_repos_base}}/{{hspc_repo_auth_webapp_ldap_project}}"
-        version="{{hspc_repo_auth_branch}}"
-        dest="{{install_dir}}/hspc/{{hspc_repo_auth_webapp_ldap_project}}"
+   git: repo="{{hspc_repos_base}}/{{auth_webapp_ldap_project}}"
+        version="{{auth_branch}}"
+        dest="{{install_dir}}/hspc/{{auth_webapp_ldap_project}}"
         update={{update_repositories}}
         force=yes
 
@@ -49,8 +49,9 @@
 
  - name: clear auth server data
    tags: [auth, smart-platform]
-   file: path={{auth_server_db_file}}{{item}} state=absent
-   when: not auth_server_preserve_db
+   file: path={{auth_db_file}}{{item}} state=absent
+# todo figure this out
+#   when: not auth_server_preserve_db
    with_items: [".tmp", ".properties", ".script", ".log", ""]
 
  # login.jsp is patched to show "username" label instead of "email address"

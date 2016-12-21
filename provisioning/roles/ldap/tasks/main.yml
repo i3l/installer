@@ -28,10 +28,6 @@
          - acl
          - aptitude
 
-- name: upgrade server packages
-  tags: [ldap, smart-platform]
-  apt: upgrade=full
-
 - name: create group
   tags: [ldap, smart-platform]
   group: name="{{username}}"

@@ -13,3 +13,11 @@ sandbox_manager_ssl_locality: "{{default_ssl_locality}}"
 sandbox_manager_ssl_organization: "{{default_ssl_organization}}"
 sandbox_manager_ssl_division: "{{default_ssl_division}}"
 sandbox_manager_ssl_email: "{{default_ssl_email}}"
+
+# Options
+sandbox_manager_defaultSystemRoles: USER
+sandbox_manager_defaultSandboxVisibility: PUBLIC
+
+# Branding
+sandbox_manager_company_logo_path: static/branding/smart/images/smart-logo.png
+sandbox_manager_company_logo2x_path: static/branding/smart/images/smart-logo@2x.png
