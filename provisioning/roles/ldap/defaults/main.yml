@@ -27,8 +27,9 @@ use_custom_ssl_certificates: false
 # LDAP server configuration
 ldap_server_domain: "example.com"
 ldap_server_host: "localhost"
+ldap_server_port: "389"
 ldap_server_base: "dc=example,dc=com"
-ldap_server_uri: "ldap://{{ldap_server_host}}:389"
+ldap_server_uri: "ldap://{{ldap_server_host}}:{{ldap_server_port}}"
 ldap_server_organization: "Example Company"
 ldap_server_admin_password: "sample-password"
 

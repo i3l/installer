@@ -105,4 +105,8 @@
      snapshot_name: "{{api_dstu2_baseline_snapshot}}"
      snapshot_action: Take
 
+ - name: verify api-dstu2-server is available
+   tags: [verify, api-dstu2, smart-platform]
+   wait_for: host={{api_dstu2_server_host}} port={{api_dstu2_server_internal_port}}
+
  - meta: flush_handlers

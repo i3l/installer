@@ -162,4 +162,8 @@
    notify:
      - restart nginx
 
+ - name: verify auth-server is available
+   tags: [verify, auth, smart-platform]
+   wait_for: host={{auth_server_host}} port={{auth_server_internal_port}}
+
  - meta: flush_handlers

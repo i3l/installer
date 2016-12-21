@@ -116,4 +116,8 @@
    tags: [sandbox-manager, smart-platform, reset_db]
    service: name=sandbox-manager-server enabled=yes state=restarted
 
+ - name: verify sandbox-manager-server is available
+   tags: [verify, auth, sandbox-manager]
+   wait_for: host={{sandbox_manager_server_host}} port={{sandbox_manager_server_internal_port}}
+
  - meta: flush_handlers

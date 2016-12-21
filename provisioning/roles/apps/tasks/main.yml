@@ -85,4 +85,8 @@
    notify:
      - restart nginx
 
+ - name: verify app-server is available
+   tags: [verify, apps, smart-platform]
+   wait_for: host={{app_server_host}} port={{app_server_port}}
+
  - meta: flush_handlers

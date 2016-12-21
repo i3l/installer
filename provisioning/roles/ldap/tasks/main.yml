@@ -39,3 +39,7 @@
         shell=/bin/bash
 
 - include: ldap-server.yml
+
+- name: verify ldap-server is available
+  tags: [verify, ldap, smart-platform]
+  wait_for: host={{ldap_server_host}} port={{ldap_server_port}}

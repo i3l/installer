@@ -20,4 +20,8 @@
    notify:
      - restart nginx
 
+ - name: verify auth-persona-server is available
+   tags: [verify, auth, smart-platform]
+   wait_for: host={{auth_persona_server_host}} port={{auth_persona_server_internal_port}}
+
  - meta: flush_handlers
