@@ -157,7 +157,7 @@ auth_persona_server_secure_http: false
 #auth_persona_server_host: "localhost"
 auth_persona_server_host: "persona-auth.com"
 auth_persona_server_port: 9086
-auth_persona_server_internal_port: {{auth_server_internal_port}}
+auth_persona_server_internal_port: "{{auth_server_internal_port}}"
 auth_persona_server_context: /
 auth_persona_server_name: "Authorization Server"
 auth_persona_server_inferred_protocol: "{{'https' if auth_persona_server_secure_http else 'http'}}"
