@@ -115,7 +115,7 @@ api_dstu2_server_name: "Local DSTU2 FHIR dev server"
 api_dstu2_server_inferred_protocol: "{{'https' if api_dstu2_server_secure_http else 'http'}}"
 api_dstu2_server_inferred_port: "{{(':'+api_dstu2_server_port|string) if api_dstu2_server_port|int not in (80,443) else ''}}"
 api_dstu2_server_smart_sandbox: smartdstu2
-api_dstu2_server_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_host}}{{api_dstu2_server_inferred_port}}{{api_dstu2_server_context}}"
+api_dstu2_server_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_host}}:{{api_dstu2_server_inferred_port}}{{api_dstu2_server_context}}"
 api_dstu2_server_smart_sandbox_url: "{{api_dstu2_server_base_url}}{{api_dstu2_server_smart_sandbox}}"
 api_dstu2_server_smart_sandbox_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/data"
 api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/open"
