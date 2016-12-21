@@ -1,2 +1,5 @@
 vagrant/.*
 .DS_Store
+.idea/
+.vagrant/
+provisioning/smart-on-fhir.retry

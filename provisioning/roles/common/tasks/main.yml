@@ -123,6 +123,6 @@
 
  - name: Configure MySQL user
    tags: [linux, smart-platform]
-   mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{mysql_privilage}} state=present
+   mysql_user: name={{mysql_user}} host={{mysql_host}} password={{mysql_pass}} priv={{mysql_privilage}} state=present
 
  - meta: flush_handlers

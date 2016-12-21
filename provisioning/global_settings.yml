@@ -30,7 +30,8 @@ jetty_download_url: "http://central.maven.org/maven2/org/eclipse/jetty/jetty-run
 hspc_repos_base: "https://bitbucket.org/hspconsortium"
 
 # Database configuration
-mysql_endpoint: localhost:3306
+mysql_host: localhost
+mysql_endpoint: {{mysql_host}}:3306
 mysql_root_pass: password
 mysql_user: fhir
 mysql_pass: password
@@ -115,7 +116,9 @@ api_dstu2_server_inferred_protocol: "{{'https' if api_dstu2_server_secure_http e
 api_dstu2_server_inferred_port: "{{(':'+api_dstu2_server_port|string) if api_dstu2_server_port|int not in (80,443) else ''}}"
 api_dstu2_server_smart_sandbox: smartdstu2
 api_dstu2_server_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_host}}{{api_dstu2_server_inferred_port}}{{api_dstu2_server_context}}"
-api_dstu2_server_smart_sandbox_url: "{{api_dstu2_server_base_url}}{{api_dstu2_server_smart_sandbox}}/data"
+api_dstu2_server_smart_sandbox_url: "{{api_dstu2_server_base_url}}{{api_dstu2_server_smart_sandbox}}"
+api_dstu2_server_smart_sandbox_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/data"
+api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/open"
 # todo this needs to change
 api_dstu2_server_base_url_persona: "{{api_dstu2_server_base_url}}"
 

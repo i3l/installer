@@ -9,10 +9,10 @@ WorkingDirectory={{install_dir}}/hspc/reference-auth-server-ldap-webapp/target
 {% if auth_server_secure_http and not use_custom_ssl_certificates %}
 ExecStart=/usr/bin/java \
  -Djetty.port="9001" \
- -Djetty.host="localhost" \
+ -Djetty.host="{{auth_server_host}}" \
  -Doidc.issuer={{auth_server_base_url}}/ \
  -Dhspc.platform.persona.oauthUserLoginEndpointURL={{auth_server_base_url}}/j_spring_security_check \
- -DCONTEXT_FHIR_ENDPOINT={{api_dstu2_server_smart_sandbox_url}} \
+ -DCONTEXT_FHIR_ENDPOINT={{api_dstu2_server_smart_sandbox_fhir_root_url}} \
  -DCONTEXT_RESOLVE_ENDPOINT={{app_server_base}} \
  -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} \
  -Doidc.datasource.mysql.username={{mysql_user}} \
@@ -33,10 +33,10 @@ ExecStart=/usr/bin/java \
 {% else %}
 ExecStart=/usr/bin/java \
  -Djetty.port="9001" \
- -Djetty.host="localhost" \
+ -Djetty.host="{{auth_server_host}}" \
  -Doidc.issuer={{auth_server_base_url}}/ \
  -Dhspc.platform.persona.oauthUserLoginEndpointURL={{auth_server_base_url}}/j_spring_security_check \
- -DCONTEXT_FHIR_ENDPOINT={{api_dstu2_server_smart_sandbox_url}} \
+ -DCONTEXT_FHIR_ENDPOINT={{api_dstu2_server_smart_sandbox_fhir_root_url}} \
  -DCONTEXT_RESOLVE_ENDPOINT={{app_server_base}} \
  -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} \
  -Doidc.datasource.mysql.username={{mysql_user}} \

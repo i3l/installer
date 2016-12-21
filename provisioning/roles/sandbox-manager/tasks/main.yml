@@ -29,7 +29,7 @@
 # todo fix privileges
  - name: Configure MySQL user
    tags: [sandbox-manager, smart-platform]
-   mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{mysql_privilage}} state=present
+   mysql_user: name={{mysql_user}} host={{mysql_host}} password={{mysql_pass}} priv={{mysql_privilage}} state=present
 
  - name: Drop the sandbox-manager-server database
    tags: [sandbox-manager, smart-platform]
