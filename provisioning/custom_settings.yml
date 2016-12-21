@@ -7,17 +7,32 @@ username: fhir
 #       for example. Alternatively, you can use `sudo passwd [username]` to
 #       enable password authentication on the account.
 userpass: nopass
-auth_server_password: secret
-api_dstu2_name: SMART-on-FHIR Sandbox
-api_dstu2_host: localhost
-auth_server_host: localhost
-app_server_host: localhost
+mysql_root_pass: password
+mysql_user: fhir
+mysql_pass: password
+
+app_server_host: "localhost"
 app_server_port: 9090
+
+api_dstu2_host: "localhost"
+api_dstu2_port: 9080
+api_dstu2_name: "SMART-on-FHIR FHIR DSTU2 Server"
+
+sandbox_manager_host: "localhost"
+sandbox_manager_port: 9075
+
+auth_host: "localhost"
+auth_port: 9085
+
+auth_persona_host: "localhost"
+auth_persona_port: 9086
+auth_password: secret
+
 #use_custom_ssl_certificates: true
 #custom_ssl_certificates_path: examples/certificates
 #api_dstu2_secure_http: true
 #app_server_secure_http: true
-#auth_server_secure_http: true
+#auth_secure_http: true
 sample_patients_branch: hapi-patients-testing
 fhir_starter_branch: v0.1.2
 cardiac_risk_branch: v0.1.0
