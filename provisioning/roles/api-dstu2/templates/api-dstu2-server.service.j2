@@ -7,11 +7,11 @@ TimeoutStartSec=infinity
 WorkingDirectory={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}/target
 {% if api_dstu2_server_secure_http and not use_custom_ssl_certificates %}
 ExecStart=/usr/bin/java \
-  -Djetty.port="{{api_dstu2_internal_port}}" \
+  -Djetty.port="{{api_dstu2_server_internal_port}}" \
   -Djetty.host="{{api_dstu2_server_host}}" \
   -Dhspc.platform.authorization.url={{auth_server_base_url}} \
-  -Dhspc.platform.api.security.mode={{api_dstu2_security_mode}} \
-  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_open_access_endpoint}} \
+  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
+  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_server_open_access_endpoint}} \
   -Dhspc.platform.api.sandbox.name={{api_dstu2_server_smart_sandbox}} \
   -Dhspc.platform.api.sandbox.useHspcStarterData=false \
   -Dhspc.platform.api.fhir.db.url=jdbc:mysql://{{mysql_endpoint}}/{{api_dstu2_database}} \
@@ -26,11 +26,11 @@ ExecStart=/usr/bin/java \
   hspc-reference-api.war
 {% else %}
 ExecStart=/usr/bin/java \
-  -Djetty.port="{{api_dstu2_internal_port}}" \
+  -Djetty.port="{{api_dstu2_server_internal_port}}" \
   -Djetty.host="{{api_dstu2_server_host}}" \
   -Dhspc.platform.authorization.url={{auth_server_base_url}} \
-  -Dhspc.platform.api.security.mode={{api_dstu2_security_mode}} \
-  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_open_access_endpoint}} \
+  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
+  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_server_open_access_endpoint}} \
   -Dhspc.platform.api.sandbox.name={{api_dstu2_server_smart_sandbox}} \
   -Dhspc.platform.api.sandbox.useHspcStarterData=false \
   -Dhspc.platform.api.fhir.db.url=jdbc:mysql://{{mysql_endpoint}}/{{api_dstu2_database}} \

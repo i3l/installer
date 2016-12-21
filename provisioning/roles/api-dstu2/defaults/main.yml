@@ -20,14 +20,6 @@ api_dstu2_database: hspc_{{api_dstu2_schema_version}}_{{api_dstu2_server_smart_s
 api_dstu2_baseline_snapshot: initial
 api_dstu2_mysql_privilage: "{{api_dstu2_database}}.*:ALL/*.*:ALL,GRANT"
 
-# DSTU2 API Server settings
-api_dstu2_internal_port: 9002
-
-# Set this to either "open" or "secured" on the primary endpoint /data
-api_dstu2_security_mode: secured
-# Set this to none to remove open access
-api_dstu2_open_access_endpoint: open
-
 # General settings for the sample patients set
 api_dstu2_sample_patients_repo: "https://github.com/smart-on-fhir/sample-patients.git"
 api_dstu2_sample_patients_branch: "master"
@@ -39,11 +31,19 @@ api_dstu2_include_custom_patients: false
 # Additional parameters for the sample patient generator
 api_dstu2_sample_patients_generator_params: ""
 
+# DSTU2 API Server settings
+api_dstu2_server_internal_port: 9002
+
+# Set this to either "open" or "secured" on the primary endpoint /data
+api_dstu2_server_security_mode: secured
+# Set this to none to remove open access
+api_dstu2_server_open_access_endpoint: open
+
 # Self-signed SSL certificates settings (if generating self-signed certificates)
-api_dstu2_ssl_country: "{{default_ssl_country}}"
-api_dstu2_ssl_province: "{{default_ssl_province}}"
-api_dstu2_ssl_locality: "{{default_ssl_locality}}"
-api_dstu2_ssl_organization: "{{default_ssl_organization}}"
-api_dstu2_ssl_division: "{{default_ssl_division}}"
-api_dstu2_ssl_email: "{{default_ssl_email}}"
+api_dstu2_server_ssl_country: "{{default_ssl_country}}"
+api_dstu2_server_ssl_province: "{{default_ssl_province}}"
+api_dstu2_server_ssl_locality: "{{default_ssl_locality}}"
+api_dstu2_server_ssl_organization: "{{default_ssl_organization}}"
+api_dstu2_server_ssl_division: "{{default_ssl_division}}"
+api_dstu2_server_ssl_email: "{{default_ssl_email}}"
 

@@ -38,8 +38,8 @@ ExecStart=/usr/bin/java \
   -DoauthAuthenticationUrl={{auth_server_base_url}}/static/auth/index.html \
   -DuserManagementUrl= \
   -DhostOrg=smart \
-  -Dhspc.platform.defaultSystemRoles={{sandbox_manager_defaultSystemRoles}} \
-  -Dhspc.platform.defaultSandboxVisibility={{sandbox_manager_defaultSandboxVisibility}} \
+  -Dhspc.platform.defaultSystemRoles={{sandbox_manager_server_defaultSystemRoles}} \
+  -Dhspc.platform.defaultSandboxVisibility={{sandbox_manager_server_defaultSandboxVisibility}} \
   -Djavax.net.ssl.trustStore={{install_dir}}/keystore \
   -Djavax.net.ssl.trustStorePassword={{keystore_password}} \
   -jar hspc-sandbox-manager.war
@@ -76,8 +76,8 @@ ExecStart=/usr/bin/java \
   -DoauthAuthenticationUrl={{auth_server_base_url}}/static/auth/index.html \
   -DuserManagementUrl= \
   -DhostOrg=smart \
-  -Dhspc.platform.defaultSystemRoles={{sandbox_manager_defaultSystemRoles}} \
-  -Dhspc.platform.defaultSandboxVisibility={{sandbox_manager_defaultSandboxVisibility}} \
+  -Dhspc.platform.defaultSystemRoles={{sandbox_manager_server_defaultSystemRoles}} \
+  -Dhspc.platform.defaultSandboxVisibility={{sandbox_manager_server_defaultSandboxVisibility}} \
   -jar hspc-sandbox-manager.war
 {% endif %}
 Restart=always

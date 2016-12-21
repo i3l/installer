@@ -19,11 +19,3 @@ auth_server_ssl_division: "{{default_ssl_division}}"
 auth_server_ssl_email: "{{default_ssl_email}}"
 auth_server_newUserUrl:
 auth_server_forgotPasswordUrl:
-
-# Options
-sandbox_manager_defaultSystemRoles: USER
-sandbox_manager_defaultSandboxVisibility: PUBLIC
-
-# Branding
-sandbox_manager_company_logo_path: static/branding/smart/images/smart-logo.png
-sandbox_manager_company_logo2x_path: static/branding/smart/images/smart-logo@2x.png

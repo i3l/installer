@@ -95,7 +95,7 @@
    tags: [sandbox-manager, smart-platform]
    when: sandbox_manager_server_secure_http and not use_custom_ssl_certificates
    shell: creates=/etc/nginx/ssl/sandbox-manager.crt
-          /bin/echo -e "{{sandbox_manager_ssl_country}}\n{{sandbox_manager_ssl_province}}\n{{sandbox_manager_ssl_locality}}\n{{sandbox_manager_ssl_organization}}\n{{sandbox_manager_ssl_division}}\n{{sandbox_manager_server_host}}\n{{sandbox_manager_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/sandbox-manager.key -out /etc/nginx/ssl/sandbox-manager.crt
+          /bin/echo -e "{{sandbox_manager_server_ssl_country}}\n{{sandbox_manager_server_ssl_province}}\n{{sandbox_manager_server_ssl_locality}}\n{{sandbox_manager_server_ssl_organization}}\n{{sandbox_manager_server_ssl_division}}\n{{sandbox_manager_server_host}}\n{{sandbox_manager_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/sandbox-manager.key -out /etc/nginx/ssl/sandbox-manager.crt
 
  - name: import sandbox-manager-server certificate in truststore (sandbox-manager-server)
    tags: [sandbox-manager, smart-platform]

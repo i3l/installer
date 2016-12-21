@@ -61,7 +61,7 @@
    tags: [api-dstu2, smart-platform]
    when: api_dstu2_server_secure_http and not use_custom_ssl_certificates
    shell: creates=/etc/nginx/ssl/api-dstu2.crt
-          /bin/echo -e "{{api_dstu2_ssl_country}}\n{{api_dstu2_ssl_province}}\n{{api_dstu2_ssl_locality}}\n{{api_dstu2_ssl_organization}}\n{{api_dstu2_ssl_division}}\n{{api_dstu2_server_host}}\n{{api_dstu2_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/api-dstu2.key -out /etc/nginx/ssl/api-dstu2.crt
+          /bin/echo -e "{{api_dstu2_server_ssl_country}}\n{{api_dstu2_server_ssl_province}}\n{{api_dstu2_server_ssl_locality}}\n{{api_dstu2_server_ssl_organization}}\n{{api_dstu2_server_ssl_division}}\n{{api_dstu2_server_host}}\n{{api_dstu2_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/api-dstu2.key -out /etc/nginx/ssl/api-dstu2.crt
 
  - name: import api-dstu2-server certificate in truststore
    tags: [api-dstu2, smart-platform]
@@ -84,13 +84,13 @@
 
  - name: wait for api-dstu2-server to become available
    tags: [api-dstu2, smart-platform]
-   wait_for: port={{api_dstu2_internal_port}}
+   wait_for: host={{api_dstu2_server_host}} port={{api_dstu2_server_internal_port}}
 
  # Create the api-dstu2-server sandbox
  - name: initialize sandbox
    tags: [api-dstu2, smart-platform]
    uri:
-     url: http://localhost:{{api_dstu2_internal_port}}/{{api_dstu2_server_smart_sandbox}}/sandbox
+     url: http://localhost:{{api_dstu2_server_internal_port}}/{{api_dstu2_server_smart_sandbox}}/sandbox
      method: PUT
      body: "{ 'teamId': '{{api_dstu2_server_smart_sandbox}}','schemaVersion': '{{api_dstu2_schema_version}}','allowOpenAccess': true,'baselineDate': '{{ ansible_date_time.year }}-{{ ansible_date_time.month }}-{{ ansible_date_time.day }}' }"
      body_format: json
