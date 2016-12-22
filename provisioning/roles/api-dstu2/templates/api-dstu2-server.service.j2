@@ -19,6 +19,7 @@ ExecStart=/usr/bin/java \
   -Dhspc.platform.api.fhir.db.username={{mysql_user}} \
   -Dhspc.platform.api.fhir.db.password={{mysql_pass}} \
   -Dspring.jpa.hibernate.ddl-auto=none \
+  -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}} \
   -Djavax.net.ssl.trustStore="{{install_dir}}/keystore" \
   -Djavax.net.ssl.trustStorePassword="{{keystore_password}}" \
   -jar {{install_dir}}/jetty-runner.jar \
@@ -38,7 +39,8 @@ ExecStart=/usr/bin/java \
   -Dhspc.platform.api.fhir.db.username={{mysql_user}} \
   -Dhspc.platform.api.fhir.db.password={{mysql_pass}} \
   -Dspring.jpa.hibernate.ddl-auto=none \
-  -jar {{install_dir}}/jetty-runner.jar \
+  -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}} \
+  -jar {{_dir}}/jetty-runner.jar \
   --config {{install_dir}}/jetty.xml \
   hspc-reference-api.war
 {% endif %}
