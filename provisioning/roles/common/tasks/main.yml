@@ -1,4 +1,8 @@
 ---
+ - name: installer profile
+   tags: [linux, smart-platform]
+   template: src=.bash_profile.j2 dest={{installer_user_home}}/.bash_profile
+
  - name: check custom certificate preconditions
    tags: [linux, smart-platform]
    fail: msg="please define the path to the custom certificates that you would like to use"
@@ -112,12 +116,6 @@
  - name: configure nginx (api server)
    tags: [linux, smart-platform]
    template: src=upload.conf.j2 dest=/etc/nginx/conf.d/upload.conf owner=root group=root mode=0644
-   notify:
-     - restart nginx
-
- - name: configure nginx (gateway server)
-   tags: [linux, smart-platform]
-   template: src=nginx_gateway.j2 dest=/etc/nginx/sites-enabled/gateway owner=root group=root mode=0644
    notify:
      - restart nginx
 

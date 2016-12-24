@@ -166,4 +166,7 @@
    tags: [verify, auth, smart-platform]
    wait_for: host={{auth_server_host}} port={{auth_server_internal_port}}
 
+# persona auth server
+ - include: persona-auth.yml
+
  - meta: flush_handlers

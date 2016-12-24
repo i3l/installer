@@ -110,17 +110,29 @@ sample_patients_generator_params: ""
 api_dstu2_server_secure_http: false
 api_dstu2_server_host: "localhost"
 api_dstu2_server_port: 9080
-api_dstu2_server_context: /
+api_dstu2_server_context: /api/
 api_dstu2_server_name: "Local DSTU2 FHIR dev server"
 api_dstu2_server_inferred_protocol: "{{'https' if api_dstu2_server_secure_http else 'http'}}"
 api_dstu2_server_inferred_port: "{{(':'+api_dstu2_server_port|string) if api_dstu2_server_port|int not in (80,443) else ''}}"
 api_dstu2_server_smart_sandbox: smartdstu2
-api_dstu2_server_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_host}}:{{api_dstu2_server_inferred_port}}{{api_dstu2_server_context}}"
+api_dstu2_server_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_host}}{{api_dstu2_server_inferred_port}}{{api_dstu2_server_context}}"
 api_dstu2_server_smart_sandbox_url: "{{api_dstu2_server_base_url}}{{api_dstu2_server_smart_sandbox}}"
 api_dstu2_server_smart_sandbox_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/data"
 api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/open"
-# todo this needs to change
-api_dstu2_server_base_url_persona: "{{api_dstu2_server_base_url}}"
+
+# Persona-API DSTU2 Server
+persona_api_dstu2_server_secure_http: false
+persona_api_dstu2_server_host: "localhost"
+persona_api_dstu2_server_port: 9081
+persona_api_dstu2_server_context: /persona-api/
+persona_api_dstu2_server_name: "Local Persona DSTU2 FHIR dev server"
+persona_api_dstu2_server_inferred_protocol: "{{'https' if persona_api_dstu2_server_secure_http else 'http'}}"
+persona_api_dstu2_server_inferred_port: "{{(':'+persona_api_dstu2_server_port|string) if persona_api_dstu2_server_port|int not in (80,443) else ''}}"
+persona_api_dstu2_server_smart_sandbox: smartdstu2
+persona_api_dstu2_server_base_url: "{{persona_api_dstu2_server_inferred_protocol}}://{{persona_api_dstu2_server_host}}{{persona_api_dstu2_server_inferred_port}}{{persona_api_dstu2_server_context}}"
+persona_api_dstu2_server_smart_sandbox_url: "{{persona_api_dstu2_server_base_url}}{{persona_api_dstu2_server_smart_sandbox}}"
+persona_api_dstu2_server_smart_sandbox_fhir_root_url: "{{persona_api_dstu2_server_smart_sandbox_url}}/data"
+persona_api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{persona_api_dstu2_server_smart_sandbox_url}}/open"
 
 # SandboxManager Server
 # Promoted to global settings to it can be shared
@@ -138,11 +150,12 @@ sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manage
 # Auth Server
 # Promoted to global settings to it can be shared
 auth_server_secure_http: false
-#auth_server_host: "localhost"
-auth_server_host: "auth.com"
+auth_server_host: "localhost"
 auth_server_port: 9085
 auth_server_internal_port: 9001
-auth_server_context: /
+# for local install with /auth and /persona from the same host
+# requiring two deployments of the auth server
+auth_server_context: /auth/
 auth_server_name: "Authorization Server"
 auth_server_inferred_protocol: "{{'https' if auth_server_secure_http else 'http'}}"
 auth_server_inferred_port: "{{(':'+auth_server_port|string) if auth_server_port|int not in (80,443) else ''}}"
@@ -151,21 +164,24 @@ auth_server_url: "{{auth_server_base_url}}{{auth_server_context}}"
 auth_server_client: client
 auth_server_password: secret
 
-# Auth Persona Server
+# Persona-Auth Server
 # Promoted to global settings to it can be shared
-auth_persona_server_secure_http: false
-#auth_persona_server_host: "localhost"
-auth_persona_server_host: "persona-auth.com"
-auth_persona_server_port: 9086
-auth_persona_server_internal_port: "{{auth_server_internal_port}}"
-auth_persona_server_context: /
-auth_persona_server_name: "Authorization Server"
-auth_persona_server_inferred_protocol: "{{'https' if auth_persona_server_secure_http else 'http'}}"
-auth_persona_server_inferred_port: "{{(':'+auth_persona_server_port|string) if auth_persona_server_port|int not in (80,443) else ''}}"
-auth_persona_server_base_url: "{{auth_persona_server_inferred_protocol}}://{{auth_persona_server_host}}{{auth_persona_server_inferred_port}}"
-auth_persona_server_url: "{{auth_persona_server_base_url}}{{auth_persona_server_context}}"
-auth_persona_server_client: client
-auth_persona_server_password: secret
+persona_auth_server_secure_http: false
+persona_auth_server_host: "localhost"
+persona_auth_server_port: 9086
+persona_auth_server_internal_port: 9002
+persona_auth_server_context: /persona-auth/
+persona_auth_server_name: "Persona Authorization Server"
+persona_auth_server_inferred_protocol: "{{'https' if auth_server_secure_http else 'http'}}"
+persona_auth_server_inferred_port: "{{(':'+persona_auth_server_port|string) if persona_auth_server_port|int not in (80,443) else ''}}"
+persona_auth_server_base_url: "{{persona_auth_server_inferred_protocol}}://{{persona_auth_server_host}}{{persona_auth_server_inferred_port}}"
+persona_auth_server_url: "{{persona_auth_server_base_url}}{{persona_auth_server_context}}"
+
+nginx_home: /etc/nginx
+fhir_home: /home/fhir
+installer_user: vagrant
+installer_user_home: "/home/{{installer_user}}"
+installer_home: "{installer_user_home}/installer"
 
 # Maximu size of sample patient data files
 max_upload_size: "5M"

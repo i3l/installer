@@ -1,0 +1,32 @@
+export NGINX_HOME={{nginx_home}}
+export NGINX_SITES=$NGINX_HOME/sites-enabled
+export SERVICE_HOME=/etc/systemd/system
+export FHIR_HOME={{fhir_home}}
+export INSTALLER_HOME={{installer_home}}
+export PROVISIONING_HOME=$INSTALLER_HOME/provisioning
+export EDITOR=vi
+
+alias n='cd $NGINX_SITES'
+alias s='cd $SERVICE_HOME'
+
+# tail services
+alias tauth='sudo journalctl -f -u auth-server.service'
+alias tauthp='sudo journalctl -f -u auth-persona-server.service'
+alias tapi='sudo journalctl -f -u api-dstu2-server.service'
+alias tapip='sudo journalctl -f -u api-dstu2-persona-server.service'
+alias tsand='sudo journalctl -f -u sandbox-manager-server.service'
+
+# view services
+alias vauth='sudo journalctl -u auth-server.service'
+alias vauthp='sudo journalctl -u auth-persona-server.service'
+alias vapi='sudo journalctl -u api-dstu2-server.service'
+alias vapip='sudo journalctl -u api-dstu2-persona-server.service'
+alias vsand='sudo journalctl -u sandbox-manager-server.service'
+
+alias f='cd $FHIR_HOME'
+
+alias stopn='sudo service nginx stop'
+alias startn='sudo service nginx start'
+alias build='~/build.sh'
+alias p='cd $PROVISIONING_HOME'
+alias i='cd $INSTALLER_HOME'

@@ -38,8 +38,9 @@ vagrant up
 
 Now visit in a web browser on your local ("host") machine:
 
- * `http://localhost:9080/data`  for a FHIR API server
- * `http://localhost:9085`  for an OAuth2 authorization server
+ * `http://localhost:9075/`  for the Sandbox Manager application
+ * `http://localhost:9080/api/data`  for a FHIR DSTU2 API server
+ * `http://localhost:9085/auth/`  for an OAuth2 authorization server
  * `http://localhost:9090`  for a SMART apps server
 
 The authorization server uses the OpenLDAP server running on the virtual machine.

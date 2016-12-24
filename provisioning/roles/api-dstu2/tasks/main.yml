@@ -109,4 +109,7 @@
    tags: [verify, api-dstu2, smart-platform]
    wait_for: host={{api_dstu2_server_host}} port={{api_dstu2_server_internal_port}}
 
+ # create the persona-api-dstu2-server
+ - include: persona-api.yml
+
  - meta: flush_handlers
