@@ -10,6 +10,7 @@ ExecStart=/usr/bin/java \
   -Xms{{sandbox_manager_server_initial_memory}} \
   -Xmx{{sandbox_manager_server_max_memory}} \
   -Dserver.port={{sandbox_manager_server_internal_port}} \
+  -Dserver.host={{sandbox_manager_server_internal_host}} \
   -Dspring.datasource.url=jdbc:mysql://{{mysql_endpoint}}/{{sandbox_manager_database}} \
   -Dspring.datasource.username={{mysql_user}} \
   -Dspring.datasource.password={{mysql_pass}} \
@@ -51,6 +52,7 @@ ExecStart=/usr/bin/java \
   -Xms{{sandbox_manager_server_initial_memory}} \
   -Xmx{{sandbox_manager_server_max_memory}} \
   -Dserver.port={{sandbox_manager_server_internal_port}} \
+  -Dserver.host={{sandbox_manager_server_internal_host}} \
   -Dspring.datasource.url=jdbc:mysql://{{mysql_endpoint}}/{{sandbox_manager_database}} \
   -Dspring.datasource.username={{mysql_user}} \
   -Dspring.datasource.password={{mysql_pass}} \

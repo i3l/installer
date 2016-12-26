@@ -10,7 +10,7 @@ ExecStart=/usr/bin/java \
  -Xms{{api_dstu2_server_initial_memory}} \
  -Xmx{{api_dstu2_server_max_memory}} \
  -Djetty.port="{{api_dstu2_server_internal_port}}" \
- -Djetty.host="{{api_dstu2_server_host}}" \
+ -Djetty.host="{{api_dstu2_server_internal_host}}" \
  -Dhspc.platform.authorization.urlContext={{auth_server_url}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
@@ -34,7 +34,7 @@ ExecStart=/usr/bin/java \
  -Xms{{api_dstu2_server_initial_memory}} \
  -Xmx{{api_dstu2_server_max_memory}} \
  -Djetty.port="{{api_dstu2_server_internal_port}}" \
- -Djetty.host="{{api_dstu2_server_host}}" \
+ -Djetty.host="{{api_dstu2_server_internal_host}}" \
  -Dhspc.platform.authorization.urlContext={{auth_server_url}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \

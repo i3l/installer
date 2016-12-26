@@ -145,6 +145,7 @@ api_server_oauth2_clientSecret: secret
 sandbox_manager_server_secure_http: false
 sandbox_manager_server_host: "localhost"
 sandbox_manager_server_port: 9075
+sandbox_manager_server_internal_host: localhost
 sandbox_manager_server_internal_port: 9005
 sandbox_manager_server_context: /
 sandbox_manager_server_name: "Sandbox Manager server"
@@ -158,6 +159,7 @@ sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manage
 auth_server_secure_http: false
 auth_server_host: "localhost"
 auth_server_port: 9085
+auth_server_internal_host: "localhost"
 auth_server_internal_port: 9001
 # for local install with /auth and /persona from the same host
 # requiring two deployments of the auth server
@@ -175,6 +177,7 @@ auth_server_password: secret
 persona_auth_server_secure_http: false
 persona_auth_server_host: "localhost"
 persona_auth_server_port: 9086
+persona_auth_server_internal_host: "localhost"
 persona_auth_server_internal_port: 9002
 persona_auth_server_context: /persona-auth/
 persona_auth_server_name: "Persona Authorization Server"
