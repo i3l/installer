@@ -84,7 +84,7 @@
 
  - name: wait for api-dstu2-server to become available
    tags: [api-dstu2, smart-platform]
-   wait_for: host={{api_dstu2_server_host}} port={{api_dstu2_server_internal_port}}
+   wait_for: host={{api_dstu2_server_internal_host}} port={{api_dstu2_server_internal_port}}
 
  # Create the api-dstu2-server sandbox
  - name: initialize sandbox
@@ -107,7 +107,7 @@
 
  - name: verify api-dstu2-server is available
    tags: [verify, api-dstu2, smart-platform]
-   wait_for: host={{api_dstu2_server_host}} port={{api_dstu2_server_internal_port}}
+   wait_for: host={{api_dstu2_server_internal_host}} port={{api_dstu2_server_internal_port}}
 
  # create the persona-api-dstu2-server
  - include: persona-api.yml

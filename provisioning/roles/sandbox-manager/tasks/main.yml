@@ -118,6 +118,6 @@
 
  - name: verify sandbox-manager-server is available
    tags: [verify, auth, sandbox-manager]
-   wait_for: host={{sandbox_manager_server_host}} port={{sandbox_manager_server_internal_port}}
+   wait_for: host={{sandbox_manager_server_internal_host}} port={{sandbox_manager_server_internal_port}}
 
  - meta: flush_handlers

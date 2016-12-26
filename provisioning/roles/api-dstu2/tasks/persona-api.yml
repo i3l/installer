@@ -44,6 +44,6 @@
 
  - name: verify api-dstu2-server is available
    tags: [verify, api-dstu2, smart-platform]
-   wait_for: host={{persona_api_dstu2_server_host}} port={{persona_api_dstu2_server_internal_port}}
+   wait_for: host={{persona_api_dstu2_server_internal_host}} port={{persona_api_dstu2_server_internal_port}}
 
  - meta: flush_handlers

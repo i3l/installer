@@ -44,6 +44,6 @@
 
  - name: verify persona-auth-server is available
    tags: [verify, auth, smart-platform]
-   wait_for: host={{persona_auth_server_host}} port={{persona_auth_server_internal_port}}
+   wait_for: host={{persona_auth_server_internal_host}} port={{persona_auth_server_internal_port}}
 
  - meta: flush_handlers
