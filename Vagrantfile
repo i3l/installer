@@ -42,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
     ansible.tags=["smart-platform"]
-#    ansible.tags=["auth"]
+#    ansible.tags=["sandbox-manager"]
 #    ansible.tags=["linux"]
     ansible.playbook = "provisioning/smart-on-fhir.yml"
   end

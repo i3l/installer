@@ -11,7 +11,7 @@ ExecStart=/usr/bin/java \
  -Xmx{{api_dstu2_server_max_memory}} \
  -Djetty.port="{{api_dstu2_server_internal_port}}" \
  -Djetty.host="{{api_dstu2_server_host}}" \
- -Dhspc.platform.authorization.url={{auth_server_url}} \
+ -Dhspc.platform.authorization.urlContext={{auth_server_url}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_server_open_access_endpoint}} \
@@ -35,7 +35,7 @@ ExecStart=/usr/bin/java \
  -Xmx{{api_dstu2_server_max_memory}} \
  -Djetty.port="{{api_dstu2_server_internal_port}}" \
  -Djetty.host="{{api_dstu2_server_host}}" \
- -Dhspc.platform.authorization.url={{auth_server_url}} \
+ -Dhspc.platform.authorization.urlContext={{auth_server_url}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_server_open_access_endpoint}} \

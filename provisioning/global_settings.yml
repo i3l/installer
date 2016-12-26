@@ -115,8 +115,9 @@ api_dstu2_server_name: "Local DSTU2 FHIR dev server"
 api_dstu2_server_inferred_protocol: "{{'https' if api_dstu2_server_secure_http else 'http'}}"
 api_dstu2_server_inferred_port: "{{(':'+api_dstu2_server_port|string) if api_dstu2_server_port|int not in (80,443) else ''}}"
 api_dstu2_server_smart_sandbox: smartdstu2
-api_dstu2_server_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_host}}{{api_dstu2_server_inferred_port}}{{api_dstu2_server_context}}"
-api_dstu2_server_smart_sandbox_url: "{{api_dstu2_server_base_url}}{{api_dstu2_server_smart_sandbox}}"
+api_dstu2_server_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_host}}{{api_dstu2_server_inferred_port}}"
+api_dstu2_server_context_url: "{{api_dstu2_server_base_url}}{{api_dstu2_server_context}}"
+api_dstu2_server_smart_sandbox_url: "{{api_dstu2_server_context_url}}{{api_dstu2_server_smart_sandbox}}"
 api_dstu2_server_smart_sandbox_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/data"
 api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{api_dstu2_server_smart_sandbox_url}}/open"
 
@@ -129,10 +130,15 @@ persona_api_dstu2_server_name: "Local Persona DSTU2 FHIR dev server"
 persona_api_dstu2_server_inferred_protocol: "{{'https' if persona_api_dstu2_server_secure_http else 'http'}}"
 persona_api_dstu2_server_inferred_port: "{{(':'+persona_api_dstu2_server_port|string) if persona_api_dstu2_server_port|int not in (80,443) else ''}}"
 persona_api_dstu2_server_smart_sandbox: smartdstu2
-persona_api_dstu2_server_base_url: "{{persona_api_dstu2_server_inferred_protocol}}://{{persona_api_dstu2_server_host}}{{persona_api_dstu2_server_inferred_port}}{{persona_api_dstu2_server_context}}"
-persona_api_dstu2_server_smart_sandbox_url: "{{persona_api_dstu2_server_base_url}}{{persona_api_dstu2_server_smart_sandbox}}"
+persona_api_dstu2_server_base_url: "{{persona_api_dstu2_server_inferred_protocol}}://{{persona_api_dstu2_server_host}}{{persona_api_dstu2_server_inferred_port}}"
+persona_api_dstu2_server_context_url: "{{persona_api_dstu2_server_base_url}}{{persona_api_dstu2_server_context}}"
+persona_api_dstu2_server_smart_sandbox_url: "{{persona_api_dstu2_server_context_url}}{{persona_api_dstu2_server_smart_sandbox}}"
 persona_api_dstu2_server_smart_sandbox_fhir_root_url: "{{persona_api_dstu2_server_smart_sandbox_url}}/data"
 persona_api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{persona_api_dstu2_server_smart_sandbox_url}}/open"
+
+# API Server client
+api_server_oauth2_clientId: hspc_resource_server
+api_server_oauth2_clientSecret: secret
 
 # SandboxManager Server
 # Promoted to global settings to it can be shared

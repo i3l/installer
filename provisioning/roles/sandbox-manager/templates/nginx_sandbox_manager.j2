@@ -29,11 +29,11 @@ server {
 {% endif %}
 }
 
-{% if sandbox_manager_server_port != 80 and http_redirect %}
-server {
-    server_name {{sandbox_manager_server_host}};
-    rewrite ^       {{sandbox_manager_server_base_url}}$request_uri? permanent;
-    listen 80;
-}
-{% endif %}
+#{% if sandbox_manager_server_port != 80 and http_redirect %}
+#server {
+#    server_name {{sandbox_manager_server_host}};
+#    rewrite ^       {{sandbox_manager_server_url}}$request_uri? permanent;
+#    listen 80;
+#}
+#{% endif %}
 
