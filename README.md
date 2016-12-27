@@ -82,6 +82,11 @@ app_server public port to 80.
 sudo ansible-playbook  -c local -i 'localhost,' -vvvv smart-on-fhir.yml
 ```
 
+You may run the Ansible playbook for specific tags using the --tags or --skip-tags flags such as:
+```
+sudo ansible-playbook  -c local -i 'localhost,' -vvvv smart-on-fhir.yml --tags "verify"
+```
+
 ---
 
 ## Building SMART-on-FHIR on fresh Ubuntu 16.04 remote machine
