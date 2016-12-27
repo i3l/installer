@@ -69,6 +69,12 @@
    template: src=patches/branded_text.js.j2
              dest={{install_dir}}/hspc/sandbox-manager/src/main/webapp/static/js/branding/branded_text.js
 
+ - name: patch sideNav.html
+   tags: [sandbox-manager, smart-platform]
+   become_user: "{{username}}"
+   template: src=patches/sideNav.html.j2
+             dest={{install_dir}}/hspc/sandbox-manager/src/main/webapp/static/js/templates/sideNav.html
+
  - name: ensures {{install_dir}}/hspc/sandbox-manager/src/main/webapp/static/branding/smart/images dir exists
    tags: [sandbox-manager, smart-platform]
    file: path={{install_dir}}/hspc/sandbox-manager/src/main/webapp/static/branding/smart/images state=directory
