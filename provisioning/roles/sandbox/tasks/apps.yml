@@ -1,5 +1,5 @@
 - name: checkout mpr monitor app
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   git: repo={{mpr_monitor_repo}}
        version={{mpr_monitor_branch}}
@@ -8,40 +8,40 @@
        force=yes
 
 - name: configure mpr monitor (step 1)
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/apps/rest/mpr_monitor/settings.py
            regexp='my_web_app'
            replace="{{mpr_monitor_client_id}}"
 
 - name: configure mpr monitor (step 2)
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/apps/rest/mpr_monitor/settings.py
            regexp='http:\/\/localhost:8000'
            replace="{{mpr_monitor_base}}"
 
 - name: install pip prerequisites to mpr monitor
-  tags: [apps]
+  tags: [apps-all]
   pip: requirements={{install_dir}}/apps/rest/mpr_monitor/requirements.txt
 
 - name: configure apache (remove default server)
-  tags: [apps]
+  tags: [apps-all]
   file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
 
 - name: configure apache (mpr monitor server)
-  tags: [apps]
+  tags: [apps-all]
   template: src=mpr-monitor.conf.j2 dest=/etc/apache2/sites-enabled/mpr-monitor.conf owner=root group=root mode=0644
 
 - name: configure nginx (mpr monitor server)
-  tags: [apps]
+  tags: [apps-all]
   template: src=nginx_mprmonitor.j2 dest=/etc/nginx/sites-enabled/mprmonitor owner=root group=root mode=0644
 
 - name: restart apache2
   service: name=apache2 state=restarted
 
 - name: checkout disease monograph app
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   git: repo={{disease_monograph_repo}}
        version={{disease_monograph_branch}}
@@ -50,7 +50,7 @@
        force=yes
 
 - name: checkout diabetes monograph app
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   git: repo={{diabetes_monograph_repo}}
        version={{diabetes_monograph_branch}}
@@ -59,7 +59,7 @@
        force=yes
 
 - name: checkout cardiac risk app
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   git: repo={{cardiac_risk_repo}}
        version={{cardiac_risk_branch}}
@@ -68,7 +68,7 @@
        force=yes
 
 - name: checkout bp centiles app
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   git: repo={{bp_centiles_repo}}
        version={{bp_centiles_branch}}
@@ -77,7 +77,7 @@
        force=yes
 
 - name: checkout growth chart app
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   git: repo={{growth_chart_repo}}
        version={{growth_chart_branch}}
@@ -86,7 +86,7 @@
        force=yes
 
 - name: configure demo apps
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/demo-apps/{{item}}
            regexp='node_modules\/fhirclient\/fhir-client\.js'
@@ -104,53 +104,53 @@
         - disease-monograph/launch.html
 
 - name: configure BP Centiles client ID
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/demo-apps/bp-centiles/launch.html
            regexp='bp_centiles'
            replace="{{bp_centiles_client_id}}"
 
 - name: configure Cardiac Risk client ID
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/demo-apps/cardiac-risk/launch.html
            regexp='cardiac_risk'
            replace="{{cardiac_risk_client_id}}"
 
 - name: configure Growth Chart client ID
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/demo-apps/growth-chart/launch.html
            regexp='growth_chart'
            replace="{{growth_chart_client_id}}"
 
 - name: configure Diabetes Monograph client ID
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/demo-apps/diabetes-monograph/launch.html
            regexp='diabetes_monograph'
            replace="{{diabetes_monograph_client_id}}"
 
 - name: configure Disease Monograph client ID
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   replace: dest={{install_dir}}/demo-apps/disease-monograph/launch.html
            regexp='disease_monograph'
            replace="{{disease_monograph_client_id}}"
 
 - name: create js directory
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   file: path={{install_dir}}/demo-apps/js state=directory
 
 - name: copy JS client from FHIR Starter
-  tags: [apps]
+  tags: [apps-all]
   become_user: "{{username}}"
   shell: chdir={{install_dir}}/demo-apps
          cp {{install_dir}}/apps/static/js/fhir-client.js js/.
 
 - name: configure nginx (demo apps)
-  tags: [apps,nginx]
+  tags: [apps-all,nginx]
   template: src=nginx_demo_apps.j2 dest=/etc/nginx/sites-enabled/demo-apps owner=root group=root mode=0644
 
 - name: restart nginx

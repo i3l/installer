@@ -1,6 +1,6 @@
 ---
  - name: checkout repository hspc_repo_api_mysql_project
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-code, smart-platform]
    become_user: "{{username}}"
    git: repo="{{api_dstu2_repos_base}}/{{api_dstu2_repo_api_mysql_project}}"
         version="{{api_dstu2_repo_api_branch}}"
@@ -9,7 +9,7 @@
         force=yes
 
  - name: checkout repository hspc_repo_api_webapp_project
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-code, smart-platform]
    become_user: "{{username}}"
    git: repo="{{hspc_repos_base}}/{{api_dstu2_repo_api_webapp_project}}"
         version="{{api_dstu2_repo_api_branch}}"
@@ -18,53 +18,53 @@
         force=yes
 
  - name: configure api-dstu2-server service
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    template: src=api-dstu2-server.service.j2
              dest=/etc/systemd/system/api-dstu2-server.service
              owner=root group=root mode=0644
 
  - name: enable api-dstu2-server service
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    shell: systemctl enable api-dstu2-server.service
 
  - name: reload systemd daemon
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    shell: systemctl daemon-reload
 
  - name: stop api-dstu2-server
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    service: name=api-dstu2-server state=stopped
 
  - name: configure mysql user
-   tags: [linux, smart-platform]
+   tags: [linux, api-dstu2-data, smart-platform]
    mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{api_dstu2_mysql_privilage}} state=present
 
  - name: drop the api-dstu2-server database
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    mysql_db: name={{api_dstu2_database}} state=absent
 
  - name: drop the {{api_dstu2_database}}${{api_dstu2_baseline_snapshot}} snapshot
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    mysql_db: name="{{api_dstu2_database}}${{api_dstu2_baseline_snapshot}}" state=absent
 
  - name: create the {{api_dstu2_database}} database
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    mysql_db: name={{api_dstu2_database}} state=present
 
  - name: build hspc server api-dstu2-server
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-code, smart-platform]
    become_user: "{{username}}"
    shell: chdir={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}
         mvn clean install -e -Pjetty
 
  - name: generate self-signed ssl certificate (api-dstu2-server)
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    when: api_dstu2_server_secure_http and not use_custom_ssl_certificates
    shell: creates=/etc/nginx/ssl/api-dstu2.crt
           /bin/echo -e "{{api_dstu2_server_ssl_country}}\n{{api_dstu2_server_ssl_province}}\n{{api_dstu2_server_ssl_locality}}\n{{api_dstu2_server_ssl_organization}}\n{{api_dstu2_server_ssl_division}}\n{{api_dstu2_server_host}}\n{{api_dstu2_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/api-dstu2.key -out /etc/nginx/ssl/api-dstu2.crt
 
  - name: import api-dstu2-server certificate in truststore
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    when: api_dstu2_server_secure_http
    shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
             -importcert -trustcacerts
@@ -73,22 +73,22 @@
             -keystore {{install_dir}}/keystore
 
  - name: configure nginx (api-dstu2-server)
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    template: src=nginx_api_dstu2.j2 dest=/etc/nginx/sites-enabled/api_dstu2 owner=root group=root mode=0644
    notify:
      - restart nginx
 
  - name: restart api-dstu2-server
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    service: name=api-dstu2-server enabled=yes state=restarted
 
  - name: wait for api-dstu2-server to become available
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, smart-platform]
    wait_for: host={{api_dstu2_server_internal_host}} port={{api_dstu2_server_internal_port}}
 
  # Create the api-dstu2-server sandbox
  - name: initialize sandbox
-   tags: [api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    uri:
      url: "{{api_dstu2_server_internal_smart_sandbox_url}}/sandbox"
      method: PUT
@@ -101,12 +101,13 @@
 
  # take a snapshot of the sandbox
  - include: snapshot-command.yml
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    vars:
      snapshot_name: "{{api_dstu2_baseline_snapshot}}"
      snapshot_action: Take
 
  - name: verify api-dstu2-server is available
-   tags: [verify, api-dstu2, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-server, verify, smart-platform]
    wait_for: host={{api_dstu2_server_internal_host}} port={{api_dstu2_server_internal_port}}
 
  # create the persona-api-dstu2-server

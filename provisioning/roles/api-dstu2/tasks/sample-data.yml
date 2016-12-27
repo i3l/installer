@@ -1,6 +1,6 @@
 ---
  - name: checkout api-dstu2-sample patients
-   tags: [api-dstu2-sample-data, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    become_user: "{{username}}"
    git: repo={{api_dstu2_sample_patients_repo}}
         version={{api_dstu2_sample_patients_branch}}
@@ -9,18 +9,18 @@
    register: api_dstu2_sample_patients_checkout
 
  - name: build api-dstu2-sample patients
-   tags: [api-dstu2-sample-data, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    become_user: "{{username}}"
    shell: chdir={{install_dir}}/api-dstu2-sample-patients/bin
           python generate.py --write-fhir ../generated-data {{api_dstu2_sample_patients_generator_params}}
 
  - name: list api-dstu2-sample patients
-   tags: [api-dstu2-sample-data, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    shell: ls {{install_dir}}/api-dstu2-sample-patients/generated-data/*.xml | head -n {{api_dstu2_sample_patients_limit}}
    register: api_dstu2_sample_patient_files
 
  - name: load api-dstu2-sample patients
-   tags: [api-dstu2-sample-data, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    shell: "chdir={{install_dir}}/api-dstu2-sample-patients/generated-data/
           curl
             '{{api_dstu2_server_internal_smart_sandbox_open_fhir_root_url}}/?'
@@ -29,12 +29,12 @@
    with_items: "{{api_dstu2_sample_patient_files.stdout_lines}}"
 
  - name: list custom patients (json)
-   tags: [api-dstu2-sample-data, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    shell: ls {{install_dir}}/api-dstu2-sample-patients/custom-data/*.json
    register: api_dstu2_custom_patient_files_json
 
  - name: load custom patients (json)
-   tags: [api-dstu2-sample-data, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    shell: "chdir={{install_dir}}/api-dstu2-sample-patients/custom-data/
           curl
             '{{api_dstu2_server_internal_smart_sandbox_open_fhir_root_url}}/?'

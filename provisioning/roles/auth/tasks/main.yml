@@ -1,6 +1,6 @@
 ---
  - name: checkout repository auth_webapp_project
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    git: repo="{{hspc_repos_base}}/{{auth_webapp_project}}"
         version="{{auth_branch}}"
@@ -9,7 +9,7 @@
         force=yes
 
  - name: checkout repository auth_webapp_ldap_project
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    git: repo="{{hspc_repos_base}}/{{auth_webapp_ldap_project}}"
         version="{{auth_branch}}"
@@ -18,37 +18,37 @@
         force=yes
 
  - name: configure auth server service
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    template: src=auth-server.service.j2
              dest=/etc/systemd/system/auth-server.service
              owner=root group=root mode=0644
 
  - name: enable auth server service
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    shell: systemctl enable auth-server.service
 
  - name: reload systemd daemon
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    shell: systemctl daemon-reload
 
  - name: stop auth server
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    service: name=auth-server state=stopped
 
  - name: Configure MySQL user
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-data, smart-platform]
    mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{mysql_privilage}} state=present
 
  - name: Drop the Authorization Server database
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-data, smart-platform]
    mysql_db: name={{auth_server_database}} state=absent
 
  - name: Create the Authorization Server database
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-data, smart-platform]
    mysql_db: name={{auth_server_database}} state=present
 
  - name: clear auth server data
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-data, smart-platform]
    file: path={{auth_db_file}}{{item}} state=absent
 # todo figure this out
 #   when: not auth_server_preserve_db
@@ -56,99 +56,99 @@
 
  # login.jsp is patched to show "username" label instead of "email address"
  - name: patch auth server login screen
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/login.jsp.j2
              dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/WEB-INF/views/login.jsp
 
  - name: patch auth server mysql auth install
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/mysql_auth_install.sql.j2
              dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_auth_install.sql
 
  - name: patch auth server clients rollback
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/mysql_clients_rollback.sql.j2
              dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_clients_rollback.sql
 
  - name: patch auth server database tables
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/mysql_database_tables.sql.j2
              dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_database_tables.sql
 
  - name: patch auth server scopes
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/mysql_system_scopes.sql.j2
              dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_system_scopes.sql
 
  - name: patch auth server users
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/mysql_users.sql.j2
              dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_users.sql
 
  - name: patch auth server clients
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/mysql_clients.sql.j2
              dest={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql/mysql_clients.sql
 
  - name: patch sandbox-manager mysql auth install
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    template: src=patches/sandbox-manager-client.sql.j2
              dest={{install_dir}}/hspc/sandbox-manager/src/main/resources/db/openidconnect/mysql/sandbox-manager-client.sql
 
  # install SMART logos
  - name: config company-logo.png
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    copy: src=company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo.png
 
  - name: config company-logo@2x.png
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    copy: src=company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo@2x.png
 
  - name: config company-logo-main-web-top.png
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    copy: src=company-logo-main-web-top.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo-main-web-top.png
 
  - name: Load Authorization Server DB Schema and Sample Data
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-data, smart-platform]
    shell: chdir={{install_dir}}/hspc/reference-auth-server-webapp/src/main/resources/db/openidconnect/mysql
           mysql oic < mysql_auth_install.sql
 
  - name: load api-dstu2 resource server client
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-data, smart-platform]
    shell: chdir={{install_dir}}/hspc/api-dstu2/reference-api-mysql/src/main/resources/db/openidconnect/mysql
           mysql oic < resource-server-client.sql
 
  - name: load sandbox-manager resource server client
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-data, smart-platform]
    shell: chdir={{install_dir}}/hspc/sandbox-manager/src/main/resources/db/openidconnect/mysql
           mysql oic < sandbox-manager-client.sql
 
  - name: build hspc auth server
-   tags: [auth, smart-platform]
+   tags: [auth-all, auth-code, smart-platform]
    become_user: "{{username}}"
    shell: chdir={{install_dir}}/hspc
         mvn clean install -e -f reference-auth-server-ldap-webapp/pom.xml
 
  - name: restart auth server
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    service: name=auth-server enabled=yes state=restarted
 
  - name: generate self-signed ssl certificate (auth server)
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    when: auth_server_secure_http and not use_custom_ssl_certificates
    shell: creates=/etc/nginx/ssl/auth.crt
           /bin/echo -e "{{auth_server_ssl_country}}\n{{auth_server_ssl_province}}\n{{auth_server_ssl_locality}}\n{{auth_server_ssl_organization}}\n{{auth_server_ssl_division}}\n{{auth_server_host}}\n{{auth_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/auth.key -out /etc/nginx/ssl/auth.crt
 
  - name: import auth server certificate in truststore (auth server)
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    when: auth_server_secure_http
    shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
             -importcert -trustcacerts
@@ -157,13 +157,13 @@
             -keystore {{install_dir}}/keystore
 
  - name: configure nginx (auth server)
-   tags: [auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, smart-platform]
    template: src=nginx_auth.j2 dest=/etc/nginx/sites-enabled/auth owner=root group=root mode=0644
    notify:
      - restart nginx
 
  - name: verify auth-server is available
-   tags: [verify, auth, smart-platform, auth-server]
+   tags: [auth-all, auth-server, verify, smart-platform]
    wait_for: host={{auth_server_internal_host}} port={{auth_server_internal_port}}
 
 # persona auth server

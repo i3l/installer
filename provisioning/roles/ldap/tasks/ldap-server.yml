@@ -1,5 +1,5 @@
 - name: automatically select the OpenLDAP configuration settings
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   shell: /bin/echo "slapd {{item}}" | sudo debconf-set-selections
   with_items:
          - slapd/password1 password {{ldap_server_admin_password}}
@@ -13,7 +13,7 @@
          - slapd/backend boolean HDB
 
 - name: install ldap apt packages
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   environment:
     DEBIAN_FRONTEND: noninteractive
   apt: pkg={{item}} force=yes
@@ -23,20 +23,20 @@
          - ssl-cert
 
 - name: configure LDAP client tool
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   template: src="ldap.conf.j2"
             dest="/etc/ldap/ldap.conf"
             owner=root group=root mode=0644
   register: ldap_checkout
 
 - name: generate sample LDAP directory
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-data, smart-platform]
   become_user: "{{username}}"
   template: src="ldap_content.ldif.j2"
             dest="{{install_dir}}/ldap_content.ldif"
 
 - name: load sample LDAP directory
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-data, smart-platform]
   when: ldap_checkout.changed or force_rebuild
   shell: chdir={{install_dir}}
          ldapadd
@@ -46,7 +46,7 @@
   failed_when: False
 
 - name: install certificate generator
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   environment:
     DEBIAN_FRONTEND: noninteractive
@@ -56,24 +56,24 @@
          - ssl-cert
 
 - name: create ldap ssl certificates directory
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls
   file: path=/etc/ldap/ssl state=directory owner=root group=ssl-cert mode=0755
 
 - name: configure certificate authority
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   template: src="ldap_ca.info.j2"
             dest="/etc/ldap/ssl/ldap_ca.info"
 
 - name: generate private key for certificate authority
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   shell: sh -c "certtool --generate-privkey > /etc/ldap/ssl/ldap_ca_key.pem"
 
 
 - name: generate self-signed ca certificate
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   shell: certtool --generate-self-signed
                   --load-privkey /etc/ldap/ssl/ldap_ca_key.pem
@@ -81,19 +81,19 @@
                   --outfile /etc/ldap/ssl/ldap_ca_cert.pem
 
 - name: configure ldap server certificate
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   template: src="ldap01.info.j2"
             dest="/etc/ldap/ssl/ldap01.info"
 
 - name: generate private key for ldap server
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   shell: certtool --generate-privkey --bits 1024
                    --outfile /etc/ldap/ssl/ldap01_slapd_key.pem
 
 - name: generate ldap server certificate
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   shell: certtool --generate-certificate
                   --load-privkey /etc/ldap/ssl/ldap01_slapd_key.pem
@@ -103,13 +103,13 @@
                   --outfile /etc/ldap/ssl/ldap01_slapd_cert.pem
 
 - name: copy custom ldap ssl certificates
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and use_custom_ssl_certificates
   copy: src={{custom_ssl_certificates_path}}/ldap/
         dest=/etc/ldap/ssl
 
 - name: copy ldap config files
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   copy: src={{item}}
         dest=/tmp
   with_items:
@@ -117,14 +117,14 @@
     - ldap_tls_config.ldif
 
 - name: configure ldap server tls
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls
   shell: ldapmodify
            -Y EXTERNAL -H ldapi:///
            -f /tmp/ldap_tls_config.ldif
 
 - name: disable ldap server tls
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: not ldap_server_tls
   shell: ldapmodify
            -Y EXTERNAL -H ldapi:///
@@ -132,25 +132,25 @@
   failed_when: False
 
 - name: add openldap user to ssl-cert group
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   user: name=openldap groups=ssl-cert
 
 - name: set ldap private key permissions
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls
   file: path=/etc/ldap/ssl/ldap01_slapd_key.pem group=ssl-cert mode=640
 
 - name: delete private key for certificate authority
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls
   file: path=/etc/ldap/ssl/ldap_ca_key.pem state=absent
 
 - name: restart ldap server
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   service: name=slapd state=restarted
 
 - name: import ldap ca certificate in truststore
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   become_user: "{{username}}"
   when: ldap_server_tls
   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
@@ -160,7 +160,7 @@
   failed_when: False
 
 - name: import ldap certificate in truststore
-  tags: [ldap, smart-platform]
+  tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls
   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
            -importcert -trustcacerts
