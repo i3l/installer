@@ -29,19 +29,19 @@ CREATE TABLE `app` (
   `logo_uri` varchar(255) DEFAULT NULL,
   `sample_patients` varchar(255) DEFAULT NULL,
   `visibility` int(11) DEFAULT NULL,
-  `auth_server_client_id` int(11) DEFAULT NULL,
+  `auth_client_id` int(11) DEFAULT NULL,
   `created_by_id` int(11) DEFAULT NULL,
   `logo_id` int(11) DEFAULT NULL,
   `sandbox_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKmgfhf5wulfbhdb765y2yvpsjg` (`auth_server_client_id`),
+  KEY `FKmgfhf5wulfbhdb765y2yvpsjg` (`auth_client_id`),
   KEY `FKhveq3hxgkgtrg9j7nscl2yuk` (`created_by_id`),
   KEY `FK7j6olsrigifajanu1xi5tr9m4` (`logo_id`),
   KEY `FK4m777b29mjjjbvaowlxjf8s62` (`sandbox_id`),
   CONSTRAINT `FK4m777b29mjjjbvaowlxjf8s62` FOREIGN KEY (`sandbox_id`) REFERENCES `sandbox` (`id`),
   CONSTRAINT `FK7j6olsrigifajanu1xi5tr9m4` FOREIGN KEY (`logo_id`) REFERENCES `image` (`id`),
   CONSTRAINT `FKhveq3hxgkgtrg9j7nscl2yuk` FOREIGN KEY (`created_by_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FKmgfhf5wulfbhdb765y2yvpsjg` FOREIGN KEY (`auth_server_client_id`) REFERENCES `auth_server_client` (`id`)
+  CONSTRAINT `FKmgfhf5wulfbhdb765y2yvpsjg` FOREIGN KEY (`auth_client_id`) REFERENCES `auth_client` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -55,13 +55,13 @@ LOCK TABLES `app` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `auth_server_client`
+-- Table structure for table `auth_client`
 --
 
-DROP TABLE IF EXISTS `auth_server_client`;
+DROP TABLE IF EXISTS `auth_client`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `auth_server_client` (
+CREATE TABLE `auth_client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `auth_database_id` int(11) DEFAULT NULL,
   `client_id` varchar(255) DEFAULT NULL,
@@ -72,12 +72,12 @@ CREATE TABLE `auth_server_client` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `auth_server_client`
+-- Dumping data for table `auth_client`
 --
 
-LOCK TABLES `auth_server_client` WRITE;
-/*!40000 ALTER TABLE `auth_server_client` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_server_client` ENABLE KEYS */;
+LOCK TABLES `auth_client` WRITE;
+/*!40000 ALTER TABLE `auth_client` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_client` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

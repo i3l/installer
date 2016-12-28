@@ -64,17 +64,10 @@ angular.module("sandManApp.branding", [], ["$provide", function($provide) {
                 {version: "1", name: "FHIR DSTU 2"}
             ],
             sandboxDescription: {
-                title: "What is a sandbox?",
-                description: "",
-                bottomNote: "",
-                checkList: [
-                    "Create apps for practitioners that launch within an EHR, smart phone, tablet, or web browser",
-                    "Create apps for patients and their related persons that launch from a smart phone, tablet, web browser, or personal computer",
-                    "Create backend services that interact directly with SMART of FHIR Platforms",
-                    "Verify your app follows the SMART security and launch context standards",
-                    "Test your apps by creating various launch scenarios",
-                    "Verify that your app is SMART of FHIR compliant"
-                ]
+                title: "",
+                description: "The SMART Health IT Sandbox is a virtual testing environment that mimics a live EHR production environment, but is populated with sample data that is reset on a nightly basis. Use it to test and demonstrate apps for practitioners and patients that use the SMART on FHIR platform to access clinical data.",
+                bottomNote:"The Sandbox is provided by the SMART Health IT project as a free service to the healthcare app development community and is for testing purposes only. Do not store any information that contains personal health information or any other confidential information. This system should not be used in the provision of clinical care.",
+                checkList: []
             }
             }
     });
