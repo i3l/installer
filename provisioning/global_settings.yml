@@ -186,6 +186,34 @@ persona_auth_server_inferred_port: "{{(':'+persona_auth_server_port|string) if p
 persona_auth_server_base_url: "{{persona_auth_server_inferred_protocol}}://{{persona_auth_server_host}}{{persona_auth_server_inferred_port}}"
 persona_auth_server_url: "{{persona_auth_server_base_url}}{{persona_auth_server_context}}"
 
+# Messaging Server
+# Promoted to global settings to it can be shared
+messaging_server_secure_http: false
+messaging_server_host: "localhost"
+messaging_server_port: 9087
+messaging_server_internal_host: "localhost"
+messaging_server_internal_port: 9006
+messaging_server_context: /
+messaging_server_name: "Messaging Server"
+messaging_server_inferred_protocol: "{{'https' if messaging_server_secure_http else 'http'}}"
+messaging_server_inferred_port: "{{(':'+messaging_server_port|string) if messaging_server_port|int not in (80,443) else ''}}"
+messaging_server_base_url: "{{messaging_server_inferred_protocol}}://{{messaging_server_host}}{{messaging_server_inferred_port}}"
+messaging_server_url: "{{messaging_server_base_url}}{{messaging_server_context}}"
+
+# PWM Server
+# Promoted to global settings to it can be shared
+#pwm_server_secure_http: false
+#pwm_server_host: "localhost"
+#pwm_server_port: 9095
+#pwm_server_internal_host: "localhost"
+#pwm_server_internal_port: 9007
+#pwm_server_context: /
+#pwm_server_name: "PWM Server"
+#pwm_server_inferred_protocol: "{{'https' if pwm_server_secure_http else 'http'}}"
+#pwm_server_inferred_port: "{{(':'+pwm_server_port|string) if pwm_server_port|int not in (80,443) else ''}}"
+#pwm_server_base_url: "{{pwm_server_inferred_protocol}}://{{pwm_server_host}}{{pwm_server_inferred_port}}"
+#pwm_server_url: "{{pwm_server_base_url}}{{pwm_server_context}}"
+
 nginx_home: /etc/nginx
 fhir_home: /home/fhir
 installer_user: vagrant

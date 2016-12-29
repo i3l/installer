@@ -36,7 +36,7 @@
    service: name=api-dstu2-server state=stopped
 
  - name: configure mysql user
-   tags: [linux, api-dstu2-data, smart-platform]
+   tags: [api-dstu2-all, api-dstu2-data, smart-platform]
    mysql_user: name={{mysql_user}} host=localhost password={{mysql_pass}} priv={{api_dstu2_mysql_privilage}} state=present
 
  - name: drop the api-dstu2-server database

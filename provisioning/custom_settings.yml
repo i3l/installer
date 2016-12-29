@@ -32,6 +32,9 @@ auth_server_password: secret
 persona_auth_server_host: "localhost"
 persona_auth_server_port: 9086
 
+messaging_server_host: "localhost"
+messaging_server_port: 9087
+
 #use_custom_ssl_certificates: true
 #custom_ssl_certificates_path: examples/certificates
 #api_dstu2_server_secure_http: true

@@ -11,6 +11,8 @@
     - sandbox-manager
     - apps
     - auth
+    - messaging
+#    - pwm
 
 - hosts: REMOTEHOST
   remote_user: REMOTEUSER
@@ -31,3 +33,5 @@
     - sandbox-manager
     - apps
     - auth
+    - messaging
+#    - pwm
