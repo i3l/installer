@@ -12,9 +12,11 @@ ExecStart=/usr/bin/java \
  -Djetty.port={{messaging_server_internal_port}} \
  -Djetty.host={{messaging_server_internal_host}} \
  -Dhspc.reference.api.url={{api_dstu2_server_smart_sandbox_fhir_root_url}} \
- -Dldap.password={{ldap_server_admin_password}} \
- -Dldap.server={{ldap_server_uri}}/ou=users,{{ldap_server_base}} \
  -Dldap.url={{ldap_server_uri}} \
+ -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} \
+ -Dldap.base={{ldap_server_base}} \
+ -Dldap.userDn=cn=admin,{{ldap_server_base}} \
+ -Dldap.password={{ldap_server_admin_password}} \
  -Dmail.server.password= \
  -Dmail.server.username= \
  -Doidc.issuer={{auth_server_url}} \
@@ -32,9 +34,11 @@ ExecStart=/usr/bin/java \
  -Djetty.port={{messaging_server_internal_port}} \
  -Djetty.host={{messaging_server_internal_host}} \
  -Dhspc.reference.api.url={{api_dstu2_server_smart_sandbox_fhir_root_url}} \
- -Dldap.password={{ldap_server_admin_password}} \
- -Dldap.server={{ldap_server_uri}}/ou=users,{{ldap_server_base}} \
  -Dldap.url={{ldap_server_uri}} \
+ -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} \
+ -Dldap.base={{ldap_server_base}} \
+ -Dldap.userDn=cn=admin,{{ldap_server_base}} \
+ -Dldap.password={{ldap_server_admin_password}} \
  -Dmail.server.password= \
  -Dmail.server.username= \
  -Doidc.issuer={{auth_server_url}} \

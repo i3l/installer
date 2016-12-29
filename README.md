@@ -79,12 +79,17 @@ to some world-routable hostname if that's what you need -- and set the
 app_server public port to 80.
 
 ```
-sudo ansible-playbook  -c local -i 'localhost,' -vvvv smart-on-fhir.yml
+sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml
+```
+
+You may run a specific Ansible playbook such as:
+```
+sudo ansible-playbook  -c local -i 'localhost,' -vvvv playbook-rebuild-databases.yml
 ```
 
 You may run the Ansible playbook for specific tags using the --tags or --skip-tags flags such as:
 ```
-sudo ansible-playbook  -c local -i 'localhost,' -vvvv smart-on-fhir.yml --tags "verify"
+sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml --tags "verify"
 ```
 
 ---
@@ -105,7 +110,7 @@ Make sure that you have a user account on the remote machine that
 has passwordless sudo privileges.  Enable SSH from your local machine to
  the remote machine using certificates or password.
 3. Configure the installer
-Edit `smart-on-fhir.yml` locally replacing `REMOTEHOST` and `REMOTEUSER` 
+Edit `site.yml` locally replacing `REMOTEHOST` and `REMOTEUSER` 
 with the hostname or IP of your remote host and the user account with the 
 sudo privileges. Also, don't forget to update the `custom_settings.yml` 
 file to suit your needs. 
@@ -118,14 +123,14 @@ sudo apt-get install curl git python-pycurl python-pip python-yaml python-parami
 sudo pip install ansible==2.1.0
 git clone https://github.com/smart-on-fhir/installer
 cd installer/provisioning
-vi smart-on-fhir.yml
+vi site.yml
 vi custom_settings.yml
-ansible-playbook -i "REMOTEHOST," smart-on-fhir.yml
+ansible-playbook -i "REMOTEHOST," site.yml
 ```
 *Note:*  If your install returns an error "ESTABLISH SSH CONNECTION FOR USER: None", 
 explicitly pass the user (replacing {user} with your username):
 ```
-ansible-playbook -i "REMOTEHOST," -e "ansible_user={user}" smart-on-fhir.yml
+ansible-playbook -i "REMOTEHOST," -e "ansible_user={user}" site.yml
 ```
 
 ---
