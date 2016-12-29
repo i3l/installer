@@ -20,13 +20,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9085, host: 9085
 # Persona-Auth Server
   config.vm.network :forwarded_port, guest: 9086, host: 9086
+# Messaging Server
+  config.vm.network :forwarded_port, guest: 9087, host: 9087
 # Apps Server
   config.vm.network :forwarded_port, guest: 9090, host: 9090
 # LDAP
   config.vm.network :forwarded_port, guest: 389, host: 1389
+# PWM Server
+  config.vm.network :forwarded_port, guest: 9095, host: 9095
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "3072"
+    vb.memory = "4096"
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
@@ -41,10 +45,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
-    ansible.tags=["smart-platform"]
-#    ansible.tags=["sandbox-manager"]
+#    ansible.tags=["smart-platform"]
+#    ansible.tags=["messaging-all"]
 #    ansible.tags=["linux"]
-    ansible.playbook = "provisioning/smart-on-fhir.yml"
+#    ansible.playbook = "provisioning/smart-on-fhir.yml"
+    ansible.playbook = "provisioning/site.yml"
+#    ansible.playbook = "provisioning/playbook-rebuild-services.yml"
   end
 
   # If you are running the build on a Windows host, please comment out the

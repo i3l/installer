@@ -1,0 +1,27 @@
+---
+auth_server_initial_memory: 128M
+auth_server_max_memory: 256M
+
+# Version control information
+auth_branch: "develop"
+# reference-auth-server-webapp is cloned to gain the SQL install files
+auth_webapp_project: "reference-auth-server-webapp"
+# reference-auth-server-webapp is cloned to gain the sourcecode to build the application
+auth_webapp_ldap_project: "reference-auth-server-ldap-webapp"
+
+# Database schema
+auth_server_database: oic
+auth_db_file: "{{install_dir}}/auth_server_db.hsql"
+
+# Self-signed SSL certificates settings (if generating self-signed certificates)
+auth_server_ssl_country: "{{default_ssl_country}}"
+auth_server_ssl_province: "{{default_ssl_province}}"
+auth_server_ssl_locality: "{{default_ssl_locality}}"
+auth_server_ssl_organization: "{{default_ssl_organization}}"
+auth_server_ssl_division: "{{default_ssl_division}}"
+auth_server_ssl_email: "{{default_ssl_email}}"
+auth_server_newUserUrl:
+auth_server_forgotPasswordUrl:
+
+persona_auth_server_newUserUrl:
+persona_auth_server_forgotPasswordUrl:

@@ -1,0 +1,17 @@
+---
+messaging_server_initial_memory: 128M
+messaging_server_max_memory: 256M
+
+# Version control information
+messaging_branch: "develop"
+messaging_project: "reference-messaging"
+
+# Self-signed SSL certificates settings (if generating self-signed certificates)
+messaging_server_ssl_country: "{{default_ssl_country}}"
+messaging_server_ssl_province: "{{default_ssl_province}}"
+messaging_server_ssl_locality: "{{default_ssl_locality}}"
+messaging_server_ssl_organization: "{{default_ssl_organization}}"
+messaging_server_ssl_division: "{{default_ssl_division}}"
+messaging_server_ssl_email: "{{default_ssl_email}}"
+messaging_server_newUserUrl:
+messaging_server_forgotPasswordUrl:

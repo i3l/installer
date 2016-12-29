@@ -1,0 +1,62 @@
+[Unit]
+Description=Authorization Service
+
+[Service]
+User={{username}}
+TimeoutStartSec=infinity
+WorkingDirectory={{install_dir}}/hspc/reference-auth-server-ldap-webapp/target
+{% if auth_server_secure_http and not use_custom_ssl_certificates %}
+ExecStart=/usr/bin/java \
+ -Xms{{auth_server_initial_memory}} \
+ -Xmx{{auth_server_max_memory}} \
+ -Djetty.port={{auth_server_internal_port}} \
+ -Djetty.host={{auth_server_internal_host}} \
+ -Doidc.issuer={{auth_server_url}} \
+ -Dhspc.platform.persona.oauthUserLoginEndpointURL=j_spring_security_check \
+ -DCONTEXT_FHIR_ENDPOINT={{api_dstu2_server_smart_sandbox_fhir_root_url}} \
+ -DCONTEXT_RESOLVE_ENDPOINT={{app_server_base}} \
+ -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} \
+ -Doidc.datasource.mysql.username={{mysql_user}} \
+ -Doidc.datasource.mysql.password={{mysql_pass}} \
+ -Dldap.url={{ldap_server_uri}} \
+ -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} \
+ -Dldap.base={{ldap_server_base}} \
+ -Dldap.userDn=cn=admin,{{ldap_server_base}} \
+ -Dldap.password={{ldap_server_admin_password}} \
+ -DnewUserUrl={{auth_server_newUserUrl}} \
+ -DforgotPasswordUrl={{auth_server_forgotPasswordUrl}} \
+ -Djavax.net.ssl.trustStore={{install_dir}}/keystore \
+ -Djavax.net.ssl.trustStorePassword={{keystore_password}} \
+ -jar {{install_dir}}/jetty-runner.jar \
+ --config {{install_dir}}/jetty.xml \
+ --path {{auth_server_context}} \
+ hspc-reference-authorization.war
+{% else %}
+ExecStart=/usr/bin/java \
+ -Xms{{auth_server_initial_memory}} \
+ -Xmx{{auth_server_max_memory}} \
+ -Djetty.port={{auth_server_internal_port}} \
+ -Djetty.host={{auth_server_internal_host}} \
+ -Doidc.issuer={{auth_server_url}} \
+ -Dhspc.platform.persona.oauthUserLoginEndpointURL=j_spring_security_check \
+ -DCONTEXT_FHIR_ENDPOINT={{api_dstu2_server_smart_sandbox_fhir_root_url}} \
+ -DCONTEXT_RESOLVE_ENDPOINT={{app_server_base}} \
+ -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} \
+ -Doidc.datasource.mysql.username={{mysql_user}} \
+ -Doidc.datasource.mysql.password={{mysql_pass}} \
+ -Dldap.url={{ldap_server_uri}} \
+ -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} \
+ -Dldap.base={{ldap_server_base}} \
+ -Dldap.userDn=cn=admin,{{ldap_server_base}} \
+ -Dldap.password={{ldap_server_admin_password}} \
+ -DnewUserUrl={{auth_server_newUserUrl}} \
+ -DforgotPasswordUrl={{auth_server_forgotPasswordUrl}} \
+ -jar {{install_dir}}/jetty-runner.jar \
+ --config {{install_dir}}/jetty.xml \
+ --path {{auth_server_context}} \
+ hspc-reference-authorization.war
+{% endif %}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

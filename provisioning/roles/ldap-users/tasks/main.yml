@@ -1,0 +1,16 @@
+---
+ - name: generate sample LDAP directory
+   tags: [ldap-all, ldap-data, smart-platform]
+   become_user: "{{username}}"
+   template: src="ldap_content.ldif.j2"
+             dest="{{install_dir}}/ldap_content.ldif"
+
+ - name: load sample LDAP directory
+   tags: [ldap-all, ldap-data, smart-platform]
+   when: ldap_checkout.changed or force_rebuild
+   shell: chdir={{install_dir}}
+          ldapadd
+            -x -D cn=admin,{{ldap_server_base}}
+            -w {{ldap_server_admin_password}}
+            -f ldap_content.ldif
+   failed_when: False

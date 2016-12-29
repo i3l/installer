@@ -1,0 +1,6 @@
+---
+ - include: api.yml
+
+ - include: persona-api.yml
+
+ - meta: flush_handlers

@@ -1,0 +1,39 @@
+upstream sandbox-manager {
+    server 127.0.0.1:{{sandbox_manager_server_internal_port}};
+}
+
+# the nginx server instance
+server {
+{% if sandbox_manager_server_host %}
+    server_name {{sandbox_manager_server_host}};
+{% endif %}
+
+    listen {{sandbox_manager_server_port}};
+
+    location / {
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header Host $http_host;
+      proxy_set_header X-NginX-Proxy true;
+
+      access_log /var/log/nginx/sandbox_manager_access.log;
+      proxy_pass http://sandbox-manager;
+      proxy_redirect off;
+    }
+
+{% if sandbox_manager_server_secure_http %}
+    ssl on;
+    ssl_certificate /etc/nginx/ssl/sandbox-manager.crt;
+    ssl_certificate_key /etc/nginx/ssl/sandbox-manager.key;
+{% endif %}
+}
+
+#{% if sandbox_manager_server_port != 80 and http_redirect %}
+#server {
+#    server_name {{sandbox_manager_server_host}};
+#    rewrite ^       {{sandbox_manager_server_url}}$request_uri? permanent;
+#    listen 80;
+#}
+#{% endif %}
+
