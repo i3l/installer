@@ -8,6 +8,8 @@
     - common
     - ldap-common
     - ldap-server
+    - pwm-common
+    - pwm-server
     - api-dstu2-common
     - api-dstu2-server
     - apps-server
@@ -34,6 +36,8 @@
     - common
     - ldap-common
     - ldap-server
+    - pwm-common
+    - pwm-server
     - api-dstu2-common
     - api-dstu2-server
     - apps-server

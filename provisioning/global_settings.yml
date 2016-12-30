@@ -78,8 +78,8 @@ sample_patients_repo: "https://github.com/smart-on-fhir/sample-patients.git"
 sample_patients_branch: "master"
 
 # choose how many sample patients to load in the server or set to 9999 for all of them
-sample_patients_limit: 10
 include_custom_patients: false
+api_dstu2_sample_patients_generator_params: --id-prefix SMART
 
 app_server_base: "{{
     'https' if app_server_secure_http else 'http'}}://{{app_server_host}}{{
@@ -101,14 +101,14 @@ app_server_ssl_email: "{{default_ssl_email}}"
 
 # LDAP server configuration
 ldap_server_host: "localhost"
+ldap_server_port: "389"
 ldap_server_base: "dc=example,dc=com"
-ldap_server_uri: "ldap://{{ldap_server_host}}:389"
-ldap_server_admin_password: "sample-password"
+ldap_server_uri: "ldap://{{ldap_server_host}}:{{ldap_server_port}}"
+
 # Additional parameters for the sample patient generator
 sample_patients_generator_params: ""
 
 # API DSTU2 Server
-# Promoted to global settings to it can be shared
 api_dstu2_server_secure_http: false
 api_dstu2_server_host: "localhost"
 api_dstu2_server_port: 9080
@@ -143,7 +143,6 @@ api_server_oauth2_clientId: hspc_resource_server
 api_server_oauth2_clientSecret: secret
 
 # SandboxManager Server
-# Promoted to global settings to it can be shared
 sandbox_manager_server_secure_http: false
 sandbox_manager_server_host: "localhost"
 sandbox_manager_server_port: 9075
@@ -157,7 +156,6 @@ sandbox_manager_server_base_url: "{{sandbox_manager_server_inferred_protocol}}:/
 sandbox_manager_server_url: "{{sandbox_manager_server_base_url}}{{sandbox_manager_server_context}}"
 
 # Auth Server
-# Promoted to global settings to it can be shared
 auth_server_secure_http: false
 auth_server_host: "localhost"
 auth_server_port: 9085
@@ -175,7 +173,6 @@ auth_server_client: client
 auth_server_password: secret
 
 # Persona-Auth Server
-# Promoted to global settings to it can be shared
 persona_auth_server_secure_http: false
 persona_auth_server_host: "localhost"
 persona_auth_server_port: 9086
@@ -189,7 +186,6 @@ persona_auth_server_base_url: "{{persona_auth_server_inferred_protocol}}://{{per
 persona_auth_server_url: "{{persona_auth_server_base_url}}{{persona_auth_server_context}}"
 
 # Messaging Server
-# Promoted to global settings to it can be shared
 messaging_server_secure_http: false
 messaging_server_host: "localhost"
 messaging_server_port: 9087
@@ -203,18 +199,17 @@ messaging_server_base_url: "{{messaging_server_inferred_protocol}}://{{messaging
 messaging_server_url: "{{messaging_server_base_url}}{{messaging_server_context}}"
 
 # PWM Server
-# Promoted to global settings to it can be shared
-#pwm_server_secure_http: false
-#pwm_server_host: "localhost"
-#pwm_server_port: 9095
-#pwm_server_internal_host: "localhost"
-#pwm_server_internal_port: 9007
-#pwm_server_context: /
-#pwm_server_name: "PWM Server"
-#pwm_server_inferred_protocol: "{{'https' if pwm_server_secure_http else 'http'}}"
-#pwm_server_inferred_port: "{{(':'+pwm_server_port|string) if pwm_server_port|int not in (80,443) else ''}}"
-#pwm_server_base_url: "{{pwm_server_inferred_protocol}}://{{pwm_server_host}}{{pwm_server_inferred_port}}"
-#pwm_server_url: "{{pwm_server_base_url}}{{pwm_server_context}}"
+pwm_server_secure_http: false
+pwm_server_host: "localhost"
+pwm_server_port: 9088
+pwm_server_internal_host: "localhost"
+pwm_server_internal_port: 9007
+pwm_server_context: /
+pwm_server_name: "PWM Server"
+pwm_server_inferred_protocol: "{{'https' if pwm_server_secure_http else 'http'}}"
+pwm_server_inferred_port: "{{(':'+pwm_server_port|string) if pwm_server_port|int not in (80,443) else ''}}"
+pwm_server_base_url: "{{pwm_server_inferred_protocol}}://{{pwm_server_host}}{{pwm_server_inferred_port}}"
+pwm_server_url: "{{pwm_server_base_url}}{{pwm_server_context}}"
 
 nginx_home: /etc/nginx
 fhir_home: /home/fhir

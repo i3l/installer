@@ -5,6 +5,8 @@
     - global_settings.yml
     - custom_settings.yml
   roles:
+    - pwm-common
+    - pwm-code
     - api-dstu2-common
     - api-dstu2-code
     - apps-code
@@ -28,6 +30,8 @@
     app_server_host: REMOTEHOST
     auth_server_host: REMOTEHOST
   roles:
+    - pwm-common
+    - pwm-code
     - api-dstu2-common
     - api-dstu2-code
     - apps-code

@@ -1,0 +1,20 @@
+---
+ - name: checkout repository pwm_project
+   tags: [pwm-all, pwm-code, smart-platform]
+   become_user: "{{username}}"
+   git: repo="{{hspc_repos_base}}/{{pwm_project}}"
+        version="{{pwm_branch}}"
+        dest="{{install_dir}}/hspc/{{pwm_project}}"
+        update={{update_repositories}}
+
+# - name: patch PwmConfiguration.xml
+#   tags: [pwm-all, pwm-code, smart-platform]
+#   become_user: "{{username}}"
+#   template: src=PwmConfiguration.xml.j2
+#             dest="{{install_dir}}/hspc/{{pwm_project}}/src/main/webapp/WEB-INF/PwmConfiguration.xml"
+
+ - name: build hspc pwm server
+   tags: [pwm-all, pwm-code, smart-platform]
+   become_user: "{{username}}"
+   shell: chdir={{install_dir}}/hspc
+        mvn clean install -e -f {{pwm_project}}/pom.xml

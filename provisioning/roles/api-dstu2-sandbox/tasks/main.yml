@@ -1,4 +1,11 @@
 ---
+ - name: drop sandbox snapshot
+   include: snapshot-command.yml
+   tags: [api-dstu2-all, api-dstu2-sandbox, smart-platform]
+   vars:
+     snapshot_name: "{{api_dstu2_baseline_snapshot}}"
+     snapshot_action: Delete
+
  - name: initialize sandbox
    tags: [api-dstu2-all, api-dstu2-sandbox, smart-platform]
    uri:
@@ -8,7 +15,6 @@
      body_format: json
      HEADER_Content-Type: "application/json"
 
- # load the sample data
  - name: checkout api-dstu2-sample patients
    tags: [api-dstu2-all, api-dstu2-sandbox, smart-platform]
    become_user: "{{username}}"
@@ -52,7 +58,6 @@
             --data-binary @{{item}}"
    with_items: "{{api_dstu2_custom_patient_files_json.stdout_lines}}"
 
- # take a snapshot of the sandbox
  - include: snapshot-command.yml
    tags: [api-dstu2-all, api-dstu2-sandbox, smart-platform]
    vars:

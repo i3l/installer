@@ -5,6 +5,8 @@
     - global_settings.yml
     - custom_settings.yml
   roles:
+    - pwm-common
+    - pwm-data
     - api-dstu2-common
     - api-dstu2-data
     - sandbox-manager-common
@@ -25,6 +27,8 @@
     app_server_host: REMOTEHOST
     auth_server_host: REMOTEHOST
   roles:
+    - pwm-common
+    - pwm-data
     - api-dstu2-common
     - api-dstu2-data
     - sandbox-manager-common

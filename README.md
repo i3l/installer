@@ -157,7 +157,7 @@ API server and add the self-signed certificate to your browser's security except
 ### Sample data
 By default, the server will load data for only 10 sample patients. To automatically load the entire set of ~60 samples patients, you can update your `custom_settings` to increase this limit:
 
-* `sample_patients_limit: 100`
+* `api_dstu2_sample_patients_limit: 100`
 
 ### Log Files
 The installer creates servers that log to the journal.  You can view the journal logs using this command:
