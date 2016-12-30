@@ -101,6 +101,7 @@ app_server_ssl_email: "{{default_ssl_email}}"
 
 # LDAP server configuration
 ldap_server_organization: "SMART Heathcare IT"
+ldap_server_domain: "example.com"
 ldap_server_host: "localhost"
 ldap_server_port: "389"
 ldap_server_base: "dc=example,dc=com"
