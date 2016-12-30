@@ -9,6 +9,7 @@ WorkingDirectory={{install_dir}}/hspc/reference-auth-server-ldap-webapp/target
 ExecStart=/usr/bin/java \
  -Xms{{auth_server_initial_memory}} \
  -Xmx{{auth_server_max_memory}} \
+ -Dspring.profiles.active=production \
  -Djetty.port={{persona_auth_server_internal_port}} \
  -Djetty.host={{persona_auth_server_internal_host}} \
  -Doidc.issuer={{persona_auth_server_url}} \
@@ -35,6 +36,7 @@ ExecStart=/usr/bin/java \
 ExecStart=/usr/bin/java \
  -Xms{{auth_server_initial_memory}} \
  -Xmx{{auth_server_max_memory}} \
+ -Dspring.profiles.active=production \
  -Djetty.port={{persona_auth_server_internal_port}} \
  -Djetty.host={{persona_auth_server_internal_host}} \
  -Doidc.issuer={{persona_auth_server_url}} \
