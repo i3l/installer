@@ -65,6 +65,10 @@
         dest={{install_dir}}/apps/static/apps/patient-picker
         update={{update_repositories}}
         force=yes
+
+ - name: copy patient picker app
+   tags: [apps-all, apps-code, smart-platform]
+   become_user: "{{username}}"
    shell: mv {{install_dir}}/apps/static/apps/patient-picker/src/main/webapp/static {{install_dir}}/apps/static/apps/patient-picker
           mv {{install_dir}}/apps/static/apps/patient-picker/src/main/webapp/index.html {{install_dir}}/apps/static/apps/patient-picker
           rm -rf {{install_dir}}/apps/static/apps/patient-picker/src/main/webapp/static/
