@@ -43,8 +43,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
 
-  config.vm.provision "shell", path: "provisioning/fetch-templates.sh", args: ["/vagrant/provisioning/roles/apps/templates/config","v0.1.2"]
-
   config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
 #    ansible.tags=["smart-platform"]
