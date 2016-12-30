@@ -56,7 +56,7 @@
    tags: [apps-all, apps-code, smart-platform]
    become_user: "{{username}}"
    template: src=branded_text.js.j2
-             dest={{install_dir}}/apps/static/apps/patient-picker/src/main/webapp/static/js/branding/branded_text.js
+             dest={{install_dir}}/apps/static/apps/patient-picker/static/js/branding/branded_text.js
 
  - name: configure sample apps
    tags: [apps-all, apps-code, smart-platform]
