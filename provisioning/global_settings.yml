@@ -65,11 +65,13 @@ cardiac_risk_repo: "https://github.com/smart-on-fhir/cardiac-risk-app.git"
 bp_centiles_repo: "https://github.com/smart-on-fhir/bp-centiles-app.git"
 growth_chart_repo: "https://github.com/smart-on-fhir/growth-chart-app.git"
 fhir_demo_app_repo: "https://github.com/smart-on-fhir/fhir-demo-app.git"
+patient_picker_app_repo: "https://bitbucket.org/hspconsortium/patient-picker.git"
 fhir_starter_branch: "master"
 cardiac_risk_branch: "master"
 bp_centiles_branch: "master"
 growth_chart_branch: "master"
 fhir_demo_app_branch: "master"
+patient_picker_app_branch: "master"
 
 # General settings for the sample patients set
 sample_patients_repo: "https://github.com/smart-on-fhir/sample-patients.git"

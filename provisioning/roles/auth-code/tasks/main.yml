@@ -66,6 +66,12 @@
    template: src=sandbox-manager-client.sql.j2
              dest={{install_dir}}/hspc/sandbox-manager/src/main/resources/db/openidconnect/mysql/sandbox-manager-client.sql
 
+ - name: patch patient-picker mysql auth install
+   tags: [auth-all, auth-code, smart-platform]
+   become_user: "{{username}}"
+   template: src=patient-picker-client.sql.j2
+             dest={{install_dir}}/apps/static/apps/patient-picker/src/main/resources/db/openidconnect/mysql/patient-picker-client.sql
+
  # install SMART logos
  - name: config company-logo.png
    tags: [auth-all, auth-code, smart-platform]
