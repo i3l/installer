@@ -35,7 +35,7 @@ api_dstu2_sample_patients_generator_params: ""
 
 # DSTU2 API Server settings
 api_dstu2_server_internal_host: localhost
-api_dstu2_server_internal_port: 9003
+api_dstu2_server_internal_port: 8070
 api_dstu2_server_internal_base_url: "{{api_dstu2_server_inferred_protocol}}://{{api_dstu2_server_internal_host}}:{{api_dstu2_server_internal_port}}{{api_dstu2_server_context}}"
 api_dstu2_server_internal_smart_sandbox_url: "{{api_dstu2_server_internal_base_url}}{{api_dstu2_server_smart_sandbox}}"
 api_dstu2_server_internal_smart_sandbox_fhir_root_url: "{{api_dstu2_server_internal_smart_sandbox_url}}/data"
@@ -43,7 +43,7 @@ api_dstu2_server_internal_smart_sandbox_open_fhir_root_url: "{{api_dstu2_server_
 
 # PERSONA DSTU2 API Server settings
 persona_api_dstu2_server_internal_host: localhost
-persona_api_dstu2_server_internal_port: 9004
+persona_api_dstu2_server_internal_port: 8071
 persona_api_dstu2_server_internal_base_url: "{{persona_api_dstu2_server_inferred_protocol}}://{{persona_api_dstu2_server_internal_host}}:{{persona_api_dstu2_server_internal_port}}{{persona_api_dstu2_server_context}}"
 persona_api_dstu2_server_internal_smart_sandbox_url: "{{persona_api_dstu2_server_internal_base_url}}{{persona_api_dstu2_server_smart_sandbox}}"
 persona_api_dstu2_server_internal_smart_sandbox_fhir_root_url: "{{persona_api_dstu2_server_internal_smart_sandbox_url}}/data"

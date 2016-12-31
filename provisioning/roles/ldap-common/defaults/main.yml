@@ -1,9 +1,6 @@
 ---
 # *** Main configuration file for the SMART-on-FHIR LDAP Server Installer ***
 
-# LDAP server configuration
-ldap_server_admin_password: "sample-password"
-
 # When set to true will force TLS and disalow anonymous binds for the LDAP server
 ldap_server_tls: false
 
@@ -13,4 +10,4 @@ ldap_server_ssl_province: MA
 ldap_server_ssl_locality: Boston
 ldap_server_ssl_organization: Example Company
 ldap_server_ssl_division: support
-ldap_server_ssl_email: support@example.com
+ldap_server_ssl_email: support@{{ldap_server_domain}}

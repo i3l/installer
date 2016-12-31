@@ -6,8 +6,8 @@ INSERT INTO users (username, password, enabled) VALUES
 
 -- By default, the username column here has to match the username column in the users table, above
 INSERT INTO user_info (sub, preferred_username, name, email, email_verified) VALUES
-  ('90342.ASDFJWFA','admin','Demo Admin','admin@example.com', true),
-  ('01921.FLANRJQW','user','Demo User','user@example.com', true);
+  ('90342.ASDFJWFA','admin','Demo Admin','admin@{{domain_name}}', true),
+  ('01921.FLANRJQW','user','Demo User','user@{{domain_name}}', true);
 
 
 INSERT INTO authorities (username, authority) VALUES

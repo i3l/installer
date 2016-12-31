@@ -24,7 +24,7 @@ use_custom_ssl_certificates: false
 #custom_ssl_certificates_path: examples/certificates
 
 # LDAP server configuration
-ldap_server_domain: "example.com"
+ldap_server_domain: "{{domain_name}}"
 ldap_server_host: "localhost"
 ldap_server_port: "389"
 ldap_server_base: "dc=example,dc=com"
@@ -41,4 +41,4 @@ ldap_server_ssl_province: MA
 ldap_server_ssl_locality: Boston
 ldap_server_ssl_organization: Example Company
 ldap_server_ssl_division: support
-ldap_server_ssl_email: support@example.com
+ldap_server_ssl_email: support@{{ldap_server_domain}}

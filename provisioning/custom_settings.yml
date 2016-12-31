@@ -12,28 +12,28 @@ mysql_user: fhir
 mysql_pass: password
 
 app_server_host: "localhost"
-app_server_port: 9090
+app_server_port: 9093
 
 api_dstu2_server_host: "localhost"
-api_dstu2_server_port: 9080
+api_dstu2_server_port: 9070
 api_dstu2_server_name: "SMART-on-FHIR FHIR DSTU2 Server"
 
 persona_api_dstu2_server_host: "localhost"
-persona_api_dstu2_server_port: 9081
+persona_api_dstu2_server_port: 9071
 persona_api_dstu2_server_name: "SMART-on-FHIR FHIR DSTU2 Server"
 
 sandbox_manager_server_host: "localhost"
-sandbox_manager_server_port: 9075
+sandbox_manager_server_port: 9090
 
 auth_server_host: "localhost"
-auth_server_port: 9085
+auth_server_port: 9080
 auth_server_password: secret
 
 persona_auth_server_host: "localhost"
-persona_auth_server_port: 9086
+persona_auth_server_port: 9081
 
 messaging_server_host: "localhost"
-messaging_server_port: 9087
+messaging_server_port: 9091
 
 #use_custom_ssl_certificates: true
 #custom_ssl_certificates_path: examples/certificates

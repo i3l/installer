@@ -8,28 +8,32 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "smart-on-fhir"
   config.vm.box = "bento/ubuntu-16.04"
 
-# Gateway
+# API_DSTU2 Server
   config.vm.network :forwarded_port, guest: 9070, host: 9070
-# Sandbox Manager
-  config.vm.network :forwarded_port, guest: 9075, host: 9075
-# API Server
-  config.vm.network :forwarded_port, guest: 9080, host: 9080
-# Persona-API Server
-  config.vm.network :forwarded_port, guest: 9081, host: 9081
+# Persona-API_DSTU2 Server
+  config.vm.network :forwarded_port, guest: 9071, host: 9071
+# API_STU3 Server
+  config.vm.network :forwarded_port, guest: 9072, host: 9072
+# Persona-API_STU3 Server
+  config.vm.network :forwarded_port, guest: 9073, host: 9073
+
 # Auth Server
-  config.vm.network :forwarded_port, guest: 9085, host: 9085
+  config.vm.network :forwarded_port, guest: 9080, host: 9080
 # Persona-Auth Server
-  config.vm.network :forwarded_port, guest: 9086, host: 9086
-# Messaging Server
-  config.vm.network :forwarded_port, guest: 9087, host: 9087
-# PWM Server
-  config.vm.network :forwarded_port, guest: 9088, host: 9088
-# Apps Server
+  config.vm.network :forwarded_port, guest: 9081, host: 9081
+
+# Sandbox Manager
   config.vm.network :forwarded_port, guest: 9090, host: 9090
+# Messaging Server
+  config.vm.network :forwarded_port, guest: 9091, host: 9091
+# PWM Server
+  config.vm.network :forwarded_port, guest: 9092, host: 9092
+# Apps Server
+  config.vm.network :forwarded_port, guest: 9093, host: 9093
+# PWM Server
+  config.vm.network :forwarded_port, guest: 9094, host: 9094
 # LDAP
   config.vm.network :forwarded_port, guest: 389, host: 1389
-# PWM Server
-  config.vm.network :forwarded_port, guest: 9095, host: 9095
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "5120"
@@ -47,9 +51,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #    ansible.verbose="vvvv"
 #    ansible.tags=["smart-platform"]
 #    ansible.tags=["api-dstu2-all"]
-    ansible.tags=["sandbox-manager-all"]
-#    ansible.playbook = "provisioning/site.yml"
-    ansible.playbook = "provisioning/playbook-rebuild-databases.yml"
+#    ansible.tags=["sandbox-manager-all"]
+    ansible.playbook = "provisioning/site.yml"
+#    ansible.playbook = "provisioning/playbook-rebuild-databases.yml"
 #    ansible.playbook = "provisioning/playbook-rebuild-app-code.yml"
   end
 

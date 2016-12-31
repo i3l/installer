@@ -11,8 +11,8 @@ sn: User
 givenName: Demo
 cn: Demo User
 displayName: Demo User
-mail: demo@example.com
-userPassword: demo
+mail: demo@{{ldap_server_domain}}
+userPassword: {{ldap_server_account_demo_password}}
 
 dn: uid=admin,ou=People,{{ldap_server_base}}
 objectClass: inetOrgPerson
@@ -23,5 +23,5 @@ sn: User
 givenName: Admin
 cn: Admin User
 displayName: Admin User
-mail: admin@example.com
-userPassword: password
+mail: admin@{{ldap_server_domain}}
+userPassword: {{ldap_server_account_admin_password}}
