@@ -100,14 +100,14 @@
   notify:
         - restart nginx
 
- - name: import server certificate in truststore
-   tags: [linux-all, smart-platform]
-   when: use_secure_http and use_custom_ssl_certificates
-   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
-            -importcert -trustcacerts
-            -alias {{certificate_truststore_alias}}
-            -file /etc/nginx/ssl/smart.crt
-            -keystore {{install_dir}}/keystore
+- name: import server certificate in truststore
+  tags: [linux-all, smart-platform]
+  when: use_secure_http and use_custom_ssl_certificates
+  shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
+           -importcert -trustcacerts
+           -alias {{certificate_truststore_alias}}
+           -file /etc/nginx/ssl/smart.crt
+           -keystore {{install_dir}}/keystore
 
 - name: add www-data user to ssl-cert group
   tags: [linux-all, smart-platform]
