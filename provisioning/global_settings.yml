@@ -57,6 +57,11 @@ use_secure_http: false
 use_custom_ssl_certificates: false
 #custom_ssl_certificates_path: examples/certificates
 
+custom_certificate_crt_filename: example.crt;
+custom_certificate_key_filename: example.key;
+
+certificate_truststore_alias: smart
+
 # Self-signed SSL certificates settings (if generating self-signed certificates)
 self_signed_certificate_ssl_country: US
 self_signed_certificate_ssl_province: MA

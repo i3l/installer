@@ -79,18 +79,35 @@
 - name: generate self-signed ssl certificate
   tags: [linux-all, smart-platform]
   when: use_secure_http and not use_custom_ssl_certificates
-  shell: creates=/etc/nginx/ssl/self_signed_certificate.crt
-         /bin/echo -e "{{self_signed_certificate_ssl_country}}\n{{self_signed_certificate_ssl_province}}\n{{self_signed_certificate_ssl_locality}}\n{{self_signed_certificate_ssl_organization}}\n{{self_signed_certificate_ssl_division}}\n{{domain_name}}\n{{self_signed_certificate_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/self_signed_certificate.key -out /etc/nginx/ssl/self_signed_certificate.crt
+  shell: creates=/etc/nginx/ssl/smart.crt
+         /bin/echo -e "{{self_signed_certificate_ssl_country}}\n{{self_signed_certificate_ssl_province}}\n{{self_signed_certificate_ssl_locality}}\n{{self_signed_certificate_ssl_organization}}\n{{self_signed_certificate_ssl_division}}\n{{domain_name}}\n{{self_signed_certificate_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/smart.key -out /etc/nginx/ssl/smart.crt
   notify:
         - restart nginx
 
 - name: copy custom ssl certificates
   tags: [linux-all, smart-platform]
   when: use_secure_http and use_custom_ssl_certificates
-  copy: src={{custom_ssl_certificates_path}}/
-        dest=/etc/nginx/ssl
+  copy: src="{{custom_ssl_certificates_path}}/{{custom_certificate_crt_filename}}"
+        dest=/etc/nginx/ssl/smart.crt
   notify:
         - restart nginx
+
+- name: copy custom ssl certificates
+  tags: [linux-all, smart-platform]
+  when: use_secure_http and use_custom_ssl_certificates
+  copy: src="{{custom_ssl_certificates_path}}/{{custom_certificate_key_filename}}"
+        dest=/etc/nginx/ssl/smart.key
+  notify:
+        - restart nginx
+
+ - name: import server certificate in truststore
+   tags: [linux-all, smart-platform]
+   when: use_secure_http and use_custom_ssl_certificates
+   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
+            -importcert -trustcacerts
+            -alias {{certificate_truststore_alias}}
+            -file /etc/nginx/ssl/smart.crt
+            -keystore {{install_dir}}/keystore
 
 - name: add www-data user to ssl-cert group
   tags: [linux-all, smart-platform]
@@ -119,7 +136,7 @@
   become_user: "{{username}}"
   when: use_secure_http
   shell: /bin/echo -e "{{keystore_password}}\n{{keystore_password}}\n\n\n\n\n\n\nyes\n" | keytool
-           -genkey -alias foo
+           -genkey -alias smart
            -keystore {{install_dir}}/keystore
 
 - name: configure nginx
