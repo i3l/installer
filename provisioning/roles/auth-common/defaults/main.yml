@@ -13,5 +13,7 @@ auth_webapp_ldap_project: "reference-auth-server-ldap-webapp"
 auth_server_database: oic
 auth_db_file: "{{install_dir}}/auth_server_db.hsql"
 
+auth_server_newUserUrl:
+auth_server_forgotPasswordUrl:
 persona_auth_server_newUserUrl:
 persona_auth_server_forgotPasswordUrl:
