@@ -21,15 +21,6 @@
    tags: [auth-all, auth-server, smart-platform]
    service: name=auth-server enabled=yes state=restarted
 
- - name: import auth server certificate in truststore (auth server)
-   tags: [auth-all, auth-server, smart-platform]
-   when: use_secure_http
-   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
-            -importcert -trustcacerts
-            -alias auth
-            -file /etc/nginx/ssl/auth.crt
-            -keystore {{install_dir}}/keystore
-
  - name: configure nginx (auth server)
    tags: [auth-all, auth-server, smart-platform]
    template: src=nginx_auth.j2 dest=/etc/nginx/sites-enabled/auth owner=root group=root mode=0644

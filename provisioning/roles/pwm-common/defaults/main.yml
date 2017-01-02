@@ -8,11 +8,3 @@ pwm_project: "pwm"
 
 # Database schema
 pwm_server_database: pwm
-
-# Self-signed SSL certificates settings (if generating self-signed certificates)
-pwm_server_ssl_country: "{{default_ssl_country}}"
-pwm_server_ssl_province: "{{default_ssl_province}}"
-pwm_server_ssl_locality: "{{default_ssl_locality}}"
-pwm_server_ssl_organization: "{{default_ssl_organization}}"
-pwm_server_ssl_division: "{{default_ssl_division}}"
-pwm_server_ssl_email: "{{default_ssl_email}}"

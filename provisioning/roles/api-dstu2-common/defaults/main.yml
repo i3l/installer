@@ -54,11 +54,4 @@ api_dstu2_server_security_mode: secured
 # Set this to none to remove open access
 api_dstu2_server_open_access_endpoint: open
 
-# Self-signed SSL certificates settings (if generating self-signed certificates)
-api_dstu2_server_ssl_country: "{{default_ssl_country}}"
-api_dstu2_server_ssl_province: "{{default_ssl_province}}"
-api_dstu2_server_ssl_locality: "{{default_ssl_locality}}"
-api_dstu2_server_ssl_organization: "{{default_ssl_organization}}"
-api_dstu2_server_ssl_division: "{{default_ssl_division}}"
-api_dstu2_server_ssl_email: "{{default_ssl_email}}"
 

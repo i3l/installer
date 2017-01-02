@@ -17,21 +17,6 @@
    tags: [sandbox-manager-all, sandbox-manager-server, smart-platform]
    service: name=sandbox-manager-server state=stopped
 
- - name: generate self-signed ssl certificate (sandbox-manager-server)
-   tags: [sandbox-manager-all, sandbox-manager-server, smart-platform]
-   when: use_secure_http and not use_custom_ssl_certificates
-   shell: creates=/etc/nginx/ssl/sandbox-manager.crt
-          /bin/echo -e "{{sandbox_manager_server_ssl_country}}\n{{sandbox_manager_server_ssl_province}}\n{{sandbox_manager_server_ssl_locality}}\n{{sandbox_manager_server_ssl_organization}}\n{{sandbox_manager_server_ssl_division}}\n{{sandbox_manager_server_host}}\n{{sandbox_manager_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/sandbox-manager.key -out /etc/nginx/ssl/sandbox-manager.crt
-
- - name: import sandbox-manager-server certificate in truststore (sandbox-manager-server)
-   tags: [sandbox-manager-all, sandbox-manager-server, smart-platform]
-   when: use_secure_http
-   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
-            -importcert -trustcacerts
-            -alias sandbox-manager
-            -file /etc/nginx/ssl/sandbox-manager.crt
-            -keystore {{install_dir}}/keystore
-
  - name: configure nginx (sandbox-manager-server)
    tags: [sandbox-manager-all, sandbox-manager-server, smart-platform]
    template: src=nginx_sandbox_manager.j2 dest=/etc/nginx/sites-enabled/sandbox-manager owner=root group=root mode=0644
