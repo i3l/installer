@@ -39,7 +39,7 @@
 
 - name: generate self-signed ssl certificate (docs server)
   tags: [docs]
-  when: docs_server_secure_http and not use_custom_ssl_certificates
+  when: use_secure_http and not use_custom_ssl_certificates
   shell: creates=/etc/nginx/ssl/docs.crt
          /bin/echo -e "{{docs_server_ssl_country}}\n{{docs_server_ssl_province}}\n{{docs_server_ssl_locality}}\n{{docs_server_ssl_organization}}\n{{docs_server_ssl_division}}\n{{docs_server_host}}\n{{docs_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/docs.key -out /etc/nginx/ssl/docs.crt
 

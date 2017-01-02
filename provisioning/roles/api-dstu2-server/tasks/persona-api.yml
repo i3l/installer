@@ -19,13 +19,13 @@
 
  - name: generate self-signed ssl certificate (persona-api-dstu2-server)
    tags: [api-dstu2-all, api-dstu2-server, smart-platform]
-   when: persona_api_dstu2_server_secure_http and not use_custom_ssl_certificates
+   when: use_secure_http and not use_custom_ssl_certificates
    shell: creates=/etc/nginx/ssl/persona-api-dstu2.crt
           /bin/echo -e "{{api_dstu2_server_ssl_country}}\n{{api_dstu2_server_ssl_province}}\n{{api_dstu2_server_ssl_locality}}\n{{api_dstu2_server_ssl_organization}}\n{{api_dstu2_server_ssl_division}}\n{{persona_api_dstu2_server_host}}\n{{api_dstu2_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/persona-api-dstu2.key -out /etc/nginx/ssl/persona-api-dstu2.crt
 
  - name: import persona-api-dstu2-server certificate in truststore
    tags: [api-dstu2-all, api-dstu2-server, smart-platform]
-   when: persona_api_dstu2_server_secure_http
+   when: use_secure_http
    shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
             -importcert -trustcacerts
             -alias persona-api-dstu2

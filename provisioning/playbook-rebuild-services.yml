@@ -6,8 +6,10 @@
     - custom_settings.yml
   roles:
     - common
-    - ldap-common
-    - ldap-server
+#    - ldap-common
+#    - ldap-server
+    - apacheds-common
+    - apacheds-server
     - pwm-common
     - pwm-server
     - api-dstu2-common
@@ -34,8 +36,10 @@
     auth_server_host: REMOTEHOST
   roles:
     - common
-    - ldap-common
-    - ldap-server
+#    - ldap-common
+#    - ldap-server
+    - apacheds-common
+    - apacheds-server
     - pwm-common
     - pwm-server
     - api-dstu2-common

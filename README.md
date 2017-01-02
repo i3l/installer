@@ -137,12 +137,10 @@ ansible-playbook -i "REMOTEHOST," -e "ansible_user={user}" site.yml
 
 ## Notes
 
-### SSL
-By default, the install process will not enable SSL. To enable SSL for specific services, you can set the following variables to `true`:
+### TLS
+By default, the install process will not enable TLS. To enable TLS for specific services, you can set the following variable:
 
-* `auth_server_secure_http`: Authorization server
-* `api_dstu2_server_secure_http`: API server
-* `app_server_secure_http`: App server
+* `use_secure_http: true`
 
 What certificates will be used? You have two options:
 
@@ -155,7 +153,7 @@ a client by client basis. Before you even try the apps, you should probably load
 API server and add the self-signed certificate to your browser's security exceptions.
 
 ### Sample data
-By default, the server will load data for only 10 sample patients. To automatically load the entire set of ~60 samples patients, you can update your `custom_settings` to increase this limit:
+By default, the server will load data for only 20 sample patients. To automatically load the entire set of ~60 samples patients, you can update your `custom_settings` to increase this limit:
 
 * `api_dstu2_sample_patients_limit: 100`
 

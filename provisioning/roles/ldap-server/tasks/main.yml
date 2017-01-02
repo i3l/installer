@@ -50,7 +50,6 @@
   with_items:
          - slapd
          - ldap-utils
-         - ssl-cert
 
 - name: configure LDAP client tool
   tags: [ldap-all, ldap-server, smart-platform]
@@ -84,7 +83,6 @@
   tags: [ldap-all, ldap-server, smart-platform]
   when: ldap_server_tls and not use_custom_ssl_certificates
   shell: sh -c "certtool --generate-privkey > /etc/ldap/ssl/ldap_ca_key.pem"
-
 
 - name: generate self-signed ca certificate
   tags: [ldap-all, ldap-server, smart-platform]

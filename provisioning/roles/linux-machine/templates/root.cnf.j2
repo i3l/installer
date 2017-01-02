@@ -1,3 +1,7 @@
 [client]
 user=root
 password={{ mysql_root_pass }}
+
+[mysqld]
+skip-external-locking
+bind-address={{ mysql_bind_address }}

@@ -22,7 +22,7 @@ server {
       proxy_redirect off;
     }
 
-{% if persona_auth_server_secure_http %}
+{% if use_secure_http %}
     ssl on;
     ssl_certificate /etc/nginx/ssl/persona-auth.crt;
     ssl_certificate_key /etc/nginx/ssl/persona-auth.key;

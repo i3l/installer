@@ -37,9 +37,7 @@ messaging_server_port: 9091
 
 #use_custom_ssl_certificates: true
 #custom_ssl_certificates_path: examples/certificates
-#api_dstu2_server_secure_http: true
-#app_server_secure_http: true
-#auth_server_secure_http: true
+#use_secure_http: true
 sample_patients_branch: hapi-patients-testing
 fhir_starter_branch: v0.1.2
 cardiac_risk_branch: v0.1.0

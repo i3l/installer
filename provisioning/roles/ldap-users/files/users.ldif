@@ -1,0 +1,19 @@
+version: 1
+
+
+dn: cn=demo,ou=users,dc=smarthealthit,dc=org
+objectClass: simpleSecurityObject
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: pwmUser
+cn: demo
+sn: User
+userPassword:demo
+labeledURI: http://sb-fhir-dstu2.smarthealthit.org:9070/api/smartdstu2/data/Practitioner/demo
+userPassword:demo
+displayName: Demo User
+givenName: Demo
+mail: support_demo@smarthealthit.org
+uid: demo

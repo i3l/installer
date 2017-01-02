@@ -23,13 +23,13 @@
 
  - name: generate self-signed ssl certificate (messaging server)
    tags: [messaging-all, messaging-server, smart-platform]
-   when: messaging_server_secure_http and not use_custom_ssl_certificates
+   when: use_secure_http and not use_custom_ssl_certificates
    shell: creates=/etc/nginx/ssl/messaging.crt
           /bin/echo -e "{{messaging_server_ssl_country}}\n{{messaging_server_ssl_province}}\n{{messaging_server_ssl_locality}}\n{{messaging_server_ssl_organization}}\n{{messaging_server_ssl_division}}\n{{messaging_server_host}}\n{{messaging_server_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/messaging.key -out /etc/nginx/ssl/messaging.crt
 
  - name: import messaging server certificate in truststore (messaging server)
    tags: [messaging-all, messaging-server, smart-platform]
-   when: messaging_server_secure_http
+   when: use_secure_http
    shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
             -importcert -trustcacerts
             -alias messaging

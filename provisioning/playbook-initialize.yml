@@ -7,8 +7,8 @@
   roles:
     - api-dstu2-common
     - api-dstu2-sandbox
-    - ldap-common
-    - ldap-users
+#    - ldap-common
+#    - ldap-users
 
 - hosts: REMOTEHOST
   remote_user: REMOTEUSER
@@ -25,5 +25,5 @@
   roles:
     - api-dstu2-common
     - api-dstu2-sandbox
-    - ldap-common
-    - ldap-users
+#    - ldap-common
+#    - ldap-users

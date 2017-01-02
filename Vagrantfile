@@ -8,6 +8,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "smart-on-fhir"
   config.vm.box = "bento/ubuntu-16.04"
 
+# MYSQL Database
+  config.vm.network :forwarded_port, guest: 3306, host: 3307
+
 # API_DSTU2 Server
   config.vm.network :forwarded_port, guest: 9070, host: 9070
 # Persona-API_DSTU2 Server
@@ -30,10 +33,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9092, host: 9092
 # Apps Server
   config.vm.network :forwarded_port, guest: 9093, host: 9093
-# PWM Server
-  config.vm.network :forwarded_port, guest: 9094, host: 9094
+# ApacheDS
+  config.vm.network :forwarded_port, guest: 10389, host: 10389
 # LDAP
-  config.vm.network :forwarded_port, guest: 389, host: 1389
+#  config.vm.network :forwarded_port, guest: 389, host: 1389
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "5120"
@@ -50,8 +53,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
 #    ansible.tags=["smart-platform"]
-#    ansible.tags=["api-dstu2-all"]
-#    ansible.tags=["sandbox-manager-all"]
+#    ansible.tags=["apps-code"]
+#    ansible.tags=["linux-all"]
     ansible.playbook = "provisioning/site.yml"
 #    ansible.playbook = "provisioning/playbook-rebuild-databases.yml"
 #    ansible.playbook = "provisioning/playbook-rebuild-app-code.yml"

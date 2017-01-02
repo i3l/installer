@@ -1,0 +1,13 @@
+[Unit]
+Description=ApacheDS Service
+
+[Service]
+User={{username}}
+TimeoutStartSec=infinity
+WorkingDirectory={{apacheds_home}}/bin
+ExecStart={{apacheds_home}}/bin/apacheds.sh start
+ExecStop={{apacheds_home}}/bin/apacheds.sh stop
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

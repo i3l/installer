@@ -5,7 +5,7 @@ Description=Authorization Service
 User={{username}}
 TimeoutStartSec=infinity
 WorkingDirectory={{install_dir}}/hspc/reference-auth-server-ldap-webapp/target
-{% if auth_server_secure_http and not use_custom_ssl_certificates %}
+{% if use_secure_http and not use_custom_ssl_certificates %}
 ExecStart=/usr/bin/java \
  -Xms{{auth_server_initial_memory}} \
  -Xmx{{auth_server_max_memory}} \
@@ -19,11 +19,11 @@ ExecStart=/usr/bin/java \
  -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} \
  -Doidc.datasource.mysql.username={{mysql_user}} \
  -Doidc.datasource.mysql.password={{mysql_pass}} \
- -Dldap.url={{ldap_server_uri}} \
- -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} \
- -Dldap.base={{ldap_server_base}} \
- -Dldap.userDn=cn=admin,{{ldap_server_base}} \
- -Dldap.password={{ldap_server_admin_password}} \
+ -Dldap.url={{apacheds_server_url}} \
+ -Dldap.server={{apacheds_server_url}}/{{apacheds_server_base}} \
+ -Dldap.base={{apacheds_server_base}} \
+ -Dldap.userDn={{apacheds_server_userdn}} \
+ -Dldap.password={{apacheds_server_admin_password}} \
  -DnewUserUrl={{auth_server_newUserUrl}} \
  -DforgotPasswordUrl={{auth_server_forgotPasswordUrl}} \
  -Djavax.net.ssl.trustStore={{install_dir}}/keystore \
@@ -46,11 +46,11 @@ ExecStart=/usr/bin/java \
  -Doidc.datasource.mysql.url=jdbc:mysql://{{mysql_endpoint}}/{{auth_server_database}} \
  -Doidc.datasource.mysql.username={{mysql_user}} \
  -Doidc.datasource.mysql.password={{mysql_pass}} \
- -Dldap.url={{ldap_server_uri}} \
- -Dldap.server={{ldap_server_uri}}/{{ldap_server_base}} \
- -Dldap.base={{ldap_server_base}} \
- -Dldap.userDn=cn=admin,{{ldap_server_base}} \
- -Dldap.password={{ldap_server_admin_password}} \
+ -Dldap.url={{apacheds_server_url}} \
+ -Dldap.server={{apacheds_server_url}}/{{apacheds_server_base}} \
+ -Dldap.base={{apacheds_server_base}} \
+ -Dldap.userDn={{apacheds_server_userdn}} \
+ -Dldap.password={{apacheds_server_admin_password}} \
  -DnewUserUrl={{auth_server_newUserUrl}} \
  -DforgotPasswordUrl={{auth_server_forgotPasswordUrl}} \
  -jar {{install_dir}}/jetty-runner.jar \

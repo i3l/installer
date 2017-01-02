@@ -33,7 +33,7 @@ update_repositories: yes
 http_redirect: true
 
 # General settings for the FHIR-Starter docs server
-docs_server_secure_http: false
+use_secure_http: false
 docs_server_host: "localhost"
 docs_server_port: 9094
 docs_server_repo: "https://github.com/smart-on-fhir/smart-on-fhir.github.io.git"
@@ -55,5 +55,5 @@ docs_webhook_secret: default-webhook-secret
 # These are convenience variables with the generated base paths of the servers. You
 # most likely will never have to touch these.
 docs_server_base: "{{
-        'https' if docs_server_secure_http else 'http'}}://{{docs_server_host}}{{
+        'https' if use_secure_http else 'http'}}://{{docs_server_host}}{{
         (':'+docs_server_port|string) if docs_server_port|int not in (80,443) else ''}}"

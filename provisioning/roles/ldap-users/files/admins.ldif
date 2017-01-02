@@ -1,0 +1,36 @@
+version: 1
+
+dn: ou=admins,dc=smarthealthit,dc=org
+objectClass: organizationalUnit
+objectClass: top
+ou: admins
+description: Container for SMART admins
+
+dn: ou=users,dc=smarthealthit,dc=org
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+description: Container for SMART self service users
+
+dn: 2.5.4.3=allowselfaccessandmodification,dc=smarthealthit,dc=org
+objectClass: subentry
+objectClass: accessControlSubentry
+objectClass: top
+cn: allowSelfAccessAndModification
+prescriptiveACI: { identificationTag "allowSelfAccessAndModification", precedence 14, authenticationLevel none, itemOrUserFirst userFirst: { userClasses { thisEntry }, userPermissions { { protectedItems { allUserAttributeTypesAndValues }, grantsAndDenials { grantAdd, grantRemove } }, { protectedItems { entry }, grantsAndDenials { grantReturnDN, grantModify, grantRead, grantBrowse, grantFilterMatch } } } } }
+subtreeSpecification: { base "ou=users" }
+
+dn: cn=admin,ou=admins,dc=smarthealthit,dc=org
+objectClass: simpleSecurityObject
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+objectClass: pwmUser
+cn: admin
+sn: User
+userPassword:password
+displayName: Admin User
+givenName: Admin
+mail: support@smarthealthit.org
+uid: admin
