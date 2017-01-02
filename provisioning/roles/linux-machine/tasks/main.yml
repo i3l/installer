@@ -79,8 +79,8 @@
 - name: generate self-signed ssl certificate
   tags: [linux-all, smart-platform]
   when: use_secure_http and not use_custom_ssl_certificates
-  shell: creates=/etc/nginx/ssl/smart.crt
-         /bin/echo -e "{{self_signed_certificate_ssl_country}}\n{{self_signed_certificate_ssl_province}}\n{{self_signed_certificate_ssl_locality}}\n{{self_signed_certificate_ssl_organization}}\n{{self_signed_certificate_ssl_division}}\n{{domain_name}}\n{{self_signed_certificate_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/smart.key -out /etc/nginx/ssl/smart.crt
+  shell: creates=/etc/nginx/ssl/{{certificate_crt_filename}}
+         /bin/echo -e "{{self_signed_certificate_ssl_country}}\n{{self_signed_certificate_ssl_province}}\n{{self_signed_certificate_ssl_locality}}\n{{self_signed_certificate_ssl_organization}}\n{{self_signed_certificate_ssl_division}}\n{{domain_name}}\n{{self_signed_certificate_ssl_email}}\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/{{certificate_key_filename}} -out /etc/nginx/ssl/{{certificate_crt_filename}}
   notify:
         - restart nginx
 
@@ -88,7 +88,7 @@
   tags: [linux-all, smart-platform]
   when: use_secure_http and use_custom_ssl_certificates
   copy: src="{{custom_ssl_certificates_path}}/{{custom_certificate_crt_filename}}"
-        dest=/etc/nginx/ssl/smart.crt
+        dest=/etc/nginx/ssl/{{certificate_crt_filename}}
   notify:
         - restart nginx
 
@@ -96,7 +96,7 @@
   tags: [linux-all, smart-platform]
   when: use_secure_http and use_custom_ssl_certificates
   copy: src="{{custom_ssl_certificates_path}}/{{custom_certificate_key_filename}}"
-        dest=/etc/nginx/ssl/smart.key
+        dest=/etc/nginx/ssl/{{certificate_key_filename}}
   notify:
         - restart nginx
 
@@ -106,7 +106,7 @@
   shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
            -importcert -trustcacerts
            -alias {{certificate_truststore_alias}}
-           -file /etc/nginx/ssl/smart.crt
+           -file /etc/nginx/ssl/{{certificate_crt_filename}}
            -keystore {{install_dir}}/keystore
 
 - name: add www-data user to ssl-cert group
