@@ -100,6 +100,15 @@
   notify:
         - restart nginx
 
+- name: remove server certificate from truststore
+  tags: [linux-all, smart-platform]
+  when: use_secure_http and use_custom_ssl_certificates
+  shell: /bin/echo -e "{{keystore_password}}\nyes\n" | keytool
+           -delete -trustcacerts
+           -alias {{certificate_truststore_alias}}
+           -file /etc/nginx/ssl/{{certificate_crt_filename}}
+           -keystore {{install_dir}}/keystore
+
 - name: import server certificate in truststore
   tags: [linux-all, smart-platform]
   when: use_secure_http and use_custom_ssl_certificates
