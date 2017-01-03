@@ -72,7 +72,7 @@ self_signed_certificate_ssl_email: support@{{domain_name}}
 
 # Controls whether HTTP requests on port 80 will be
 # redirected to the server's base URLs
-http_redirect: false
+http_redirect: true
 
 # Set this to either "open" or "secured" on the primary endpoint /data
 fhir_server_security_mode: secured

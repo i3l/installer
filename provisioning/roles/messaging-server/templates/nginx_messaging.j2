@@ -28,3 +28,12 @@ server {
     ssl_certificate_key /etc/nginx/ssl/{{certificate_key_filename}};
 {% endif %}
 }
+
+{% if messaging_server_port != 80 and http_redirect %}
+server {
+    server_name {{messaging_server_host}};
+    listen 80;
+    listen [::]:80;
+    return 301 https://$server_name$request_uri;
+}
+{% endif %}

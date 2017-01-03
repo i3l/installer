@@ -29,10 +29,11 @@ server {
 {% endif %}
 }
 
-#{% if persona_api_dstu2_server_port != 80 and http_redirect %}
-#server {
-#    server_name {{persona_api_dstu2_server_host}};
-#    rewrite ^       {{persona_api_dstu2_server_context_url}}$request_uri? permanent;
-#    listen 80;
-#}
-#{% endif %}
+{% if persona_api_dstu2_server_port != 80 and http_redirect %}
+server {
+    server_name {{persona_api_dstu2_server_host}};
+    listen 80;
+    listen [::]:80;
+    return 301 https://$server_name$request_uri;
+}
+{% endif %}
