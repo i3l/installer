@@ -2,11 +2,22 @@
 Description=PWM Service
 
 [Service]
-User={{username}}
-TimeoutStartSec=infinity
-WorkingDirectory={{install_dir}}/apache-tomcat-8.5.9
-ExecStart={{install_dir}}/apache-tomcat-8.5.9/bin/catalina.sh start
-ExecStop={{install_dir}}/apache-tomcat-8.5.9/bin/catalina.sh start
+Type=forking
+
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+Environment=CATALINA_HOME=/home/fhir/apache-tomcat-8.5.9
+Environment=CATALINA_BASE=$CATALINA_HOME
+Environment=CATALINA_PID=$CATALINA_HOME/temp/tomcat.pid
+Environment='CATALINA_OPTS=-Xms216M -Xmx512M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=$CATALINA_HOME/bin/startup.sh
+ExecStop=$CATALINA_HOME/bin/shutdown.sh
+
+User=fhir
+Group=fhir
+UMask=0007
+RestartSec=10
 Restart=always
 
 [Install]
