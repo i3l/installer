@@ -8,3 +8,13 @@ pwm_project: "pwm"
 
 # Database schema
 pwm_server_database: pwm
+
+# Tomcat settings
+tomcat_version: 8.5.9
+tomcat_server_folder: "apache-tomcat-{{tomcat_version}}"
+tomcat_home: "{{install_dir}}/{{tomcat_server_folder}}"
+tomcat_shutdown_port: 8005
+tomcat_redirect_port: 8443
+tomcat_ajp_port: 8009
+tomcat_server_name: Catalina
+tomcat_default_host: localhost
