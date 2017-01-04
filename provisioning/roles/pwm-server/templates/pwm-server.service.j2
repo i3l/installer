@@ -5,8 +5,8 @@ Description=PWM Service
 User={{username}}
 TimeoutStartSec=infinity
 WorkingDirectory={{install_dir}}/apache-tomcat-8.5.9
-ExecStart={{install_dir}}/apache-tomcat-8.5.9/catalina.sh start
-ExecStop={{install_dir}}/apache-tomcat-8.5.9/catalina.sh start
+ExecStart={{install_dir}}/apache-tomcat-8.5.9/bin/catalina.sh start
+ExecStop={{install_dir}}/apache-tomcat-8.5.9/bin/catalina.sh start
 Restart=always
 
 [Install]
