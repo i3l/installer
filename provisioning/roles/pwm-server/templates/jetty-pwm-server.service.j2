@@ -1,0 +1,34 @@
+[Unit]
+Description=PWM Service
+
+[Service]
+User={{username}}
+TimeoutStartSec=infinity
+WorkingDirectory={{install_dir}}/hspc/pwm/target
+{% if use_secure_http and not use_custom_ssl_certificates %}
+ExecStart=/usr/bin/java \
+ -Xms{{pwm_server_initial_memory}} \
+ -Xmx{{pwm_server_max_memory}} \
+ -Djetty.port={{pwm_server_internal_port}} \
+ -Djetty.host={{pwm_server_internal_host}} \
+ -Djavax.net.ssl.trustStore={{install_dir}}/keystore \
+ -Djavax.net.ssl.trustStorePassword={{keystore_password}} \
+ -jar {{install_dir}}/jetty-runner.jar \
+ --config {{install_dir}}/jetty.xml \
+ --path {{pwm_server_context}} \
+ pwm-1.7.war
+{% else %}
+ExecStart=/usr/bin/java \
+ -Xms{{pwm_server_initial_memory}} \
+ -Xmx{{pwm_server_max_memory}} \
+ -Djetty.port={{pwm_server_internal_port}} \
+ -Djetty.host={{pwm_server_internal_host}} \
+ -jar {{install_dir}}/jetty-runner.jar \
+ --config {{install_dir}}/jetty.xml \
+ --path {{pwm_server_context}} \
+ pwm-1.7.war
+{% endif %}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
