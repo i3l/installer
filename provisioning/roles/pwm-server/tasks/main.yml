@@ -4,7 +4,20 @@
   become_user: "{{username}}"
   unarchive: src="http:////supergsego.com/apache/tomcat/tomcat-8/v8.5.9/bin/apache-tomcat-8.5.9.tar.gz"
              dest="{{install_dir}}"
-             remote_src=yes
+#             remote_src=yes
+             copy=no
+#todo this url just isn't working
+#might need to do it this way:
+# for raw apacheds
+#- name: download apacheds
+#  tags: [apacheds-all, apacheds-server, smart-platform]
+#  become_user: "{{username}}"
+#  get_url: url={{apacheds_artifact_url}} dest={{install_dir}}
+#
+#- name: extract apacheds
+#  tags: [apacheds-all, apacheds-server, smart-platform]
+#  become_user: "{{username}}"
+#  unarchive: src="{{install_dir}}/{{apacheds_artifact_name}}" dest="{{install_dir}}" copy=no
 
 - name: configure tomcat server
   tags: [pwm-all, pwm-server, smart-platform]
