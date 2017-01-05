@@ -1,5 +1,6 @@
 ---
 - name: install apache-tomcat
+  tags: [pwm-all, pwm-server, smart-platform]
   become_user: "{{username}}"
   unarchive:
     src: http://supergsego.com/apache/tomcat/tomcat-8/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
@@ -7,11 +8,13 @@
     remote_src: yes
 
 - name: configure tomcat server
+  tags: [pwm-all, pwm-server, smart-platform]
   become_user: "{{username}}"
   template: src=server.xml.j2
             dest="{{tomcat_home}}/conf/server.xml"
 
 - name: configure pwm to tomcat as the root context
+  tags: [pwm-all, pwm-server, smart-platform]
   become_user: "{{username}}"
   template: src=ROOT.xml.j2
             dest="{{tomcat_home}}/conf/{{tomcat_server_name}}/{{tomcat_default_host}}/ROOT.xml"
