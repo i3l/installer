@@ -35,6 +35,7 @@ alias build='~/build.sh'
 alias p='cd $PROVISIONING_HOME'
 alias i='cd $INSTALLER_HOME'
 
+alias pull='cd $INSTALLER_HOME; git pull'
 alias b='sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml'
 alias echob='echo sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml'
 alias v='sudo ansible-playbook  -c local -i 'localhost,' -vvvv site.yml --tags "verify"'
