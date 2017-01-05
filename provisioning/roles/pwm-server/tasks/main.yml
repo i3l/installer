@@ -2,7 +2,7 @@
 - name: install apache-tomcat
   tags: [pwm-all, pwm-server, smart-platform]
   become_user: "{{username}}"
-  unarchive: src: "{{tomcat_artifact_url}}" dest: "{{install_dir}}" remote_src: yes
+  unarchive: src="{{tomcat_artifact_url}}" dest="{{install_dir}}" remote_src=yes
 
 - name: configure tomcat server
   tags: [pwm-all, pwm-server, smart-platform]
