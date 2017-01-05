@@ -3,7 +3,7 @@
   tags: [pwm-all, pwm-server, smart-platform]
   become_user: "{{username}}"
   unarchive:
-    src: http://supergsego.com/apache/tomcat/tomcat-8/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz
+    src: "http://supergsego.com/apache/tomcat/tomcat-8/v{{tomcat_version}}/bin/apache-tomcat-{{tomcat_version}}.tar.gz"
     dest: "{{install_dir}}"
     remote_src: yes
 
