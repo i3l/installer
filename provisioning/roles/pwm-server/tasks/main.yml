@@ -14,7 +14,10 @@
             dest="{{tomcat_home}}/conf/server.xml"
 
 - name: Ensures "{{tomcat_home}}/conf/{{tomcat_server_name}}/{{tomcat_default_host}}" dir exists
-  file: path="{{tomcat_home}}/conf/{{tomcat_server_name}}/{{tomcat_default_host}}" state=directory
+  tags: [pwm-all, pwm-server, smart-platform]
+  become_user: "{{username}}"
+  file: path="{{tomcat_home}}/conf/{{tomcat_server_name}}/{{tomcat_default_host}}"
+        state=directory
 
 - name: configure pwm to tomcat as the root context
   tags: [pwm-all, pwm-server, smart-platform]
