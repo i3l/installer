@@ -7,10 +7,20 @@
        dest="{{install_dir}}/hspc/{{pwm_project}}"
        update={{update_repositories}}
 
-#- name: copy mysql driver
-#  tags: [pwm-all, pwm-code, smart-platform]
-#  copy: src=mysql-connector-java-5.1.34.jar
-#        dest="{{install_dir}}/hspc/{{pwm_project}}/src/main/webapp/WEB-INF/lib/mysql-connector-java-5.1.34.jar"
+# install SMART logos
+- name: config company-logo.png
+  tags: [pwm-all, pwm-code, smart-platform]
+  copy: src=roles/common/files/images/company-logo.png dest="{{install_dir}}/hspc/{{pwm_project}}/src/main/webapp/public/resources/themes/custom/company-logo.png"
+
+# install SMART logos
+- name: config company-logo.png
+  tags: [pwm-all, pwm-code, smart-platform]
+  copy: src=roles/common/files/images/company-logo@2x.png dest="{{install_dir}}/hspc/{{pwm_project}}/src/main/webapp/public/resources/themes/custom/company-logo@2x.png"
+
+# install SMART logos
+- name: config company-logo.png
+  tags: [pwm-all, pwm-code, smart-platform]
+  copy: src=roles/common/files/images/company-logo-main-web-top.png dest="{{install_dir}}/hspc/{{pwm_project}}/src/main/webapp/public/resources/themes/custom/company-logo-main-web-top.png"
 
 - name: patch PwmConfiguration.xml
   tags: [pwm-all, pwm-code, smart-platform]

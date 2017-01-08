@@ -19,3 +19,9 @@ tomcat_redirect_port: 8443
 tomcat_ajp_port: 8009
 tomcat_server_name: Catalina
 tomcat_default_host: localhost
+
+# Email Account
+pwm_email_host:
+pwm_email_account: smartplatforms
+pwm_email_password: PLMnzBSZ9FTA
+
