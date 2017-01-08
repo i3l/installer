@@ -13,20 +13,24 @@
   template: src=server.xml.j2
             dest="{{tomcat_home}}/conf/server.xml"
 
-- name: Ensures "{{tomcat_home}}/conf/{{tomcat_server_name}}/{{tomcat_default_host}}" dir exists
+- name: remove tomcat default webapps
   tags: [pwm-all, pwm-server, smart-platform]
   become_user: "{{username}}"
-  file: path="{{tomcat_home}}/conf/{{tomcat_server_name}}/{{tomcat_default_host}}"
-        state=directory
+  file: path="{{tomcat_home}}/webapps" state=absent
 
-- name: configure pwm to tomcat as the root context
+- name: initialize tomcat webapps
   tags: [pwm-all, pwm-server, smart-platform]
   become_user: "{{username}}"
-  template: src=ROOT.xml.j2
-            dest="{{tomcat_home}}/conf/{{tomcat_server_name}}/{{tomcat_default_host}}/ROOT.xml"
+  file: path="{{tomcat_home}}/webapps" state=directory
+
+- name: configure tomcat to only host pwm
+  tags: [pwm-all, pwm-server, smart-platform]
+  become_user: "{{username}}"
+  shell: "cp -r {{install_dir}}/hspc/pwm/target/pwm-1.7 {{tomcat_home}}/webapps/ROOT"
 
 - name: configure pwm server service
   tags: [pwm-all, pwm-server, smart-platform]
+  become_user: "{{username}}"
   template: src=pwm-server.service.j2
             dest=/etc/systemd/system/pwm-server.service
             owner=root group=root mode=0644

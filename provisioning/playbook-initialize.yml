@@ -5,10 +5,10 @@
     - global_settings.yml
     - custom_settings.yml
   roles:
+    - pwm-common
+    - pwm-sandbox
     - api-dstu2-common
     - api-dstu2-sandbox
-#    - ldap-common
-#    - ldap-users
 
 - hosts: REMOTEHOST
   remote_user: REMOTEUSER
@@ -23,7 +23,7 @@
     app_server_host: REMOTEHOST
     auth_server_host: REMOTEHOST
   roles:
+    - pwm-common
+    - pwm-sandbox
     - api-dstu2-common
     - api-dstu2-sandbox
-#    - ldap-common
-#    - ldap-users
