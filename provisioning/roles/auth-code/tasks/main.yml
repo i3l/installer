@@ -17,12 +17,11 @@
         update={{update_repositories}}
         force=yes
 
- # login.jsp is patched to show "username" label instead of "email address"
-# - name: patch auth server login screen
-#   tags: [auth-all, auth-code, smart-platform]
-#   become_user: "{{username}}"
-#   template: src=login.jsp.j2
-#             dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/WEB-INF/views/login.jsp
+ - name: patch auth server login screen
+   tags: [auth-all, auth-code, smart-platform]
+   become_user: "{{username}}"
+   template: src=login.jsp.j2
+             dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/WEB-INF/views/login.jsp
 
  - name: patch auth server mysql auth install
    tags: [auth-all, auth-code, smart-platform]
