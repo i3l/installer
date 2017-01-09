@@ -6,6 +6,7 @@
        dest={{install_dir}}/apps/rest/mpr_monitor
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: configure mpr monitor (step 1)
   tags: [apps-all]
@@ -48,6 +49,7 @@
        dest={{install_dir}}/demo-apps/disease-monograph
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout diabetes monograph app
   tags: [apps-all]
@@ -57,6 +59,7 @@
        dest={{install_dir}}/demo-apps/diabetes-monograph
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout cardiac risk app
   tags: [apps-all]
@@ -66,6 +69,7 @@
        dest={{install_dir}}/demo-apps/cardiac-risk
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout bp centiles app
   tags: [apps-all]
@@ -75,6 +79,7 @@
        dest={{install_dir}}/demo-apps/bp-centiles
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout growth chart app
   tags: [apps-all]
@@ -84,6 +89,7 @@
        dest={{install_dir}}/demo-apps/growth-chart
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: configure demo apps
   tags: [apps-all]

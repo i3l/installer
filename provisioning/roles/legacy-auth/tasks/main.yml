@@ -7,6 +7,7 @@
         dest="{{install_dir}}/hspc/{{auth_webapp_project}}"
         update={{update_repositories}}
         force=yes
+        depth=1
 
  - name: checkout repository auth_webapp_ldap_project
    tags: [auth-all, auth-code, smart-platform]
@@ -16,6 +17,7 @@
         dest="{{install_dir}}/hspc/{{auth_webapp_ldap_project}}"
         update={{update_repositories}}
         force=yes
+        depth=1
 
  - name: configure auth server service
    tags: [auth-all, auth-server, smart-platform]

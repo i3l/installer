@@ -7,6 +7,7 @@
         dest="{{install_dir}}/hspc/{{messaging_project}}"
         update={{update_repositories}}
         force=yes
+        depth=1
 
  - name: configure messaging server service
    tags: [messaging-all, messaging-server, smart-platform]

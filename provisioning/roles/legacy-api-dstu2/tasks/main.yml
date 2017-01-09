@@ -7,6 +7,7 @@
         dest="{{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_mysql_project}}"
         update={{update_repositories}}
         force=yes
+        depth=1
 
  - name: checkout repository hspc_repo_api_webapp_project
    tags: [api-dstu2-all, api-dstu2-code, smart-platform]
@@ -16,6 +17,7 @@
         dest="{{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}"
         update={{update_repositories}}
         force=yes
+        depth=1
 
  - name: configure api-dstu2-server service
    tags: [api-dstu2-all, api-dstu2-server, smart-platform]
