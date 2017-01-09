@@ -256,6 +256,7 @@ email_account_description: SMART Account Services
 email_smtp_address: smtp.sendgrid.net
 email_smtp_port: 587
 email_smtp_username: smartplatforms
+email_smtp_password: PLMnzBSZ9FTA
 email_smtp_password_encrypted: 3yiat3gJMJPuQO5yZ6ojSg==
 email_admin_address: travis@isalussolutions.com
 email_contact_addresss: support@smarthealthit.org
