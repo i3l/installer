@@ -16,6 +16,10 @@ apacheds_server_internal_port: "{{apacheds_server_port}}"
 # Users
 apacheds_server_admin: "admin"
 apacheds_server_adminuserdn: "uid={{apacheds_server_admin}},ou=system"
+# note, this does not change the password in the apache_ds system
+# the apacheds admin password is already set in the apacheds-2.0.0-M23-configured.tar
+# if you would like a different password, change it in ApacheDS after deploy
+# then change it here for other services to use
 apacheds_server_admin_password: "secret"
 apacheds_server_test: "test"
 apacheds_server_users_ou: "ou=users"
