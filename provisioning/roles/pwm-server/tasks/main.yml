@@ -30,7 +30,6 @@
 
 - name: configure pwm server service
   tags: [pwm-all, pwm-server, smart-platform]
-  become_user: "{{username}}"
   template: src=pwm-server.service.j2
             dest=/etc/systemd/system/pwm-server.service
             owner=root group=root mode=0644
