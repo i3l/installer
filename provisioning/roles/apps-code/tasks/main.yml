@@ -7,6 +7,7 @@
        dest={{install_dir}}/apps/static/apps/cardiac-risk
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout bp centiles app
   tags: [apps-all, apps-code, smart-platform]
@@ -16,6 +17,7 @@
        dest={{install_dir}}/apps/static/apps/bp-centiles
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout growth chart app
   tags: [apps-all, apps-code, smart-platform]
@@ -25,6 +27,7 @@
        dest={{install_dir}}/apps/static/apps/growth-chart
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout fhir demo app
   tags: [apps-all, apps-code, smart-platform]
@@ -34,6 +37,7 @@
        dest={{install_dir}}/apps/static/apps/fhir-demo
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: checkout patient picker app
   tags: [apps-all, apps-code, smart-platform]
@@ -43,6 +47,7 @@
        dest={{install_dir}}/apps/static/apps/patient-picker
        update={{update_repositories}}
        force=yes
+       depth=1
 
 - name: copy patient picker app
   tags: [apps-all, apps-code, smart-platform]

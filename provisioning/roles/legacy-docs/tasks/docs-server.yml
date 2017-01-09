@@ -26,6 +26,8 @@
        version={{docs_server_branch}}
        dest={{install_dir}}/docs/repo
        update={{update_repositories}}
+       force=yes
+       depth=1
   register: docs_checkout
 
 - name: delete static directory

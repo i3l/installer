@@ -7,6 +7,7 @@
         dest="{{install_dir}}/hspc/{{auth_webapp_project}}"
         update={{update_repositories}}
         force=yes
+        depth=1
 
  - name: checkout repository auth_webapp_ldap_project
    tags: [auth-all, auth-code, smart-platform]
@@ -16,6 +17,7 @@
         dest="{{install_dir}}/hspc/{{auth_webapp_ldap_project}}"
         update={{update_repositories}}
         force=yes
+        depth=1
 
  - name: configure auth server service
    tags: [auth-all, auth-server, smart-platform]
@@ -106,15 +108,15 @@
  # install SMART logos
  - name: config company-logo.png
    tags: [auth-all, auth-code, smart-platform]
-   copy: src=company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo.png
+   copy: src=roles/common/files/images/company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo.png
 
  - name: config company-logo@2x.png
    tags: [auth-all, auth-code, smart-platform]
-   copy: src=company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo@2x.png
+   copy: src=roles/common/files/images/company-logo.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo@2x.png
 
  - name: config company-logo-main-web-top.png
    tags: [auth-all, auth-code, smart-platform]
-   copy: src=company-logo-main-web-top.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo-main-web-top.png
+   copy: src=roles/common/files/images/company-logo-main-web-top.png dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/webapp/static/images/company-logo-main-web-top.png
 
  - name: Load Authorization Server DB Schema and Sample Data
    tags: [auth-all, auth-data, smart-platform]

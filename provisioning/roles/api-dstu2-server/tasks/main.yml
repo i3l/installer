@@ -1,6 +1,6 @@
 ---
- - include: api.yml
+- include: api.yml
 
- - include: persona-api.yml
+- include: persona-api.yml
 
- - meta: flush_handlers
+- meta: flush_handlers

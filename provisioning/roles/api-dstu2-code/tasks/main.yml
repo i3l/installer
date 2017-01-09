@@ -1,27 +1,29 @@
 ---
 # hspc_repo_api_mysql_project contains SQL files needed for install
- - name: checkout repository hspc_repo_api_mysql_project
-   tags: [api-dstu2-all, api-dstu2-code, smart-platform]
-   become_user: "{{username}}"
-   git: repo="{{api_dstu2_repos_base}}/{{api_dstu2_repo_api_mysql_project}}"
-        version="{{api_dstu2_repo_api_branch}}"
-        dest="{{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_mysql_project}}"
-        update={{update_repositories}}
-        force=yes
+- name: checkout repository hspc_repo_api_mysql_project
+  tags: [api-dstu2-all, api-dstu2-code, smart-platform]
+  become_user: "{{username}}"
+  git: repo="{{api_dstu2_repos_base}}/{{api_dstu2_repo_api_mysql_project}}"
+       version="{{api_dstu2_repo_api_branch}}"
+       dest="{{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_mysql_project}}"
+       update={{update_repositories}}
+       force=yes
+       depth=1
 
- - name: checkout repository hspc_repo_api_webapp_project
-   tags: [api-dstu2-all, api-dstu2-code, smart-platform]
-   become_user: "{{username}}"
-   git: repo="{{hspc_repos_base}}/{{api_dstu2_repo_api_webapp_project}}"
-        version="{{api_dstu2_repo_api_branch}}"
-        dest="{{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}"
-        update={{update_repositories}}
-        force=yes
+- name: checkout repository hspc_repo_api_webapp_project
+  tags: [api-dstu2-all, api-dstu2-code, smart-platform]
+  become_user: "{{username}}"
+  git: repo="{{hspc_repos_base}}/{{api_dstu2_repo_api_webapp_project}}"
+       version="{{api_dstu2_repo_api_branch}}"
+       dest="{{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}"
+       update={{update_repositories}}
+       force=yes
+       depth=1
 
- - name: build hspc server api-dstu2-server
-   tags: [api-dstu2-all, api-dstu2-code, smart-platform]
-   become_user: "{{username}}"
-   shell: chdir={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}
-        mvn clean install -e -Pjetty
+- name: build hspc server api-dstu2-server
+  tags: [api-dstu2-all, api-dstu2-code, smart-platform]
+  become_user: "{{username}}"
+  shell: chdir={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}
+       mvn clean install -e -Pjetty
 
- - meta: flush_handlers
+- meta: flush_handlers
