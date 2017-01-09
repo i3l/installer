@@ -6,6 +6,7 @@
        version="{{pwm_branch}}"
        dest="{{install_dir}}/hspc/{{pwm_project}}"
        update={{update_repositories}}
+       force=yes
 
 # install SMART logos
 - name: config company-logo.png

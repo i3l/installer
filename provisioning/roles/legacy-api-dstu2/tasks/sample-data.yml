@@ -6,6 +6,7 @@
         version={{api_dstu2_sample_patients_branch}}
         dest={{install_dir}}/api-dstu2-sample-patients
         update={{update_repositories}}
+        force=yes
    register: api_dstu2_sample_patients_checkout
 
  - name: build api-dstu2-sample patients
