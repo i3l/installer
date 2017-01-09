@@ -111,20 +111,10 @@ app_server_base: "{{
 sample_patients_generator_params: ""
 
 # ApacheDS server configuration
-#apacheds_server_organization: "SMART Heathcare IT"
-#ldap_server_domain: "{{domain_name}}"
 apacheds_server_host: "localhost"
 apacheds_server_port: "10389"
 apacheds_server_base: "dc={{second_level_domain}},dc={{top_level_domain}}"
 apacheds_server_url: "ldap://{{apacheds_server_host}}:{{apacheds_server_port}}"
-#ldap_server_uri: "ldap://{{ldap_server_host}}:{{ldap_server_port}}"
-apacheds_server_admin: "admin"
-apacheds_server_userdn: "uid={{apacheds_server_admin}},ou=system"
-apacheds_server_admin_password: "secret"
-#ldap_server_admin_password: "sample-password"
-#ldap_server_account_admin_password: "password"
-#ldap_server_account_demo_password: "demo"
-
 
 # API DSTU2 Server
 api_dstu2_server_host: "localhost"
@@ -261,3 +251,11 @@ ldap_server_admin_password: "sample-password"
 ldap_server_account_admin_password: "password"
 ldap_server_account_demo_password: "demo"
 
+# Email server account
+email_account_description: SMART Account Services
+email_smtp_address: smtp.sendgrid.net
+email_smtp_port: 587
+email_smtp_username: smartplatforms
+email_smtp_password_encrypted: 3yiat3gJMJPuQO5yZ6ojSg==
+email_admin_address: travis@isalussolutions.com
+email_contact_addresss: support@smarthealthit.org

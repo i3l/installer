@@ -12,3 +12,12 @@ apacheds_artifact_url: "http://mirrors.sonic.net/apache//directory/apacheds/dist
 # Host
 apacheds_server_internal_host: "{{apacheds_server_host}}"
 apacheds_server_internal_port: "{{apacheds_server_port}}"
+
+# Users
+apacheds_server_admin: "admin"
+apacheds_server_adminuserdn: "uid={{apacheds_server_admin}},ou=system"
+apacheds_server_admin_password: "secret"
+apacheds_server_test: "test"
+apacheds_server_users_ou: "ou=users"
+apacheds_server_user_context: "{{apacheds_server_users_ou}},{{apacheds_server_base}}"
+apacheds_server_testuserdn: "cn={{apacheds_server_test}},{{apacheds_server_user_context}}"
