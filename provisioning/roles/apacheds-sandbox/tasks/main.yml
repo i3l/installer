@@ -10,6 +10,8 @@
   become_user: "{{username}}"
   shell: chdir={{apacheds_home}}
          ldapadd
+           -h {{apacheds_server_host}}
+           -p {{apacheds_server_port}}
            -x -D {{apacheds_server_system_admin_dn}}
            -w {{apacheds_server_system_admin_initial_password}}
            -f update-sandbox-admin-password.ldif
@@ -26,6 +28,8 @@
   become_user: "{{username}}"
   shell: chdir={{apacheds_home}}
          ldapadd
+           -h {{apacheds_server_host}}
+           -p {{apacheds_server_port}}
            -x -D {{apacheds_server_system_admin_dn}}
            -w {{apacheds_server_system_admin_initial_password}}
            -f update-sandbox-demo-password.ldif

@@ -44,7 +44,6 @@
          - python-mysqldb
          - python-requests
          - python-pycurl
-         - slapd
          - ldap-utils
          - ssl-cert
 
