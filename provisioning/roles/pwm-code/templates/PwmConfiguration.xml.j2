@@ -30,12 +30,6 @@
       <!--Please use the Configuration Manager GUI to modify this value.-->
       <value>{{pwm_securitykey_encrypted}}</value>
     </setting>
-    <setting key="pwm.securityKey" syntax="PASSWORD">
-      <label>Security Key</label>
-      <!--Note: This value is encrypted and can not be edited directly.-->
-      <!--Please use the Configuration Manager GUI to modify this value.-->
-      <value>J/qrIW3L60PO6aaZLxckCMl2KHBafDnPEUI9EMFmIBkzO29wV7lZlTO06Jy9WBb73mxlo1C3XDo/WpA6yQF+FU3+OLvYbmHQCbuYTJV7LU4khPy3aTCvf72mYUNklgEZZN6ZN3mOccWB9t0h4BBL9vl0nqGLbCCZQadaNQKT5lQmTFME9evyQ9rke9OAoTXaZFEu9+VPXk97axLS3p5rHyKmh3NfACEyfTF0Gh3X9xVNmt5aIb+HxkJKfxLUJZct/BMwb6JNS0/BJiHF7Qu2KjL4uE5ojFOMt1WsN03cOdDsV29TQIAXyPDUL6l8E3k4INuov3Sobvx3yIvfQe4t0RmtyV0PUJaDhjC2ccAA+SeDxKsY20Jxq0vxzumpK1OkA2Ch0obKB7r8UE6sESXj3ONIIZidOBN36BOg2mV0qBNlC+CWVCMan2NDZxsF706gOgMYMzuZCrLlVYv6aEz0LudPigEA82m3Vvd4Rfo/TX5a/yZTGilYD0IZmaKGe1t8u4ZCCiXwVe+tvIUfya5zFLTt1YGIiIFAGXlaccEWM7eTJJPIriq+GylBwozZdGyDEzU4/QMRGVrpgSoH+hZ8nFKyIbp5w/Wq+Lsujst+Awd+1j6m284Z2j+tPPlYXNPppfaTWPYMVdUxF4qIPjVRjoqyPQC4UKuTz0U13va8yD69EbTckm+yii4S1XZxffXp</value>
-    </setting>
     <setting key="db.classname" syntax="STRING" syntaxVersion="0" modifyTime="2015-11-05T17:44:31Z">
       <label>Database Class</label>
       <value><![CDATA[com.mysql.jdbc.Driver]]></value>
@@ -68,7 +62,7 @@
     </setting>
     <setting key="ldap.proxy.username" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="2015-11-05T18:20:27Z">
       <label>LDAP Proxy User</label>
-      <value><![CDATA[{{apacheds_server_adminuserdn}}]]></value>
+      <value><![CDATA[{{apacheds_server_system_admin_dn}}]]></value>
     </setting>
     <setting key="ldap.rootContexts" syntax="STRING_ARRAY" profile="default" syntaxVersion="0" modifyTime="2017-01-04T07:04:31Z" modifyUser="default|cn=admin,ou=admins,dc=hspconsortium,dc=org">
       <label>LDAP Contextless Login Roots</label>
@@ -88,11 +82,11 @@
     </setting>
     <setting key="ldap.testuser.username" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="2017-01-04T07:04:51Z" modifyUser="default|cn=admin,ou=admins,dc=hspconsortium,dc=org">
       <label>LDAP Test User</label>
-      <value><![CDATA[{{apacheds_server_testuserdn}}]]></value>
+      <value><![CDATA[{{apacheds_server_sandbox_test_dn}}]]></value>
     </setting>
     <setting key="pwmAdmin.queryMatch" syntax="USER_PERMISSION" syntaxVersion="2" modifyTime="2015-11-09T20:05:27Z" modifyUser="default|uid=admin,ou=admins,dc=hspconsortium,dc=org">
       <label>Administrator Permission</label>
-      <value>{"ldapProfileID":"default","ldapQuery":"(uid={{apacheds_server_admin}})","type":"ldapQuery"}</value>
+      <value>{"ldapProfileID":"default","ldapQuery":"(uid={{apacheds_server_system_admin}})","type":"ldapQuery"}</value>
     </setting>
     <setting key="ldap.usernameSearchFilter" syntax="STRING" profile="default">
       <label>Username Search Filter</label>
@@ -825,7 +819,7 @@
     <!--</setting>-->
     <setting key="newUser.createContext" syntax="STRING" profile="default" syntaxVersion="0" modifyTime="2017-01-04T15:28:55Z" modifyUser="default|cn=admin,ou=admins,dc=smarthealthit,dc=org">
       <label>Creation Context</label>
-      <value><![CDATA[{{apacheds_server_user_context}}]]></value>
+      <value><![CDATA[{{apacheds_server_sandbox_users_context}}]]></value>
     </setting>
     <setting key="display.newuser.agreement" syntax="LOCALIZED_TEXT_AREA" profile="default">
       <label>New User Agreement Message</label>
