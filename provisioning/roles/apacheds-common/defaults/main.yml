@@ -20,6 +20,9 @@ apacheds_server_system_admin_dn: "uid={{apacheds_server_system_admin}},ou=system
 # the apacheds admin password is already set in the apacheds-2.0.0-M23-configured.tar
 # if you would like a different password, change it in ApacheDS after deploy
 # then change it here for other services to use
+apacheds_server_system_admin_initial_password: "secret"
+# if you are changing the ldap password after install, set this to the future password
+# so the services can be configured to use it correctly
 apacheds_server_system_admin_password: "secret"
 
 apacheds_server_sandbox_admins_ou: "ou=admins"

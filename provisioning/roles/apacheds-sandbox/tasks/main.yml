@@ -11,7 +11,7 @@
   shell: chdir={{apacheds_home}}
          ldapadd
            -x -D {{apacheds_server_system_admin_dn}}
-           -w {{apacheds_server_system_admin_password}}
+           -w {{apacheds_server_system_admin_initial_password}}
            -f update-sandbox-admin-password.ldif
   failed_when: False
 
@@ -27,7 +27,7 @@
   shell: chdir={{apacheds_home}}
          ldapadd
            -x -D {{apacheds_server_system_admin_dn}}
-           -w {{apacheds_server_demo_password}}
+           -w {{apacheds_server_system_admin_initial_password}}
            -f update-sandbox-demo-password.ldif
   failed_when: False
 
