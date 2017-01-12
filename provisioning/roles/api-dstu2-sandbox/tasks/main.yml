@@ -66,4 +66,47 @@
     snapshot_name: "{{api_dstu2_baseline_snapshot}}"
     snapshot_action: Take
 
+# custom-sample-data is loaded nightly after the snapshot is restored
+# checkout the project but don't build it
+- name: checkout api-dstu2-custom-sample-data
+  tags: [api-dstu2-all, api-dstu2-sandbox, smart-platform]
+  become_user: "{{username}}"
+  git: repo={{api_dstu2_custom_sample_data_repo}}
+       version={{api_dstu2_custom_sample_data_branch}}
+       dest={{install_dir}}/api-dstu2-custom-sample-data
+       update={{update_repositories}}
+       force=yes
+       depth=1
+
+- name: create script process-custom-sample-data.sh
+  tags: [api-dstu2-all, api-dstu2-sandbox, api-dstu2-cron, smart-platform]
+  become_user: "{{username}}"
+  template: src=process-custom-sample-data.sh.j2
+            dest={{installer_user_scripts_home}}/process-custom-sample-data.sh
+            mode=0755
+
+- name: create script restore-baseline-snapshot.sh
+  tags: [api-dstu2-all, api-dstu2-sandbox, api-dstu2-cron, smart-platform]
+  become_user: "{{username}}"
+  template: src=restore-baseline-snapshot.sh.j2
+            dest={{installer_user_scripts_home}}/restore-baseline-snapshot.sh
+            mode=0755
+
+- name: create script reset-database-job.sh
+  tags: [api-dstu2-all, api-dstu2-sandbox, api-dstu2-cron, smart-platform]
+  become_user: "{{username}}"
+  template: src=reset-database-job.sh.j2
+            dest={{installer_user_scripts_home}}/reset-database-job.sh
+            mode=0755
+
+# create a cron job for nightly reset to be run at 5 AM UTC, or midnight US-EST
+- name: create cron job to nightly reset the api database
+  tags: [api-dstu2-all, api-dstu2-sandbox, api-dstu2-cron, smart-platform]
+  become_user: "{{username}}"
+  cron:
+    name: "reset api-dstu2 database"
+    minute: "0"
+    hour: "5"
+    job: "{{installer_user_scripts_home}}/reset-database-job.sh >> {{installer_user_jobs_output_home}}/cron.log"
+
 - meta: flush_handlers

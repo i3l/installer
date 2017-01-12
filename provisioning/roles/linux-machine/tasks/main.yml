@@ -44,8 +44,10 @@
          - python-mysqldb
          - python-requests
          - python-pycurl
+         - python-pip
          - ldap-utils
          - ssl-cert
+         - cron
 
 - name: upgrade server packages
   tags: [linux-all, smart-platform]
@@ -162,5 +164,39 @@
 - name: Drop annonomous MySQL user
   tags: [linux-all, smart-platform]
   mysql_user: name='' host={{mysql_connect_host}} state=absent
+
+- name: ensures {{install_dir}}/scripts dir exists
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  file: path={{installer_user_scripts_home}}
+        state=directory
+
+- name: ensures {{install_dir}}/jobs dir exists
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  file: path={{installer_user_jobs_home}}
+        state=directory
+
+- name: ensures {{install_dir}}/jobs dir exists
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  file: path="{{installer_user_jobs_home}}/output"
+        state=directory
+
+- name: initialize crontab file SHELL
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  cron:
+    name: SHELL
+    env: yes
+    value: /bin/bash
+
+- name: initialize crontab file PATH
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  cron:
+    name: PATH
+    env: yes
+    value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 - meta: flush_handlers

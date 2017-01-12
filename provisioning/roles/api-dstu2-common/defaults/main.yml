@@ -26,6 +26,10 @@ api_dstu2_mysql_privilage: "{{api_dstu2_database}}.*:ALL/*.*:ALL,GRANT"
 api_dstu2_sample_patients_repo: "https://github.com/smart-on-fhir/sample-patients.git"
 api_dstu2_sample_patients_branch: "master"
 
+# General settings for the custom-sample-data
+api_dstu2_custom_sample_data_repo: "https://github.com/smart-on-fhir/custom-sample-data.git"
+api_dstu2_custom_sample_data_branch: "master"
+
 # choose how many sample patients to load in the server or set to 9999 for all of them
 api_dstu2_sample_patients_limit: 20
 api_dstu2_include_custom_patients: false
