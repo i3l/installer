@@ -19,6 +19,12 @@
        force=yes
        depth=1
 
+- name: patch auth server log4j
+  tags: [auth-all, auth-code, smart-platform]
+  become_user: "{{username}}"
+  template: src=log4j.xml.j2
+            dest={{install_dir}}/hspc/reference-auth-server-ldap-webapp/src/main/resources/log4j.xml
+
 - name: patch auth server login screen
   tags: [auth-all, auth-code, smart-platform]
   become_user: "{{username}}"
