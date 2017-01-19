@@ -171,13 +171,15 @@
 
 - name: Create the AWS config directory
   tags: [linux-all, smart-platform]
-  file: path={{installer_user_home}}/.aws
+  become_user: "{{username}}"
+  file: path={{install_dir}}/.aws
         state=directory
         mode=0755
 
 - name: Copy AWS CLI config
   tags: [linux-all, smart-platform]
-  template: src=aws_cli_config.j2 dest="{{installer_user_home}}/.aws/config" mode=0600
+  become_user: "{{username}}"
+  template: src=aws_cli_config.j2 dest="{{install_dir}}/.aws/config" mode=0600
 
 - name: ensures {{install_dir}}/scripts dir exists
   tags: [linux-all, smart-platform]
