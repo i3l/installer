@@ -3,4 +3,6 @@
 
 - include: persona-api.yml
 
+- include: mock-api.yml
+
 - meta: flush_handlers

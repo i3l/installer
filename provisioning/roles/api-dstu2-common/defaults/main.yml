@@ -53,9 +53,19 @@ persona_api_dstu2_server_internal_smart_sandbox_url: "{{persona_api_dstu2_server
 persona_api_dstu2_server_internal_smart_sandbox_fhir_root_url: "{{persona_api_dstu2_server_internal_smart_sandbox_url}}/data"
 persona_api_dstu2_server_internal_smart_sandbox_open_fhir_root_url: "{{persona_api_dstu2_server_internal_smart_sandbox_url}}/open"
 
+# MOCK DSTU2 API Server settings
+mock_api_dstu2_server_internal_host: localhost
+mock_api_dstu2_server_internal_port: 8074
+mock_api_dstu2_server_internal_base_url: "http://{{mock_api_dstu2_server_internal_host}}:{{mock_api_dstu2_server_internal_port}}{{mock_api_dstu2_server_context}}"
+mock_api_dstu2_server_internal_smart_sandbox_url: "{{mock_api_dstu2_server_internal_base_url}}{{mock_api_dstu2_server_smart_sandbox}}"
+mock_api_dstu2_server_internal_smart_sandbox_fhir_root_url: "{{mock_api_dstu2_server_internal_smart_sandbox_url}}/data"
+mock_api_dstu2_server_internal_smart_sandbox_open_fhir_root_url: "{{mock_api_dstu2_server_internal_smart_sandbox_url}}/open"
+
 # Set this to either "open" or "secured" on the primary endpoint /data
 api_dstu2_server_security_mode: secured
 # Set this to none to remove open access
 api_dstu2_server_open_access_endpoint: open
+# Set this to "mock" on the primary endpoint /data
+mock_api_dstu2_server_security_mode: mock
 
 

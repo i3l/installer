@@ -144,6 +144,20 @@ persona_api_dstu2_server_smart_sandbox_url: "{{persona_api_dstu2_server_context_
 persona_api_dstu2_server_smart_sandbox_fhir_root_url: "{{persona_api_dstu2_server_smart_sandbox_url}}/data"
 persona_api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{persona_api_dstu2_server_smart_sandbox_url}}/open"
 
+# Mock-API DSTU2 Server
+mock_api_dstu2_server_host: "localhost"
+mock_api_dstu2_server_port: 9074
+mock_api_dstu2_server_context: /mock-api/
+mock_api_dstu2_server_name: "Local Mock DSTU2 FHIR dev server"
+mock_api_dstu2_server_inferred_protocol: "{{'https' if use_secure_http else 'http'}}"
+mock_api_dstu2_server_inferred_port: "{{(':'+mock_api_dstu2_server_port|string) if mock_api_dstu2_server_port|int not in (80,443) else ''}}"
+mock_api_dstu2_server_smart_sandbox: smartdstu2
+mock_api_dstu2_server_base_url: "{{mock_api_dstu2_server_inferred_protocol}}://{{mock_api_dstu2_server_host}}{{mock_api_dstu2_server_inferred_port}}"
+mock_api_dstu2_server_context_url: "{{mock_api_dstu2_server_base_url}}{{mock_api_dstu2_server_context}}"
+mock_api_dstu2_server_smart_sandbox_url: "{{mock_api_dstu2_server_context_url}}{{mock_api_dstu2_server_smart_sandbox}}"
+mock_api_dstu2_server_smart_sandbox_fhir_root_url: "{{mock_api_dstu2_server_smart_sandbox_url}}/data"
+mock_api_dstu2_server_smart_sandbox_open_fhir_root_url: "{{mock_api_dstu2_server_smart_sandbox_url}}/open"
+
 # API Server client
 api_server_oauth2_clientId: hspc_resource_server
 api_server_oauth2_clientSecret: secret
@@ -175,6 +189,7 @@ auth_server_base_url: "{{auth_server_inferred_protocol}}://{{auth_server_host}}{
 auth_server_url: "{{auth_server_base_url}}{{auth_server_context}}"
 auth_server_client: client
 auth_server_password: secret
+auth_server_enable_mock_endpoints: true
 
 # Persona-Auth Server
 persona_auth_server_host: "localhost"
@@ -187,6 +202,7 @@ persona_auth_server_inferred_protocol: "{{'https' if use_secure_http else 'http'
 persona_auth_server_inferred_port: "{{(':'+persona_auth_server_port|string) if persona_auth_server_port|int not in (80,443) else ''}}"
 persona_auth_server_base_url: "{{persona_auth_server_inferred_protocol}}://{{persona_auth_server_host}}{{persona_auth_server_inferred_port}}"
 persona_auth_server_url: "{{persona_auth_server_base_url}}{{persona_auth_server_context}}"
+persona_auth_server_enable_mock_endpoints: false
 
 # Messaging Server
 messaging_server_host: "localhost"

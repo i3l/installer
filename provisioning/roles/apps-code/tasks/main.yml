@@ -63,6 +63,11 @@
   template: src=branded_text.js.j2
             dest={{install_dir}}/apps/static/apps/patient-picker/static/js/branding/branded_text.js
 
+- name: branding rights
+  tags: [apps-all, apps-code, smart-platform]
+  file: path={{install_dir}}/apps/static/apps/patient-picker/static/js/branding/branded_text.js state=file owner=root group=root mode=0644
+
+
 - name: configure sample apps to use a common fhir-client
   tags: [apps-all, apps-code, smart-platform]
   become_user: "{{username}}"

@@ -9,10 +9,12 @@ WorkingDirectory={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_proj
 ExecStart=/usr/bin/java \
  -Xms{{api_dstu2_server_initial_memory}} \
  -Xmx{{api_dstu2_server_max_memory}} \
- -Djetty.port="{{persona_api_dstu2_server_internal_port}}" \
- -Djetty.host="{{persona_api_dstu2_server_internal_host}}" \
- -Dhspc.platform.authorization.urlContext={{persona_auth_server_url}} \
- -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
+ -Djetty.port="{{mock_api_dstu2_server_internal_port}}" \
+ -Djetty.host="{{mock_api_dstu2_server_internal_host}}" \
+ -Dhspc.platform.authorization.authorizeUrl={{auth_server_url}}mock/authorize \
+ -Dhspc.platform.authorization.tokenUrl={{auth_server_url}}mock/token \
+ -Dhspc.platform.authorization.urlContext={{auth_server_url}} \
+ -Dhspc.platform.api.security.mode={{mock_api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_server_open_access_endpoint}} \
  -Dhspc.platform.api.sandbox.name={{api_dstu2_server_smart_sandbox}} \
  -Dhspc.platform.api.sandbox.useHspcStarterData=false \
@@ -21,21 +23,23 @@ ExecStart=/usr/bin/java \
  -Dhspc.platform.api.fhir.db.username={{mysql_user}} \
  -Dhspc.platform.api.fhir.db.password={{mysql_pass}} \
  -Dspring.jpa.hibernate.ddl-auto=none \
- -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}/persona-index \
+ -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}/mock-index \
  -Djavax.net.ssl.trustStore="{{install_dir}}/keystore" \
  -Djavax.net.ssl.trustStorePassword="{{keystore_password}}" \
  -jar {{install_dir}}/jetty-runner.jar \
  --config {{install_dir}}/jetty.xml \
- --path {{persona_api_dstu2_server_context}} \
+ --path {{mock_api_dstu2_server_context}} \
  hspc-reference-api.war
 {% else %}
 ExecStart=/usr/bin/java \
  -Xms{{api_dstu2_server_initial_memory}} \
  -Xmx{{api_dstu2_server_max_memory}} \
- -Djetty.port="{{persona_api_dstu2_server_internal_port}}" \
- -Djetty.host="{{persona_api_dstu2_server_internal_host}}" \
- -Dhspc.platform.authorization.urlContext={{persona_auth_server_url}} \
- -Dhspc.platform.api.security.mode={{api_dstu2_server_security_mode}} \
+ -Djetty.port="{{mock_api_dstu2_server_internal_port}}" \
+ -Djetty.host="{{mock_api_dstu2_server_internal_host}}" \
+ -Dhspc.platform.authorization.authorizeUrl={{auth_server_url}}mock/authorize \
+ -Dhspc.platform.authorization.tokenUrl={{auth_server_url}}mock/token \
+ -Dhspc.platform.authorization.urlContext={{auth_server_url}} \
+ -Dhspc.platform.api.security.mode={{mock_api_dstu2_server_security_mode}} \
  -Dhspc.platform.api.fhir.openContextPath={{api_dstu2_server_open_access_endpoint}} \
  -Dhspc.platform.api.sandbox.name={{api_dstu2_server_smart_sandbox}} \
  -Dhspc.platform.api.sandbox.useHspcStarterData=false \
@@ -44,10 +48,10 @@ ExecStart=/usr/bin/java \
  -Dhspc.platform.api.fhir.db.username={{mysql_user}} \
  -Dhspc.platform.api.fhir.db.password={{mysql_pass}} \
  -Dspring.jpa.hibernate.ddl-auto=none \
- -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}/persona-index \
+ -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}/mock-index \
  -jar {{install_dir}}/jetty-runner.jar \
  --config {{install_dir}}/jetty.xml \
- --path {{persona_api_dstu2_server_context}} \
+ --path {{mock_api_dstu2_server_context}} \
  hspc-reference-api.war
 {% endif %}
 Restart=always

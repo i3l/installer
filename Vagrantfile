@@ -15,6 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 9070, host: 9070
 # Persona-API_DSTU2 Server
   config.vm.network :forwarded_port, guest: 9071, host: 9071
+# Mock-API_DSTU2 Server
+  config.vm.network :forwarded_port, guest: 9074, host: 9074
 # API_STU3 Server
   config.vm.network :forwarded_port, guest: 9072, host: 9072
 # Persona-API_STU3 Server
@@ -53,11 +55,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
 #    ansible.verbose="vvvv"
 #    ansible.tags=["smart-platform"]
-#    ansible.tags=["apps-code"]
+    ansible.tags=["apps-code"]
 #    ansible.tags=["linux-all"]
-    ansible.playbook = "provisioning/site.yml"
+#    ansible.playbook = "provisioning/site.yml"
 #    ansible.playbook = "provisioning/playbook-rebuild-databases.yml"
-#    ansible.playbook = "provisioning/playbook-rebuild-app-code.yml"
+    ansible.playbook = "provisioning/playbook-rebuild-app-code.yml"
+#    ansible.playbook = "provisioning/playbook-rebuild-services.yml"
   end
 
   # If you are running the build on a Windows host, please comment out the
