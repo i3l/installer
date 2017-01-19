@@ -241,6 +241,12 @@ installer_user_scripts_home: "{{install_dir}}/scripts"
 installer_user_jobs_home: "{{install_dir}}/jobs"
 installer_user_jobs_output_home: "{{installer_user_jobs_home}}/output"
 
+enable_aws_backup: false
+aws_output_format: 'json'
+aws_region: "changeme"
+aws_access_key_id: "changeme"
+aws_secret_access_key: "changeme"
+
 # Maximu size of sample patient data files
 max_upload_size: "5M"
 

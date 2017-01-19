@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 #    ansible.verbose="vvvv"
 #    ansible.tags=["smart-platform"]
 #    ansible.tags=["apps-code"]
-#    ansible.tags=["linux-all"]
+    ansible.tags=["linux-all"]
     ansible.playbook = "provisioning/site.yml"
 #    ansible.playbook = "provisioning/playbook-rebuild-databases.yml"
 #    ansible.playbook = "provisioning/playbook-rebuild-app-code.yml"

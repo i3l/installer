@@ -18,9 +18,11 @@ ExecStart=/usr/bin/java \
  -Dhspc.platform.api.sandbox.useHspcStarterData=false \
  -Dhspc.platform.api.fhir.db.url=jdbc:mysql://{{mysql_endpoint}}/{{api_dstu2_database}} \
  -Dhspc.platform.api.fhir.db.schema={{api_dstu2_database}} \
+ -Dhspc.platform.api.fhir.defaultTenantId={{api_dstu2_server_smart_sandbox}} \
  -Dhspc.platform.api.fhir.db.username={{mysql_user}} \
  -Dhspc.platform.api.fhir.db.password={{mysql_pass}} \
  -Dspring.jpa.hibernate.ddl-auto=none \
+ -Dhspc.platform.messaging.subscriptionSupport.enabled=false \
  -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}/persona-index \
  -Djavax.net.ssl.trustStore="{{install_dir}}/keystore" \
  -Djavax.net.ssl.trustStorePassword="{{keystore_password}}" \
@@ -41,9 +43,11 @@ ExecStart=/usr/bin/java \
  -Dhspc.platform.api.sandbox.useHspcStarterData=false \
  -Dhspc.platform.api.fhir.db.url=jdbc:mysql://{{mysql_endpoint}}/{{api_dstu2_database}} \
  -Dhspc.platform.api.fhir.db.schema={{api_dstu2_database}} \
+ -Dhspc.platform.api.fhir.defaultTenantId={{api_dstu2_server_smart_sandbox}} \
  -Dhspc.platform.api.fhir.db.username={{mysql_user}} \
  -Dhspc.platform.api.fhir.db.password={{mysql_pass}} \
  -Dspring.jpa.hibernate.ddl-auto=none \
+ -Dhspc.platform.messaging.subscriptionSupport.enabled=false \
  -Dhibernate.search.default.indexBase={{install_dir}}/hspc/api-dstu2/{{api_dstu2_repo_api_webapp_project}}/persona-index \
  -jar {{install_dir}}/jetty-runner.jar \
  --config {{install_dir}}/jetty.xml \

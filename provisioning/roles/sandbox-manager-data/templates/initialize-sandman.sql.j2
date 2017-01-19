@@ -28,7 +28,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `sandbox` WRITE;
 INSERT INTO `sandbox` (`id`,`allow_open_access`,`created_timestamp`,`description`,`name`,`sandbox_id`,`schema_version`,`created_by_id`,`fhir_server_end_point`,`visibility`)
-VALUES (1,0x00,now(),'SMART Public Development Sandbox','SMART Sandbox','smartdstu2','1',1,NULL,0);
+VALUES (1,0x00,now(),'SMART Public Development Sandbox','SMART Sandbox','{{api_dstu2_server_smart_sandbox}}',{{api_dstu2_schema_version}},1,NULL,0);
 UNLOCK TABLES;
 
 LOCK TABLES `user_sandbox` WRITE;
