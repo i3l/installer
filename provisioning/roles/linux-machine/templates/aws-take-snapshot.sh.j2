@@ -1,12 +1,10 @@
 #!/bin/bash
 
+VOLUME_ID="{{aws_ec2_volume_id}}"
 DATE=$(date '+%Y-%m-%d')
-REMOVE_DATE=$(date --date="7 day ago" +%Y-%m-%d)
+SNAPSHOT_DESC="$DATE-Backup"
 ERROR=1
 CONTINUE_ON_ERROR=false
-JOBS_FOLDER="{{user_jobs_home}}"
-SCRIPTS_FOLDER="{{user_scripts_home}}"
-OUTPUT_FOLDER="{{user_jobs_output_home}}/$DATE"
 
 function handleLastError {
   echo $1
@@ -16,40 +14,24 @@ function handleLastError {
   fi
 }
 
-# delete old snapshots
-echo "Removing snapshots from $REMOVE_DATE"
-#
-REMOVE_SNAPSHOT_ID="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$REMOVE_DATE-Backup") | .SnapshotId')"
-echo "Snapshot to delete: [$REMOVE_SNAPSHOT_ID]"
-
-if [ ! -z $REMOVE_SNAPSHOT_ID ]
-then
-  aws ec2 delete-snapshot --snapshot-id $REMOVE_SNAPSHOT_ID
-fi
-
-if [ $? -ne 0 ]
-then
-    handleLastError "Failed to delete prior snapshot $REMOVE_SNAPSHOT_ID"
-fi
-
 # take a snapshot for today
-echo "Creating backup: $DATE-Backup"
-aws ec2 create-snapshot --volume-id {{aws_ec2_volume_id}} --description "$DATE-Backup"
+echo "Creating backup: $SNAPSHOT_DESC"
+aws ec2 create-snapshot --volume-id $VOLUME_ID --description "$SNAPSHOT_DESC"
 if [ $? -ne 0 ]
 then
-    handleLastError "Failed to create backup $REMOVE_SNAPSHOT_ID"
+    handleLastError "Failed to create backup $SNAPSHOT_DESC"
 fi
 
-sleep 10
+sleep 2
 # verify the snapshot is complete
-NEW_SNAPSHOT_STATUS="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$DATE-Backup") | .State')"
+NEW_SNAPSHOT_STATUS=$(aws ec2 describe-snapshots --filters Name=volume-id,Values=$VOLUME_ID | jq -r ".Snapshots[] | select(.Description==\"$SNAPSHOT_DESC\") | .State")
 echo "backup is $NEW_SNAPSHOT_STATUS"
-sleep 10
+sleep 5
 
 while [ ( -z $NEW_SNAPSHOT_STATUS ) -o ( $NEW_SNAPSHOT_STATUS -ne "complete" ) ];
 do
-  sleep 10
-  NEW_SNAPSHOT_STATUS="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$DATE-Backup") | .State')"
+  sleep 5
+  NEW_SNAPSHOT_STATUS=$(aws ec2 describe-snapshots --filters Name=volume-id,Values=$VOLUME_ID | jq -r ".Snapshots[] | select(.Description==\"$SNAPSHOT_DESC\") | .State")
   echo "backup is $NEW_SNAPSHOT_STATUS"
 done
 

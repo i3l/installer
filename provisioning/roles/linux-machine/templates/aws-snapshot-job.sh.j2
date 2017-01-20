@@ -1,6 +1,5 @@
 #!/bin/bash
 
-DATE=$(date '+%Y-%b-%d')
 REMOVE_DATE=$(date --date="7 day ago" +%Y-%m-%d)
 ERROR=1
 CONTINUE_ON_ERROR=false
@@ -21,6 +20,6 @@ echo "aws-backup-job.sh has started successfully!"
 aws-remove-snapshot.sh $REMOVE_DATE
 
 # take new snapshot
-aws-take-snapshot.sh $DATE
+aws-take-snapshot.sh
 
 echo "aws-backup-job.sh completed successfully!"
