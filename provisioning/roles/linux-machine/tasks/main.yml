@@ -216,22 +216,36 @@
     env: yes
     value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-- name: create script aws-backup-job.sh
+- name: create script aws-snapshot-job.sh
   tags: [linux-all, smart-platform]
   become_user: "{{username}}"
-  template: src=aws-backup-job.sh.j2
-            dest={{user_scripts_home}}/aws-backup-job.sh
+  template: src=aws-snapshot-job.sh.j2
+            dest={{user_scripts_home}}/aws-snapshot-job.sh
+            mode=0755
+
+- name: create script aws-remove-snapshot-job.sh
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  template: src=aws-remove-snapshot-job.sh.j2
+            dest={{user_scripts_home}}/aws-remove-snapshot-job.sh
+            mode=0755
+
+- name: create script aws-take-snapshot-job.sh
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  template: src=aws-take-snapshot-job.sh.j2
+            dest={{user_scripts_home}}/aws-take-snapshot-job.sh
             mode=0755
 
 # create a cron job for nightly reset to be run at 6 AM UTC, or 1 AM US-EST
-- name: create cron job to backup to AWS
+- name: create cron job to snapshot to AWS
   tags: [api-dstu2-all, api-dstu2-sandbox, api-dstu2-cron, smart-platform]
-  when: enable_aws_backup
+  when: enable_aws_snapshot
   become_user: "{{username}}"
   cron:
-    name: "server backup"
+    name: "server snapshot"
     minute: "0"
     hour: "6"
-    job: "{{user_scripts_home}}/aws-backup-job.sh >> {{user_jobs_output_home}}/server-backup.log"
+    job: "{{user_scripts_home}}/aws-snapshot-job.sh >> {{user_jobs_output_home}}/server-snapshot.log"
 
 - meta: flush_handlers
