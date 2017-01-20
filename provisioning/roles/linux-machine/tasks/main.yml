@@ -223,18 +223,25 @@
             dest={{user_scripts_home}}/aws-snapshot-job.sh
             mode=0755
 
-- name: create script aws-remove-snapshot-job.sh
+- name: create script aws-remove-snapshot.sh
   tags: [linux-all, smart-platform]
   become_user: "{{username}}"
-  template: src=aws-remove-snapshot-job.sh.j2
-            dest={{user_scripts_home}}/aws-remove-snapshot-job.sh
+  template: src=aws-remove-snapshot.sh.j2
+            dest={{user_scripts_home}}/aws-remove-snapshot.sh
             mode=0755
 
-- name: create script aws-take-snapshot-job.sh
+- name: create script aws-take-snapshot.sh
   tags: [linux-all, smart-platform]
   become_user: "{{username}}"
-  template: src=aws-take-snapshot-job.sh.j2
-            dest={{user_scripts_home}}/aws-take-snapshot-job.sh
+  template: src=aws-take-snapshot.sh.j2
+            dest={{user_scripts_home}}/aws-take-snapshot.sh
+            mode=0755
+
+- name: create script aws-describe-snapshots.sh
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  template: src=aws-describe-snapshots.sh.j2
+            dest={{user_scripts_home}}/aws-describe-snapshots.sh
             mode=0755
 
 # create a cron job for nightly reset to be run at 6 AM UTC, or 1 AM US-EST
