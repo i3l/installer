@@ -20,7 +20,7 @@ function handleLastError {
 echo "Removing snapshots from $REMOVE_DATE"
 #
 REMOVE_SNAPSHOT_ID="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$REMOVE_DATE-Backup") | .SnapshotId')"
-echo "Found snapshot to delete: $REMOVE_SNAPSHOT_ID"
+echo "Snapshot to delete: [$REMOVE_SNAPSHOT_ID]"
 
 if [ ! -z $REMOVE_SNAPSHOT_ID ]
 then
@@ -40,9 +40,13 @@ then
     handleLastError "Failed to create backup $REMOVE_SNAPSHOT_ID"
 fi
 
+sleep 10
 # verify the snapshot is complete
 NEW_SNAPSHOT_STATUS="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$DATE-Backup") | .State')"
-while [ $NEW_SNAPSHOT_STATUS -ne "complete" ];
+echo "backup is $NEW_SNAPSHOT_STATUS"
+sleep 10
+
+while [ ( -z NEW_SNAPSHOT_STATUS ) -o ( $NEW_SNAPSHOT_STATUS -ne "complete" ) ];
 do
   sleep 10
   NEW_SNAPSHOT_STATUS="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$DATE-Backup") | .State')"
