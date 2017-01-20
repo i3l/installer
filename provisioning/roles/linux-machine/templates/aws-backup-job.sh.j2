@@ -1,0 +1,52 @@
+#!/bin/bash
+
+DATE=$(date '+%Y-%b-%d')
+REMOVE_DATE=$(date --date="7 day ago" +%Y-%m-%d)
+ERROR=1
+CONTINUE_ON_ERROR=false
+JOBS_FOLDER="{{user_jobs_home}}"
+SCRIPTS_FOLDER="{{user_scripts_home}}"
+OUTPUT_FOLDER="{{user_jobs_output_home}}/$DATE"
+
+function handleLastError {
+  echo $1
+  if [ ! $CONTINUE_ON_ERROR ]
+  then
+    exit $ERROR
+  fi
+}
+
+# delete old snapshots
+echo "Removing snapshots from $REMOVE_DATE"
+#
+REMOVE_SNAPSHOT_ID="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$REMOVE_DATE-Backup") | .SnapshotId')"
+echo "Found snapshot to delete: $REMOVE_SNAPSHOT_ID"
+
+if [ ! -z $REMOVE_SNAPSHOT_ID ]
+then
+  aws ec2 delete-snapshot --snapshot-id $REMOVE_SNAPSHOT_ID
+fi
+
+if [ $? -ne 0 ]
+then
+    handleLastError "Failed to delete prior snapshot $REMOVE_SNAPSHOT_ID"
+fi
+
+# take a snapshot for today
+echo "Creating backup: $DATE-Backup"
+aws ec2 create-snapshot --volume-id {{aws_ec2_volume_id}} --description "$DATE-Backup"
+if [ $? -ne 0 ]
+then
+    handleLastError "Failed to create backup $REMOVE_SNAPSHOT_ID"
+fi
+
+# verify the snapshot is complete
+NEW_SNAPSHOT_STATUS="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$DATE-Backup") | .State')"
+while [ $NEW_SNAPSHOT_STATUS -ne "complete" ];
+do
+  sleep 10
+  NEW_SNAPSHOT_STATUS="$(aws ec2 describe-snapshots --filters Name=volume-id,Values=vol-0a106b5aa0fe2c577 | jq -r '.Snapshots[] | select(.Description=="$DATE-Backup") | .State')"
+  echo "backup is $NEW_SNAPSHOT_STATUS"
+done
+
+echo "aws-backup-job.sh completed successfully!"

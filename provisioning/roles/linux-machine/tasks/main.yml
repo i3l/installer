@@ -48,6 +48,7 @@
          - ldap-utils
          - ssl-cert
          - cron
+         - jq
 
 - name: upgrade server packages
   tags: [linux-all, smart-platform]
@@ -165,6 +166,24 @@
   tags: [linux-all, smart-platform]
   mysql_user: name='' host={{mysql_connect_host}} state=absent
 
+- name: ensures {{install_dir}}/scripts dir exists
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  file: path={{user_scripts_home}}
+        state=directory
+
+- name: ensures {{install_dir}}/jobs dir exists
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  file: path={{user_jobs_home}}
+        state=directory
+
+- name: ensures {{install_dir}}/jobs output dir exists
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  file: path="{{user_jobs_home}}/output"
+        state=directory
+
 - name: install AWS shell
   tags: [linux-all, smart-platform]
   pip: name="aws-shell"
@@ -181,24 +200,6 @@
   become_user: "{{username}}"
   template: src=aws_cli_config.j2 dest="{{install_dir}}/.aws/config" mode=0600
 
-- name: ensures {{install_dir}}/scripts dir exists
-  tags: [linux-all, smart-platform]
-  become_user: "{{username}}"
-  file: path={{installer_user_scripts_home}}
-        state=directory
-
-- name: ensures {{install_dir}}/jobs dir exists
-  tags: [linux-all, smart-platform]
-  become_user: "{{username}}"
-  file: path={{installer_user_jobs_home}}
-        state=directory
-
-- name: ensures {{install_dir}}/jobs dir exists
-  tags: [linux-all, smart-platform]
-  become_user: "{{username}}"
-  file: path="{{installer_user_jobs_home}}/output"
-        state=directory
-
 - name: initialize crontab file SHELL
   tags: [linux-all, smart-platform]
   become_user: "{{username}}"
@@ -214,5 +215,23 @@
     name: PATH
     env: yes
     value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+- name: create script aws-backup-job.sh
+  tags: [linux-all, smart-platform]
+  become_user: "{{username}}"
+  template: src=aws-backup-job.sh.j2
+            dest={{user_scripts_home}}/aws-backup-job.sh
+            mode=0755
+
+# create a cron job for nightly reset to be run at 6 AM UTC, or 1 AM US-EST
+- name: create cron job to backup to AWS
+  tags: [api-dstu2-all, api-dstu2-sandbox, api-dstu2-cron, smart-platform]
+  when: enable_aws_backup
+  become_user: "{{username}}"
+  cron:
+    name: "server backup"
+    minute: "0"
+    hour: "6"
+    job: "{{user_scripts_home}}/aws-backup-job.sh >> {{user_jobs_output_home}}/server-backup.log"
 
 - meta: flush_handlers
