@@ -241,7 +241,7 @@ user_scripts_home: "{{install_dir}}/scripts"
 user_jobs_home: "{{install_dir}}/jobs"
 user_jobs_output_home: "{{user_jobs_home}}/output"
 
-enable_aws_backup: false
+enable_aws_snapshot: false
 aws_output_format: 'json'
 aws_region: "changeme"
 aws_access_key_id: "changeme"
