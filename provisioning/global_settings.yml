@@ -246,7 +246,7 @@ aws_output_format: 'json'
 aws_region: "changeme"
 aws_access_key_id: "changeme"
 aws_secret_access_key: "changeme"
-aws_ec2_volume_id: "vol-0a106b5aa0fe2c577"
+aws_ec2_volume_id: "changeme"
 
 # Maximu size of sample patient data files
 max_upload_size: "5M"

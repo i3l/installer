@@ -166,12 +166,6 @@
   tags: [linux-all, smart-platform]
   mysql_user: name='' host={{mysql_connect_host}} state=absent
 
-- name: removes prior {{install_dir}}/scripts dir exists
-  tags: [linux-all, smart-platform]
-  become_user: "{{username}}"
-  file: path={{user_scripts_home}}
-        state=absent
-
 - name: ensures {{install_dir}}/scripts dir exists
   tags: [linux-all, smart-platform]
   become_user: "{{username}}"
